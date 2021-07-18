@@ -8,7 +8,7 @@ type ReadingListItemProps = {
   title: string;
   description?: string;
   onPressButton?: () => void;
-  uri: string;
+  uri?: string;
 };
 
 export const ReadingListItem: React.VFC<ReadingListItemProps> = ({
@@ -18,7 +18,7 @@ export const ReadingListItem: React.VFC<ReadingListItemProps> = ({
   uri,
 }) => (
   <InfoBoxContainer containerStyle={styles.container}>
-    <Image style={styles.image} source={{uri}} />
+    <Image style={styles.image} source={{uri}} resizeMode="cover" />
     <InfoBox
       title={title}
       description={description}
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   image: {
     height: 110,
     width: 110,
-    borderRadius: 5,
+    borderRadius: 10,
     marginRight: 15,
     marginTop: -28,
   },
