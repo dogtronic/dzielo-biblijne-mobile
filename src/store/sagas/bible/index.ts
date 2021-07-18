@@ -1,17 +1,22 @@
-import {put, takeLatest, select} from 'redux-saga/effects';
+import {put, takeLatest} from 'redux-saga/effects';
 import * as actions from '../../actions';
-import {StoreState} from '../../configureStore';
+
+// Api
+import {AxiosResponse} from 'axios';
+import {Api, Endpoint} from '../../../services/Api.service';
+
+// Models
+import {BibleBook} from '../../types/BibleBook.model';
 
 export function* getBooks() {
   try {
-    // const { session_id } = yield select((state: StoreState) => state.auth);
-    // const body = new JSONFormData(session_id);
-    // const response: AxiosResponse<{
-    //     callqueue_list: CallQueue[];
-    // }> = yield api.post(Customer.GetCallQueueList, body);
-    // yield put(actions.getCallQueues.success(response.data.callqueue_list));
+    const response: AxiosResponse<BibleBook[]> = yield Api.get(
+      Endpoint.BibleBooks,
+    );
+    console.log(response.data);
+    yield put(actions.getBooks.success(response.data));
   } catch (err) {
-    // yield put(actions.getCallQueues.failure());
+    yield put(actions.getAppSettings.failure());
   }
 }
 

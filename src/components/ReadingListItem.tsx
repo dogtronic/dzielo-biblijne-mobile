@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import {StyleSheet, Image} from 'react-native';
+import {StyleSheet, Image, View} from 'react-native';
 import {InfoBox, InfoBoxContainer} from './InfoBox';
 
 type ReadingListItemProps = {
@@ -9,29 +9,38 @@ type ReadingListItemProps = {
   description?: string;
   onPressButton?: () => void;
   uri?: string;
+  customButtonLabel?: string;
 };
 
-export const ReadingListItem: React.VFC<ReadingListItemProps> = ({
+export const ReadingListItem: React.FC<ReadingListItemProps> = ({
   title,
   description,
   onPressButton,
   uri,
+  customButtonLabel,
+  children,
 }) => (
   <InfoBoxContainer containerStyle={styles.container}>
-    <Image style={styles.image} source={{uri}} resizeMode="cover" />
-    <InfoBox
-      title={title}
-      description={description}
-      onPressButton={onPressButton}
-      position="vertical"
-    />
+    <View style={styles.insideContainer}>
+      <Image style={styles.image} source={{uri}} resizeMode="cover" />
+      <InfoBox
+        title={title}
+        description={description}
+        onPressButton={onPressButton}
+        position="vertical"
+        customButtonLabel={customButtonLabel}
+      />
+    </View>
+    {children}
   </InfoBoxContainer>
 );
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
     marginTop: 28,
+  },
+  insideContainer: {
+    flexDirection: 'row',
   },
   image: {
     height: 110,

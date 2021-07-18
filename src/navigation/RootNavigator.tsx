@@ -20,9 +20,11 @@ import * as actions from '../store/actions';
 
 //screens
 import DashboardScreen from '../screens/DashboardScreen';
+import BibleScreen from '../screens/BibleScreen';
 
 export type RootNavigatorParamList = {
   DashboardScreen: undefined;
+  BibleScreen: undefined;
 };
 
 const DrawerNav = createDrawerNavigator<RootNavigatorParamList>();
@@ -71,6 +73,7 @@ const RootNavigator = () => {
             name="DashboardScreen"
             component={DashboardScreen}
           />
+          <DrawerNav.Screen name="BibleScreen" component={BibleScreen} />
         </DrawerNav.Navigator>
       </NavigationContainer>
     </SafeAreaView>

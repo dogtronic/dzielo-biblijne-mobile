@@ -30,7 +30,7 @@ function capitalizeFirstLetter(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-const DashboardScreen: React.VFC<DashboardScreenProps> = () => {
+const DashboardScreen: React.VFC<DashboardScreenProps> = ({navigation}) => {
   const {t} = useTranslation();
 
   const sectionImages = useAppSelector(state => state.settings.sectionImages);
@@ -55,6 +55,7 @@ const DashboardScreen: React.VFC<DashboardScreenProps> = () => {
           title={t('dashboard:bibleHeader')}
           description={t('dashboard:bibleDescription')}
           uri={remoteAsset(sectionImages?.bible?.url)}
+          onPressButton={() => navigation.navigate('BibleScreen')}
         />
 
         <ReadingListItem

@@ -1,6 +1,8 @@
 export default {
   common: {
     read: 'Czytaj',
+    hide: 'Zwiń',
+    show: 'Rozwiń',
   },
   menu: {
     startPage: 'Strona startowa',
@@ -26,5 +28,12 @@ export default {
     homilyDescription: 'Nauczanie Kościoła',
     nationalReadingsHeader: 'Narodowe czytanie',
     nationalReadingsDescription: 'Pismo Święte',
+  },
+  bible: {
+    continueReading: 'Kontynuuj czytanie',
+    oldTestamentHeader: 'Stary Testament',
+    oldTestamentDescription: 'Księga Rodzaju i inne',
+    newTestamentHeader: 'Nowy Testament',
+    newTestamentDescription: 'Listy i Ewangelie',
   },
 };

@@ -18,6 +18,7 @@ type InfoBoxProps = {
   description?: string;
   onPressButton?: () => void;
   position?: 'vertical' | 'horizontal';
+  customButtonLabel?: string;
 };
 
 export const InfoBoxContainer: React.FC<InfoBoxContainerProps> = ({
@@ -34,6 +35,7 @@ export const InfoBox: React.VFC<InfoBoxProps> = ({
   description,
   onPressButton,
   position = 'horizontal',
+  customButtonLabel,
 }) => (
   <View
     style={[
@@ -46,7 +48,7 @@ export const InfoBox: React.VFC<InfoBoxProps> = ({
     </View>
     <ContentButton
       onPress={onPressButton}
-      title={'Czytaj'}
+      title={customButtonLabel || 'Czytaj'}
       containerStyle={[
         position === 'vertical'
           ? styles.verticalButtonContainer

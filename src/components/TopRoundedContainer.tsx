@@ -23,5 +23,6 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingHorizontal: 23,
     paddingVertical: 30,
+    flex: 1,
   },
 });

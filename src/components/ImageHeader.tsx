@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 5,
-    marginTop: -20,
+    marginTop: -24,
   },
   image: {
     height: 80,
@@ -69,6 +69,7 @@ const styles = StyleSheet.create({
     color: Colors.primary,
     fontSize: 22,
     fontFamily: Fonts.MartelRegular,
+    marginTop: 2,
   },
   disabledText: {
     color: Colors.gray,
