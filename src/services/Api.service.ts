@@ -4,6 +4,7 @@ import {Config} from '../../config';
 export enum Endpoint {
   SectionImages = 'sections-images/',
   BibleBooks = 'bible-books/',
+  Chapters = 'chapters/',
 }
 
 export const Api = axios.create();

@@ -35,5 +35,6 @@ export default {
     oldTestamentDescription: 'Księga Rodzaju i inne',
     newTestamentHeader: 'Nowy Testament',
     newTestamentDescription: 'Listy i Ewangelie',
+    chapter: 'Rozdział',
   },
 };

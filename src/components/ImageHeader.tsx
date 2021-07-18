@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
   headerText: {
     color: Colors.primary,

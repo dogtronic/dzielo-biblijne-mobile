@@ -1,15 +1,24 @@
 import React from 'react';
 
 // components
-import {StyleSheet, View} from 'react-native';
+import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
 
 // styles
 import Colors from '../constants/Colors';
 import GlobalStyles from '../constants/GlobalStyles';
 
-const TopRoundedContainer: React.FC = ({children}) => {
+type TopRoundedContainerProps = {
+  style?: StyleProp<ViewStyle>;
+};
+
+const TopRoundedContainer: React.FC<TopRoundedContainerProps> = ({
+  style,
+  children,
+}) => {
   return (
-    <View style={[styles.container, GlobalStyles.shadow]}>{children}</View>
+    <View style={[styles.container, GlobalStyles.shadow, style]}>
+      {children}
+    </View>
   );
 };
 

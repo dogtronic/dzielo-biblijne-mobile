@@ -1,3 +1,4 @@
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 
 // Components
@@ -15,13 +16,26 @@ type BookItemProps = {
   withoutTopLine?: boolean;
 };
 
-export const BookItem: React.VFC<BookItemProps> = ({item, withoutTopLine}) => (
-  <View style={[!withoutTopLine ? styles.topLineContainer : styles.topMargin]}>
-    <TouchableOpacity style={styles.container} activeOpacity={0.7}>
-      <Text style={styles.text}>{item.name}</Text>
-    </TouchableOpacity>
-  </View>
-);
+export const BookItem: React.VFC<BookItemProps> = ({item, withoutTopLine}) => {
+  const navigation = useNavigation();
+
+  return (
+    <View
+      style={[!withoutTopLine ? styles.topLineContainer : styles.topMargin]}>
+      <TouchableOpacity
+        style={styles.container}
+        activeOpacity={0.7}
+        onPress={() =>
+          navigation.navigate('ChaptersScreen', {
+            bookId: item.id,
+            testament: item.testament,
+          })
+        }>
+        <Text style={styles.text}>{item.name}</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
