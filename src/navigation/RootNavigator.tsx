@@ -17,6 +17,10 @@ import TopRoundedContainer from '../components/TopRoundedContainer';
 import {InfoBox, InfoBoxContainer} from '../components/InfoBox';
 import {ReadingListItem} from '../components/ReadingListItem';
 
+import {useAppDispatch, useAppSelector} from '../hooks/useAppDispatch';
+import Loader from '../components/Loader';
+import * as actions from '../store/actions';
+
 function HomeScreen({navigation}: any) {
   return (
     <View
@@ -61,6 +65,18 @@ function NotificationsScreen({navigation}: any) {
 const DrawerNav = createDrawerNavigator();
 
 const RootNavigator = () => {
+  const dispatch = useAppDispatch();
+
+  const loading = useAppSelector(state => state.settings.isSettingsLoading);
+
+  React.useEffect(() => {
+    dispatch(actions.getAppSettings.request());
+  }, [dispatch]);
+
+  if (loading) {
+    return <Loader isAbsolute />;
+  }
+
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
       <NavigationContainer>

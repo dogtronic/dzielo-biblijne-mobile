@@ -8,9 +8,11 @@ import {all} from 'redux-saga/effects';
 
 //reducers
 import bibleReducer from './reducers/bible';
+import settingsReducer from './reducers/settings';
 
 //sagas
 import {booksSaga} from './sagas/bible';
+import {settingsSaga} from './sagas/settings';
 
 const persistConfig = {
   key: 'store',
@@ -19,6 +21,7 @@ const persistConfig = {
 
 const reducers = combineReducers({
   bible: bibleReducer,
+  settings: settingsReducer,
 });
 
 const sagaMiddleware = createSagaMiddleware();
@@ -31,7 +34,7 @@ export type StoreState = ReturnType<typeof reducers>;
 export type AppDispatch = typeof store.dispatch;
 
 function* saga() {
-  yield all([...booksSaga]);
+  yield all([...booksSaga, ...settingsSaga]);
 }
 
 sagaMiddleware.run(saga);

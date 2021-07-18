@@ -1,5 +1,7 @@
 export default {
-  common: {},
+  common: {
+    read: 'Czytaj',
+  },
   menu: {
     startPage: 'Strona startowa',
     bible: 'Biblia',
@@ -12,5 +14,17 @@ export default {
     biblemap: 'Bibliomapa',
     recommendations: 'Polecane',
     contact: 'Kontakt',
+  },
+  dashboard: {
+    photoOfWeek: 'Zdjęcie tygodnia',
+    notification: 'Powiadomienie',
+    bibleHeader: 'Biblia',
+    bibleDescription: 'Stary i Nowy Testament',
+    sundayReadingsHeader: 'Czytania na niedzielę',
+    sundayReadingsDescription: 'Czytania, Ewangelia',
+    homilyHeader: 'Homilia',
+    homilyDescription: 'Nauczanie Kościoła',
+    nationalReadingsHeader: 'Narodowe czytanie',
+    nationalReadingsDescription: 'Pismo Święte',
   },
 };
