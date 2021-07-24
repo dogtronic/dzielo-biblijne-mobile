@@ -11,7 +11,6 @@ type HtmlViewerProps = {
 
 const HtmlViewer: React.VFC<HtmlViewerProps> = ({html}) => {
   const {width} = useWindowDimensions();
-
   const navigation = useNavigation();
 
   const onPressLink = useCallback(

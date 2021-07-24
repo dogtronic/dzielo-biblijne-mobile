@@ -5,6 +5,7 @@ export enum Endpoint {
   SectionImages = 'sections-images/',
   BibleBooks = 'bible-books/',
   Chapters = 'chapters/',
+  Terms = 'terms/',
 }
 
 export const Api = axios.create();

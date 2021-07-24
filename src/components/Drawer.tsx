@@ -14,9 +14,10 @@ import {useTranslation} from 'react-i18next';
 
 type DrawerProps = {
   closeDrawer?: () => void;
+  navigate?: (name: string) => void;
 };
 
-const Drawer: React.VFC<DrawerProps> = ({closeDrawer}) => {
+const Drawer: React.VFC<DrawerProps> = ({closeDrawer, navigate}) => {
   const {t} = useTranslation();
 
   const topMenu = useMemo(
@@ -53,7 +54,7 @@ const Drawer: React.VFC<DrawerProps> = ({closeDrawer}) => {
       },
       {
         name: t('menu:words'),
-        onPress: () => null,
+        onPress: () => navigate?.('TermsListScreen'),
       },
       {
         name: t('menu:curiosities'),
@@ -72,7 +73,7 @@ const Drawer: React.VFC<DrawerProps> = ({closeDrawer}) => {
         onPress: () => null,
       },
     ],
-    [t],
+    [t, navigate],
   );
 
   return (

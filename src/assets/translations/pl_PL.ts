@@ -3,6 +3,7 @@ export default {
     read: 'Czytaj',
     hide: 'Zwiń',
     show: 'Rozwiń',
+    search: 'Szukaj',
   },
   menu: {
     startPage: 'Strona startowa',
