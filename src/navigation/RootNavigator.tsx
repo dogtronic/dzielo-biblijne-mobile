@@ -25,6 +25,7 @@ import ChaptersScreen from '../screens/ChaptersScreen';
 import ChapterDetailsScreen from '../screens/ChapterDetailsScreen';
 import TermsListScreen from '../screens/TermsListScreen';
 import TermDetailsScreen from '../screens/TermDetailsScreen';
+import ReadingsScreen from '../screens/ReadingsScreen';
 
 export type RootNavigatorParamList = {
   DashboardScreen: undefined;
@@ -33,6 +34,7 @@ export type RootNavigatorParamList = {
   ChapterDetailsScreen: {chapterId: number};
   TermsListScreen: undefined;
   TermDetailsScreen: {termId: number};
+  ReadingsScreen: undefined;
 };
 
 const DrawerNav = createDrawerNavigator<RootNavigatorParamList>();
@@ -97,6 +99,10 @@ const RootNavigator = () => {
           <DrawerNav.Screen
             name={'TermDetailsScreen'}
             component={TermDetailsScreen}
+          />
+          <DrawerNav.Screen
+            name={'ReadingsScreen'}
+            component={ReadingsScreen}
           />
         </DrawerNav.Navigator>
       </NavigationContainer>

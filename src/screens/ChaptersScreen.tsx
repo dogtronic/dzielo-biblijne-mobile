@@ -6,6 +6,9 @@ import {useAppDispatch, useAppSelector} from '../hooks/useAppDispatch';
 //components
 import {StyleSheet, ScrollView, View} from 'react-native';
 import ImageHeader, {ImageHeaderText} from '../components/ImageHeader';
+import ChapterButton from '../components/ChapterButton';
+import Loader from '../components/Loader';
+import {RightArrowIcon} from '../assets/svg';
 
 //navigation
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -18,10 +21,7 @@ import {remoteAsset} from '../utils/remoteAsset';
 import * as actions from '../store/actions';
 
 // Styles
-import Loader from '../components/Loader';
 import Colors from '../constants/Colors';
-import {RightArrowIcon} from '../assets/svg';
-import ChapterButton from '../components/ChapterButton';
 
 type BibleScreenProps = {
   navigation: StackNavigationProp<RootNavigatorParamList, 'ChaptersScreen'>;

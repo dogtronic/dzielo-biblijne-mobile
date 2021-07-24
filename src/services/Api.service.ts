@@ -6,6 +6,7 @@ export enum Endpoint {
   BibleBooks = 'bible-books/',
   Chapters = 'chapters/',
   Terms = 'terms/',
+  Readings = 'readings/',
 }
 
 export const Api = axios.create();

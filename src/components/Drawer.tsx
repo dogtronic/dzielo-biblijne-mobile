@@ -32,7 +32,7 @@ const Drawer: React.VFC<DrawerProps> = ({closeDrawer, navigate}) => {
       },
       {
         name: t('menu:sundayReading'),
-        onPress: () => null,
+        onPress: () => navigate?.('ReadingsScreen'),
       },
       {
         name: t('menu:homily'),
@@ -43,7 +43,7 @@ const Drawer: React.VFC<DrawerProps> = ({closeDrawer, navigate}) => {
         onPress: () => null,
       },
     ],
-    [t],
+    [t, navigate],
   );
 
   const bottomMenu = useMemo(
