@@ -22,11 +22,13 @@ import * as actions from '../store/actions';
 import DashboardScreen from '../screens/DashboardScreen';
 import BibleScreen from '../screens/BibleScreen';
 import ChaptersScreen from '../screens/ChaptersScreen';
+import ChapterDetailsScreen from '../screens/ChapterDetailsScreen';
 
 export type RootNavigatorParamList = {
   DashboardScreen: undefined;
   BibleScreen: undefined;
   ChaptersScreen: {bookId: number; testament: 'Nowy' | 'Stary'};
+  ChapterDetailsScreen: {chapterId: number};
 };
 
 const DrawerNav = createDrawerNavigator<RootNavigatorParamList>();
@@ -77,6 +79,10 @@ const RootNavigator = () => {
           />
           <DrawerNav.Screen name="BibleScreen" component={BibleScreen} />
           <DrawerNav.Screen name="ChaptersScreen" component={ChaptersScreen} />
+          <DrawerNav.Screen
+            name="ChapterDetailsScreen"
+            component={ChapterDetailsScreen}
+          />
         </DrawerNav.Navigator>
       </NavigationContainer>
     </SafeAreaView>

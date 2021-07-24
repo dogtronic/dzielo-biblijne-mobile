@@ -14,7 +14,7 @@ type ImageHeaderProps = {
 };
 
 type ImageHeaderTextProps = {
-  content: string;
+  content?: string;
   underline?: boolean;
   disabled?: boolean;
 };

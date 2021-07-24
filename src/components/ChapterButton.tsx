@@ -11,16 +11,23 @@ import GlobalStyles from '../constants/GlobalStyles';
 // Models
 import {Chapter} from '../store/types/Chapter.model';
 
+// Helpers
+import {useNavigation} from '@react-navigation/core';
+
 type ChapterButtonProps = {
   item: Chapter;
 };
 
 const ChapterButton: React.VFC<ChapterButtonProps> = ({item}) => {
+  const navigation = useNavigation();
+
   return (
     <TouchableOpacity
       activeOpacity={0.6}
       style={[styles.container, GlobalStyles.shadow]}
-      onPress={() => null}>
+      onPress={() =>
+        navigation.navigate('ChapterDetailsScreen', {chapterId: item.id})
+      }>
       <Text style={styles.buttonText}>{item.number}</Text>
     </TouchableOpacity>
   );

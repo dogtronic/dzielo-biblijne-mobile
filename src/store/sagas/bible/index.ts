@@ -40,7 +40,22 @@ export function* getChaptersByBookId(
   }
 }
 
+export function* getChapterDetails(
+  action: ActionType<typeof actions.getChapterDetails.request>,
+) {
+  try {
+    const response: AxiosResponse<Chapter> = yield Api.get(
+      `${Endpoint.Chapters}${action.payload.chapterId}`,
+    );
+    console.log(response);
+    yield put(actions.getChapterDetails.success(response.data));
+  } catch (err) {
+    yield put(actions.getChapterDetails.failure());
+  }
+}
+
 export const booksSaga = [
   takeLatest(actions.getBooks.request, getBooks),
   takeLatest(actions.getChapters.request, getChaptersByBookId),
+  takeLatest(actions.getChapterDetails.request, getChapterDetails),
 ];

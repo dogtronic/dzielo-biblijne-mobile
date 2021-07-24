@@ -10,6 +10,8 @@ export type BibleState = {
   isBooksLoading: boolean;
   chapters: Chapter[];
   isChaptersLoading: boolean;
+  chapterDetails?: Chapter;
+  isChapterDetailsLoading: boolean;
 };
 
 const initialState: BibleState = {
@@ -17,6 +19,8 @@ const initialState: BibleState = {
   isBooksLoading: true,
   chapters: [],
   isChaptersLoading: true,
+  chapterDetails: undefined,
+  isChapterDetailsLoading: true,
 };
 
 export type BibleActions = ActionType<typeof actions>;
@@ -39,6 +43,15 @@ const bibleReducer = createReducer<BibleState, BibleActions>(initialState)
     ...state,
     isChaptersLoading: false,
     chapters: action.payload,
+  }))
+  .handleAction(actions.getChapterDetails.request, state => ({
+    ...state,
+    isChapterDetailsLoading: true,
+  }))
+  .handleAction(actions.getChapterDetails.success, (state, action) => ({
+    ...state,
+    isChapterDetailsLoading: false,
+    chapterDetails: action.payload,
   }));
 
 export default bibleReducer;

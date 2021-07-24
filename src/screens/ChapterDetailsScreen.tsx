@@ -4,8 +4,10 @@ import React from 'react';
 import {useAppDispatch, useAppSelector} from '../hooks/useAppDispatch';
 
 //components
-import {StyleSheet, ScrollView, View} from 'react-native';
+import {StyleSheet, ScrollView} from 'react-native';
 import ImageHeader, {ImageHeaderText} from '../components/ImageHeader';
+import {RightArrowIcon} from '../assets/svg';
+import HtmlViewer from '../components/HtmlViewer';
 
 //navigation
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -13,39 +15,34 @@ import {RouteProp} from '@react-navigation/core';
 import {RootNavigatorParamList} from '../navigation/RootNavigator';
 
 //utils
-import {useTranslation} from 'react-i18next';
 import {remoteAsset} from '../utils/remoteAsset';
 import * as actions from '../store/actions';
 
 // Styles
 import Loader from '../components/Loader';
 import Colors from '../constants/Colors';
-import {RightArrowIcon} from '../assets/svg';
-import ChapterButton from '../components/ChapterButton';
 
 type BibleScreenProps = {
-  navigation: StackNavigationProp<RootNavigatorParamList, 'ChaptersScreen'>;
-  route: RouteProp<RootNavigatorParamList, 'ChaptersScreen'>;
+  navigation: StackNavigationProp<
+    RootNavigatorParamList,
+    'ChapterDetailsScreen'
+  >;
+  route: RouteProp<RootNavigatorParamList, 'ChapterDetailsScreen'>;
 };
 
 const BibleScreen: React.VFC<BibleScreenProps> = ({route}) => {
-  const {bookId, testament} = route.params;
+  const {chapterId} = route.params;
 
-  const {t} = useTranslation();
+  // const {t} = useTranslation();
   const dispatch = useAppDispatch();
 
-  const book = useAppSelector(state =>
-    state.bible.books.find(v => v.id === bookId),
-  );
-  const chapters = useAppSelector(state =>
-    state.bible.chapters.sort((v, w) => (v.number < w.number ? -1 : 1)),
-  );
+  const chapter = useAppSelector(state => state.bible.chapterDetails);
   const sectionImages = useAppSelector(state => state.settings.sectionImages);
-  const loading = useAppSelector(state => state.bible.isChaptersLoading);
+  const loading = useAppSelector(state => state.bible.isChapterDetailsLoading);
 
   React.useEffect(() => {
-    dispatch(actions.getChapters.request({bookId}));
-  }, [dispatch, bookId]);
+    dispatch(actions.getChapterDetails.request({chapterId}));
+  }, [dispatch, chapterId]);
 
   if (loading) {
     return <Loader isAbsolute />;
@@ -57,20 +54,16 @@ const BibleScreen: React.VFC<BibleScreenProps> = ({route}) => {
       contentContainerStyle={styles.contentContainer}>
       <ImageHeader
         uri={
-          testament === 'Stary'
+          chapter?.bible_book.testament === 'Stary'
             ? remoteAsset(sectionImages?.old_testament?.url) || ''
             : remoteAsset(sectionImages?.new_testament?.url) || ''
         }>
-        <ImageHeaderText content={book?.name || ''} underline />
+        <ImageHeaderText content={chapter?.bible_book.name || ''} underline />
         <RightArrowIcon style={styles.headerArrow} />
-        <ImageHeaderText content={t('bible:chapter')} disabled />
+        <ImageHeaderText content={chapter?.number.toString()} underline />
       </ImageHeader>
 
-      <View style={styles.chaptersContainer}>
-        {chapters.map(v => (
-          <ChapterButton key={v.id} item={v} />
-        ))}
-      </View>
+      <HtmlViewer html={chapter?.text} />
     </ScrollView>
   );
 };
@@ -85,19 +78,7 @@ const styles = StyleSheet.create({
   contentContainer: {
     flexGrow: 1,
   },
-  insideContainer: {
-    marginTop: 20,
-    marginBottom: 40,
-    marginHorizontal: 20,
-  },
   headerArrow: {
     marginHorizontal: 5,
-  },
-  chaptersContainer: {
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    marginHorizontal: 20,
-    marginVertical: 30,
-    justifyContent: 'center',
   },
 });

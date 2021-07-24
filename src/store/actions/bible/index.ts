@@ -1,5 +1,8 @@
 import {createAsyncAction} from 'typesafe-actions';
-import {GetChaptersRequestPayload} from './payloads';
+import {
+  GetChapterDetailsRequestPayload,
+  GetChaptersRequestPayload,
+} from './payloads';
 
 // Models
 import {BibleBook} from '../../types/BibleBook.model';
@@ -16,3 +19,9 @@ export const getChapters = createAsyncAction(
   'GET_CHAPTERS_LIST_SUCCESS',
   'GET_CHAPTERS_LIST_FAILURE',
 )<GetChaptersRequestPayload, Chapter[], undefined>();
+
+export const getChapterDetails = createAsyncAction(
+  'GET_CHAPTER_DETAILS',
+  'GET_CHAPTER_DETAILS_SUCCESS',
+  'GET_CHAPTER_DETAILS_FAILURE',
+)<GetChapterDetailsRequestPayload, Chapter, undefined>();
