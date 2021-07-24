@@ -24,6 +24,7 @@ import BibleScreen from '../screens/BibleScreen';
 import ChaptersScreen from '../screens/ChaptersScreen';
 import ChapterDetailsScreen from '../screens/ChapterDetailsScreen';
 import TermsListScreen from '../screens/TermsListScreen';
+import TermDetailsScreen from '../screens/TermDetailsScreen';
 
 export type RootNavigatorParamList = {
   DashboardScreen: undefined;
@@ -31,6 +32,7 @@ export type RootNavigatorParamList = {
   ChaptersScreen: {bookId: number; testament: 'Nowy' | 'Stary'};
   ChapterDetailsScreen: {chapterId: number};
   TermsListScreen: undefined;
+  TermDetailsScreen: {termId: number};
 };
 
 const DrawerNav = createDrawerNavigator<RootNavigatorParamList>();
@@ -91,6 +93,10 @@ const RootNavigator = () => {
           <DrawerNav.Screen
             name="TermsListScreen"
             component={TermsListScreen}
+          />
+          <DrawerNav.Screen
+            name={'TermDetailsScreen'}
+            component={TermDetailsScreen}
           />
         </DrawerNav.Navigator>
       </NavigationContainer>

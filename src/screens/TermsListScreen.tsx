@@ -33,7 +33,7 @@ type TermsListScreenProps = {
   route: RouteProp<RootNavigatorParamList, 'TermsListScreen'>;
 };
 
-const TermsListScreen: React.VFC<TermsListScreenProps> = () => {
+const TermsListScreen: React.VFC<TermsListScreenProps> = ({navigation}) => {
   const {t} = useTranslation();
   const dispatch = useAppDispatch();
 
@@ -86,13 +86,17 @@ const TermsListScreen: React.VFC<TermsListScreenProps> = () => {
 
   const renderItem = useCallback(
     ({item}: {item: Term}) => (
-      <TouchableOpacity style={styles.itemContainer}>
+      <TouchableOpacity
+        style={styles.itemContainer}
+        onPress={() =>
+          navigation.navigate('TermDetailsScreen', {termId: item.id})
+        }>
         <Text style={styles.itemText} numberOfLines={1}>
           {item.term}
         </Text>
       </TouchableOpacity>
     ),
-    [],
+    [navigation],
   );
 
   return (
