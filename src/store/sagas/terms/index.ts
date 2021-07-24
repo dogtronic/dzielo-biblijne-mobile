@@ -16,7 +16,7 @@ export function* getTerms(action: ActionType<typeof actions.getTerms.request>) {
     if (action.payload.filter) {
       link += `&term_contains=${action.payload.filter}`;
     }
-    console.log(link);
+
     const response: AxiosResponse<Term[]> = yield Api.get(link);
 
     yield put(

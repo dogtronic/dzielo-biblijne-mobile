@@ -1,9 +1,10 @@
 import {useNavigation} from '@react-navigation/core';
-import React, {useCallback, useMemo} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 
 // components
 import {StyleSheet, useWindowDimensions} from 'react-native';
 import RenderHtml from 'react-native-render-html';
+import TermModal from './TermModal';
 
 type HtmlViewerProps = {
   html?: string;
@@ -12,6 +13,17 @@ type HtmlViewerProps = {
 const HtmlViewer: React.VFC<HtmlViewerProps> = ({html}) => {
   const {width} = useWindowDimensions();
   const navigation = useNavigation();
+
+  const [termModalVisible, setTermModalVisible] = useState(false);
+  const [termId, setTermId] = useState<number | undefined>(undefined);
+
+  const toggleTermModal = useCallback(
+    (id?: number) => {
+      setTermId(id);
+      setTermModalVisible(!termModalVisible);
+    },
+    [termModalVisible],
+  );
 
   const onPressLink = useCallback(
     (event: unknown, href: string) => {
@@ -23,8 +35,15 @@ const HtmlViewer: React.VFC<HtmlViewerProps> = ({html}) => {
           chapterId: parseInt(bibleLinkParams[2], 10),
         });
       }
+
+      if (href.includes('term')) {
+        const termLink = href.substring(href.indexOf('terms/'));
+        const termLinkParams = termLink.split('/');
+
+        toggleTermModal(parseInt(termLinkParams[1], 10));
+      }
     },
-    [navigation],
+    [navigation, toggleTermModal],
   );
 
   const renderersProps = useMemo(
@@ -37,12 +56,20 @@ const HtmlViewer: React.VFC<HtmlViewerProps> = ({html}) => {
   );
 
   return (
-    <RenderHtml
-      contentWidth={width - 40}
-      source={{html: html || ''}}
-      baseStyle={styles.container}
-      renderersProps={renderersProps}
-    />
+    <>
+      <RenderHtml
+        contentWidth={width - 40}
+        source={{html: html || ''}}
+        baseStyle={styles.container}
+        renderersProps={renderersProps}
+      />
+
+      <TermModal
+        isVisible={termModalVisible}
+        toggleModal={toggleTermModal}
+        termId={termId}
+      />
+    </>
   );
 };
 

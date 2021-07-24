@@ -79,7 +79,6 @@ const TermsListScreen: React.VFC<TermsListScreenProps> = ({navigation}) => {
 
   const onReachEnd = () => {
     if (areMoreData && !loading) {
-      console.log('test');
       getTerms();
     }
   };

@@ -4,6 +4,7 @@ export default {
     hide: 'Zwiń',
     show: 'Rozwiń',
     search: 'Szukaj',
+    readMore: 'Czytaj więcej',
   },
   menu: {
     startPage: 'Strona startowa',

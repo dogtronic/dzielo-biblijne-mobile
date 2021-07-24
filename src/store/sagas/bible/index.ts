@@ -47,7 +47,7 @@ export function* getChapterDetails(
     const response: AxiosResponse<Chapter> = yield Api.get(
       `${Endpoint.Chapters}${action.payload.chapterId}`,
     );
-    console.log(response);
+
     yield put(actions.getChapterDetails.success(response.data));
   } catch (err) {
     yield put(actions.getChapterDetails.failure());

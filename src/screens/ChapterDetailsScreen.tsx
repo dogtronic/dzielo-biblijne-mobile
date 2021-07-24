@@ -4,10 +4,11 @@ import React from 'react';
 import {useAppDispatch, useAppSelector} from '../hooks/useAppDispatch';
 
 //components
-import {StyleSheet, ScrollView} from 'react-native';
+import {StyleSheet, ScrollView, Text} from 'react-native';
 import ImageHeader, {ImageHeaderText} from '../components/ImageHeader';
 import {RightArrowIcon} from '../assets/svg';
 import HtmlViewer from '../components/HtmlViewer';
+import Loader from '../components/Loader';
 
 //navigation
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -19,8 +20,8 @@ import {remoteAsset} from '../utils/remoteAsset';
 import * as actions from '../store/actions';
 
 // Styles
-import Loader from '../components/Loader';
 import Colors from '../constants/Colors';
+import Fonts from '../constants/Fonts';
 
 type BibleScreenProps = {
   navigation: StackNavigationProp<
@@ -63,6 +64,8 @@ const BibleScreen: React.VFC<BibleScreenProps> = ({route}) => {
         <ImageHeaderText content={chapter?.number.toString()} underline />
       </ImageHeader>
 
+      <Text style={styles.title}>{chapter?.title}</Text>
+
       <HtmlViewer html={chapter?.text} />
     </ScrollView>
   );
@@ -80,5 +83,11 @@ const styles = StyleSheet.create({
   },
   headerArrow: {
     marginHorizontal: 5,
+  },
+  title: {
+    fontSize: 16,
+    fontFamily: Fonts.RobotoRegular,
+    marginTop: 20,
+    marginHorizontal: 20,
   },
 });
