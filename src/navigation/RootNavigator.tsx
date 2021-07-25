@@ -31,6 +31,7 @@ import ReadingsDrawerNavigator from './ReadingsDrawerNavigator';
 
 // Models
 import {Reading} from '../store/types/Reading.model';
+import HomiliesListScreen from '../screens/HomiliesListScreen';
 
 export type RootDrawerParamList = {
   StackRootNavigator: undefined;
@@ -45,6 +46,7 @@ export type RootNavigatorParamList = {
   TermDetailsScreen: {termId: number};
   ReadingsScreen: undefined;
   ReadingsDrawerNavigator: {reading: Reading};
+  HomiliesListScreen: undefined;
 };
 
 const DrawerNav = createDrawerNavigator<RootDrawerParamList>();
@@ -85,6 +87,10 @@ const StackRootNavigator = () => {
       <StackNav.Screen
         name={'ReadingsDrawerNavigator'}
         component={ReadingsDrawerNavigator}
+      />
+      <StackNav.Screen
+        name={'HomiliesListScreen'}
+        component={HomiliesListScreen}
       />
     </StackNav.Navigator>
   );

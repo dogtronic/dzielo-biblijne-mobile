@@ -1,6 +1,8 @@
 import {createAsyncAction} from 'typesafe-actions';
 import {
   GetCurrentReadingsSuccessPayload,
+  GetHomiliesRequestPayload,
+  GetHomiliesSuccessPayload,
   GetReadingDetailsRequestPayload,
 } from './payloads';
 
@@ -18,3 +20,9 @@ export const getReadingDetails = createAsyncAction(
   'GET_READINGS_DETAILS_SUCCESS',
   'GET_READINGS_DETAILS_FAILURE',
 )<GetReadingDetailsRequestPayload, Reading, undefined>();
+
+export const getHomilies = createAsyncAction(
+  'GET_HOMILIES',
+  'GET_HOMILIES_SUCCESS',
+  'GET_HOMILIES_FAILURE',
+)<GetHomiliesRequestPayload, GetHomiliesSuccessPayload, undefined>();

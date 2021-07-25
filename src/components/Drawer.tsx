@@ -36,7 +36,7 @@ const Drawer: React.VFC<DrawerProps> = ({closeDrawer, navigate}) => {
       },
       {
         name: t('menu:homily'),
-        onPress: () => null,
+        onPress: () => navigate?.('HomiliesListScreen'),
       },
       {
         name: t('menu:nationalReadings'),

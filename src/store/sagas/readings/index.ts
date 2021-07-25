@@ -50,7 +50,32 @@ export function* getReadingDetails(
   }
 }
 
+export function* getHomilies(
+  action: ActionType<typeof actions.getHomilies.request>,
+) {
+  try {
+    let link = `${Endpoint.Readings}?_start=${action.payload.offset}&_limit=${action.payload.limit}&_reading_type.name=Homilia`;
+
+    if (action.payload.filter) {
+      link += `&term_contains=${action.payload.filter}`;
+    }
+
+    const response: AxiosResponse<Reading[]> = yield Api.get(link);
+
+    yield put(
+      actions.getHomilies.success({
+        homilies: response.data,
+        areMoreData: response.data.length >= 10,
+        withReset: action.payload.withReset,
+      }),
+    );
+  } catch (err) {
+    yield put(actions.getHomilies.failure());
+  }
+}
+
 export const readingsSaga = [
   takeLatest(actions.getCurrentReadings.request, getCurrentReadings),
   takeLatest(actions.getReadingDetails.request, getReadingDetails),
+  takeLatest(actions.getHomilies.request, getHomilies),
 ];
