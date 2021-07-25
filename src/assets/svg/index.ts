@@ -4,6 +4,7 @@ import CloseIcon from './CloseIcon';
 import CalendarIcon from './Calendar';
 import RightArrowIcon from './RightArrow';
 import SearchIcon from './SearchIcon';
+import BookIcon from './BookIcon';
 
 export {
   MenuIcon,
@@ -12,4 +13,5 @@ export {
   CalendarIcon,
   RightArrowIcon,
   SearchIcon,
+  BookIcon,
 };

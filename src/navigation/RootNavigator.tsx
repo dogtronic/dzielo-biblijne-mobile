@@ -10,6 +10,7 @@ import Loader from '../components/Loader';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {NavigationContainer} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {createStackNavigator} from '@react-navigation/stack';
 
 // Styles
 import Colors from '../constants/Colors';
@@ -26,7 +27,10 @@ import ChapterDetailsScreen from '../screens/ChapterDetailsScreen';
 import TermsListScreen from '../screens/TermsListScreen';
 import TermDetailsScreen from '../screens/TermDetailsScreen';
 import ReadingsScreen from '../screens/ReadingsScreen';
-import {createStackNavigator} from '@react-navigation/stack';
+import ReadingsDrawerNavigator from './ReadingsDrawerNavigator';
+
+// Models
+import {Reading} from '../store/types/Reading.model';
 
 export type RootDrawerParamList = {
   StackRootNavigator: undefined;
@@ -40,6 +44,7 @@ export type RootNavigatorParamList = {
   TermsListScreen: undefined;
   TermDetailsScreen: {termId: number};
   ReadingsScreen: undefined;
+  ReadingsDrawerNavigator: {reading: Reading};
 };
 
 const DrawerNav = createDrawerNavigator<RootDrawerParamList>();
@@ -77,6 +82,10 @@ const StackRootNavigator = () => {
         component={TermDetailsScreen}
       />
       <StackNav.Screen name={'ReadingsScreen'} component={ReadingsScreen} />
+      <StackNav.Screen
+        name={'ReadingsDrawerNavigator'}
+        component={ReadingsDrawerNavigator}
+      />
     </StackNav.Navigator>
   );
 };

@@ -36,6 +36,7 @@ export interface Photo {
 export interface Reading {
   id: number;
   description?: string;
+  sub_description?: string;
   reading_type: ReadingType;
   visible_from: string;
   visible_to: string;

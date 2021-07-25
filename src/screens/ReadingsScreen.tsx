@@ -36,7 +36,7 @@ type ReadingsScreenProps = {
   route: RouteProp<RootNavigatorParamList, 'ReadingsScreen'>;
 };
 
-const ReadingsScreen: React.VFC<ReadingsScreenProps> = () => {
+const ReadingsScreen: React.VFC<ReadingsScreenProps> = ({navigation}) => {
   const {t} = useTranslation();
   const dispatch = useAppDispatch();
 
@@ -72,7 +72,9 @@ const ReadingsScreen: React.VFC<ReadingsScreenProps> = () => {
             title={v.reading_type.name}
             description={v.description}
             uri={remoteAsset(v.reading_type.image.url)}
-            onPressButton={() => null}
+            onPressButton={() =>
+              navigation.navigate('ReadingsDrawerNavigator', {reading: v})
+            }
           />
         ))}
 

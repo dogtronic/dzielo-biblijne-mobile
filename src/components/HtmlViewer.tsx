@@ -8,9 +8,10 @@ import TermModal from './TermModal';
 
 type HtmlViewerProps = {
   html?: string;
+  containerStyle?: Object;
 };
 
-const HtmlViewer: React.VFC<HtmlViewerProps> = ({html}) => {
+const HtmlViewer: React.VFC<HtmlViewerProps> = ({html, containerStyle}) => {
   const {width} = useWindowDimensions();
   const navigation = useNavigation();
 
@@ -60,7 +61,7 @@ const HtmlViewer: React.VFC<HtmlViewerProps> = ({html}) => {
       <RenderHtml
         contentWidth={width - 40}
         source={{html: html || ''}}
-        baseStyle={styles.container}
+        baseStyle={{...styles.container, ...containerStyle}}
         renderersProps={renderersProps}
       />
 
