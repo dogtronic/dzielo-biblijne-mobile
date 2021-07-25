@@ -118,7 +118,8 @@ const NationalReadingsListScreen: React.VFC<NationalReadingsListScreenProps> =
       <FlatList<Reading>
         ListHeaderComponent={
           <View style={styles.headerContainer}>
-            <ImageHeader uri={remoteAsset(sectionImages?.homily?.url) || ''}>
+            <ImageHeader
+              uri={remoteAsset(sectionImages?.national_readings?.url) || ''}>
               <ImageHeaderText content={t('menu:nationalReadings')} />
             </ImageHeader>
 

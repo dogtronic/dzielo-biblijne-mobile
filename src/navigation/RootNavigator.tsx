@@ -33,6 +33,8 @@ import ReadingsScreen from '../screens/ReadingsScreen';
 import ReadingsDrawerNavigator from './ReadingsDrawerNavigator';
 import HomiliesListScreen from '../screens/HomiliesListScreen';
 import NationalReadingsListScreen from '../screens/NationalReadingsScreen';
+import ContactScreen from '../screens/ContactScreen';
+import RecommendedScreen from '../screens/RecommendedScreen';
 
 export type RootDrawerParamList = {
   StackRootNavigator: undefined;
@@ -49,6 +51,8 @@ export type RootNavigatorParamList = {
   ReadingsDrawerNavigator: {reading: Reading};
   HomiliesListScreen: undefined;
   NationalReadingsListScreen: undefined;
+  ContactScreen: undefined;
+  RecommendedScreen: undefined;
 };
 
 const DrawerNav = createDrawerNavigator<RootDrawerParamList>();
@@ -97,6 +101,11 @@ const StackRootNavigator = () => {
       <StackNav.Screen
         name={'NationalReadingsListScreen'}
         component={NationalReadingsListScreen}
+      />
+      <StackNav.Screen name={'ContactScreen'} component={ContactScreen} />
+      <StackNav.Screen
+        name={'RecommendedScreen'}
+        component={RecommendedScreen}
       />
     </StackNav.Navigator>
   );

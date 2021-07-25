@@ -24,11 +24,11 @@ const Drawer: React.VFC<DrawerProps> = ({closeDrawer, navigate}) => {
     () => [
       {
         name: t('menu:startPage'),
-        onPress: () => null,
+        onPress: () => navigate?.('DashboardScreen'),
       },
       {
         name: t('menu:bible'),
-        onPress: () => null,
+        onPress: () => navigate?.('BibleScreen'),
       },
       {
         name: t('menu:sundayReading'),
@@ -66,11 +66,11 @@ const Drawer: React.VFC<DrawerProps> = ({closeDrawer, navigate}) => {
       },
       {
         name: t('menu:recommendations'),
-        onPress: () => null,
+        onPress: () => navigate?.('RecommendedScreen'),
       },
       {
         name: t('menu:contact'),
-        onPress: () => null,
+        onPress: () => navigate?.('ContactScreen'),
       },
     ],
     [t, navigate],
