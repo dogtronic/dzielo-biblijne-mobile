@@ -41,7 +41,7 @@ export interface Reading {
   visible_from: string;
   visible_to: string;
   content: string;
-  sections: Section[];
+  sections: (Section & {section_type: number})[];
   curiosities: Curiosity[];
   photos: Photo[];
 }

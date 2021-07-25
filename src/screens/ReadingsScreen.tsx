@@ -44,10 +44,10 @@ const ReadingsScreen: React.VFC<ReadingsScreenProps> = ({navigation}) => {
   const readings = useAppSelector(state => state.readings.readings);
   const loading = useAppSelector(state => state.readings.areReadingsLoading);
 
-  const mainReaddings = readings.filter(v => v.reading_type.type === 'Glowne');
-  const additionalReadings = readings.filter(
-    v => v.reading_type.type === 'Poboczne',
-  );
+  const mainReaddings =
+    readings?.filter(v => v.reading_type.type === 'Glowne') || [];
+  const additionalReadings =
+    readings?.filter(v => v.reading_type.type === 'Poboczne') || [];
 
   React.useEffect(() => {
     dispatch(actions.getCurrentReadings.request());

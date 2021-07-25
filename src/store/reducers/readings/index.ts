@@ -2,13 +2,14 @@ import {createReducer, ActionType} from 'typesafe-actions';
 import * as actions from '../../actions/readings';
 
 // Models
-import {Reading} from '../../types/Reading.model';
+import {Reading, SectionType} from '../../types/Reading.model';
 
 export type ReadingsState = {
   readings: Reading[];
   areReadingsLoading: boolean;
   readingDetails?: Reading;
   isReadingLoading: boolean;
+  sections: SectionType[];
 };
 
 const initialState: ReadingsState = {
@@ -16,6 +17,7 @@ const initialState: ReadingsState = {
   areReadingsLoading: true,
   readingDetails: undefined,
   isReadingLoading: true,
+  sections: [],
 };
 
 export type ReadingsActions = ActionType<typeof actions>;
@@ -30,7 +32,8 @@ const readingsReducer = createReducer<ReadingsState, ReadingsActions>(
   .handleAction(actions.getCurrentReadings.success, (state, action) => ({
     ...state,
     areReadingsLoading: false,
-    readings: action.payload,
+    readings: action.payload.readings,
+    sections: action.payload.sections,
   }))
   .handleAction(actions.getReadingDetails.request, state => ({
     ...state,

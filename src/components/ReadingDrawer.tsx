@@ -13,25 +13,43 @@ import {useTranslation} from 'react-i18next';
 
 // Models
 import {Reading} from '../store/types/Reading.model';
+import {useAppSelector} from '../hooks/useAppDispatch';
 
 type DrawerProps = {
   closeDrawer?: () => void;
-  navigate?: (name: string) => void;
+  navigate?: (name: string, params: any) => void;
   reading: Reading;
 };
 
-const ReadingDrawer: React.VFC<DrawerProps> = ({navigate, reading}) => {
+type Menus = {name: string; onPress: () => void}[];
+
+const ReadingDrawer: React.VFC<DrawerProps> = ({
+  navigate,
+  reading,
+  closeDrawer,
+}) => {
   const {t} = useTranslation();
-  const [menus, setMenus] = useState<{name: string; onPress: () => void}[]>([]);
+  const [menus, setMenus] = useState<Menus>([]);
+
+  const sections = useAppSelector(state => state.readings.sections);
 
   React.useEffect(() => {
-    const menu: {name: string; onPress: () => void}[] = [];
+    const menu: Menus = [];
 
     reading.sections.forEach(v => {
-      menu.push({
-        name: v.section_type.name,
-        onPress: () => null,
-      });
+      const section = sections.find(w => w.id === v.section_type);
+
+      if (section) {
+        menu.push({
+          name: section.name,
+          onPress: () =>
+            navigate?.(`SectionDetailsScreen_${v.id}`, {
+              reading,
+              section: v,
+              sectionType: section,
+            }),
+        });
+      }
     });
 
     if (reading.curiosities.length) {
@@ -49,7 +67,7 @@ const ReadingDrawer: React.VFC<DrawerProps> = ({navigate, reading}) => {
     }
 
     setMenus(menu);
-  }, [reading, t]);
+  }, [reading, t, navigate, sections]);
 
   return (
     <View style={styles.container}>
@@ -61,7 +79,10 @@ const ReadingDrawer: React.VFC<DrawerProps> = ({navigate, reading}) => {
         {menus.map((v, index) => (
           <TouchableOpacity
             key={index}
-            onPress={v.onPress}
+            onPress={() => {
+              closeDrawer?.();
+              v.onPress();
+            }}
             style={styles.optionContainer}>
             <Text style={styles.optionText}>{v.name}</Text>
           </TouchableOpacity>

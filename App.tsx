@@ -1,8 +1,5 @@
 import React from 'react';
 
-//components
-import {View} from 'react-native';
-
 //navigation
 import RootNavigator from './src/navigation/RootNavigator';
 import {SafeAreaProvider} from 'react-native-safe-area-context';

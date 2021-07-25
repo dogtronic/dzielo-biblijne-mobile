@@ -1,24 +1,28 @@
 import * as React from 'react';
 
 // Components
-import {StyleSheet, Dimensions} from 'react-native';
-import Drawer from '../components/Drawer';
+import {StyleSheet} from 'react-native';
+import ReadingDrawer from '../components/ReadingDrawer';
 
 // Navigation
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import {NavigationContainer} from '@react-navigation/native';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import {createStackNavigator} from '@react-navigation/stack';
 
 // Styles
 import Colors from '../constants/Colors';
 
 // Models
-import {Curiosity, Photo, Reading, Section} from '../store/types/Reading.model';
+import {
+  Curiosity,
+  Photo,
+  Reading,
+  Section,
+  SectionType,
+} from '../store/types/Reading.model';
 
 // Screens
 import ReadingDetailsScreen from '../screens/ReadingDetailsScreen';
-import ReadingDrawer from '../components/ReadingDrawer';
+import SectionDetailsScreen from '../screens/SectionDetailsScreen';
 
 export type ReadingsDrawerParamList = {
   ReadingsStackNavigator: {reading: Reading};
@@ -27,7 +31,8 @@ export type ReadingsDrawerParamList = {
 export type ReadingsStackParamList = {
   [key in string]: {
     reading: Reading;
-    section?: Section;
+    section?: Section & {section_type: number};
+    sectionType?: SectionType;
     curiosities?: Curiosity[];
     photos?: Photo[];
   };
@@ -36,29 +41,9 @@ export type ReadingsStackParamList = {
 const DrawerNav = createDrawerNavigator<ReadingsDrawerParamList>();
 const StackNav = createStackNavigator<ReadingsStackParamList>();
 
+//@ts-ignore
 const ReadingsStackNavigator = ({route}) => {
-  const reading = route.params.reading;
-
-  // reading.sections.forEach(v => {
-  //   menu.push({
-  //     name: v.section_type.name,
-  //     onPress: () => null,
-  //   });
-  // });
-
-  // if (reading.curiosities.length) {
-  //   menu.push({
-  //     name: t('menu:curiosities'),
-  //     onPress: () => null,
-  //   });
-  // }
-
-  // if (reading.photos.length) {
-  //   menu.push({
-  //     name: t('menu:photos'),
-  //     onPress: () => null,
-  //   });
-  // }
+  const reading: Reading = route.params.reading;
 
   return (
     <StackNav.Navigator
@@ -71,23 +56,19 @@ const ReadingsStackNavigator = ({route}) => {
         component={ReadingDetailsScreen}
         initialParams={{reading}}
       />
-      {/* <StackNav.Screen name="DashboardScreen" component={DashboardScreen} />
-      <StackNav.Screen name="BibleScreen" component={BibleScreen} />
-      <StackNav.Screen name="ChaptersScreen" component={ChaptersScreen} />
-      <StackNav.Screen
-        name="ChapterDetailsScreen"
-        component={ChapterDetailsScreen}
-      />
-      <StackNav.Screen name="TermsListScreen" component={TermsListScreen} />
-      <StackNav.Screen
-        name={'TermDetailsScreen'}
-        component={TermDetailsScreen}
-      />
-      <StackNav.Screen name={'ReadingsScreen'} component={ReadingsScreen} /> */}
+
+      {reading.sections.map(v => (
+        <StackNav.Screen
+          key={v.id}
+          name={`SectionDetailsScreen_${v.id}`}
+          component={SectionDetailsScreen}
+        />
+      ))}
     </StackNav.Navigator>
   );
 };
 
+//@ts-ignore
 const ReadingsDrawerNavigator = ({route}) => {
   const reading = route.params.reading;
 

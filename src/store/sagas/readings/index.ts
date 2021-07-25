@@ -10,18 +10,27 @@ import {Api, Endpoint} from '../../../services/Api.service';
 import dayjs from 'dayjs';
 
 // Models
-import {Reading} from '../../types/Reading.model';
+import {Reading, SectionType} from '../../types/Reading.model';
 
 export function* getCurrentReadings() {
   try {
     const startWeekDate = dayjs().startOf('week').format('YYYY-MM-DDTHH:mm');
     const endWeekDate = dayjs().endOf('week').format('YYYY-MM-DDTHH:mm');
 
-    const response: AxiosResponse<Reading[]> = yield Api.get(
+    const readingsResponse: AxiosResponse<Reading[]> = yield Api.get(
       `${Endpoint.Readings}?visible_from_lte=${endWeekDate}&visible_to_gte=${startWeekDate}`,
     );
 
-    yield put(actions.getCurrentReadings.success(response.data));
+    const sectionsResponse: AxiosResponse<SectionType[]> = yield Api.get(
+      Endpoint.SectionTypes,
+    );
+
+    yield put(
+      actions.getCurrentReadings.success({
+        readings: readingsResponse.data,
+        sections: sectionsResponse.data,
+      }),
+    );
   } catch (err) {
     yield put(actions.getCurrentReadings.failure());
   }

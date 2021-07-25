@@ -7,6 +7,8 @@ export enum Endpoint {
   Chapters = 'chapters/',
   Terms = 'terms/',
   Readings = 'readings/',
+  Sections = 'sections/',
+  SectionTypes = 'section-types/',
 }
 
 export const Api = axios.create();
