@@ -26,6 +26,11 @@ import ChapterDetailsScreen from '../screens/ChapterDetailsScreen';
 import TermsListScreen from '../screens/TermsListScreen';
 import TermDetailsScreen from '../screens/TermDetailsScreen';
 import ReadingsScreen from '../screens/ReadingsScreen';
+import {createStackNavigator} from '@react-navigation/stack';
+
+export type RootDrawerParamList = {
+  StackRootNavigator: undefined;
+};
 
 export type RootNavigatorParamList = {
   DashboardScreen: undefined;
@@ -37,7 +42,44 @@ export type RootNavigatorParamList = {
   ReadingsScreen: undefined;
 };
 
-const DrawerNav = createDrawerNavigator<RootNavigatorParamList>();
+const DrawerNav = createDrawerNavigator<RootDrawerParamList>();
+const StackNav = createStackNavigator<RootNavigatorParamList>();
+
+const StackRootNavigator = () => {
+  return (
+    <StackNav.Navigator
+      initialRouteName="DashboardScreen"
+      screenOptions={{
+        header: ({scene}) => {
+          //@ts-ignore
+          const {canGoBack, openDrawer, goBack} = scene.descriptor.navigation;
+
+          return (
+            <Topbar
+              onPressLeftButton={goBack}
+              onPressRightButton={openDrawer}
+              canGoBack={canGoBack}
+            />
+          );
+        },
+        headerShown: true,
+      }}>
+      <StackNav.Screen name="DashboardScreen" component={DashboardScreen} />
+      <StackNav.Screen name="BibleScreen" component={BibleScreen} />
+      <StackNav.Screen name="ChaptersScreen" component={ChaptersScreen} />
+      <StackNav.Screen
+        name="ChapterDetailsScreen"
+        component={ChapterDetailsScreen}
+      />
+      <StackNav.Screen name="TermsListScreen" component={TermsListScreen} />
+      <StackNav.Screen
+        name={'TermDetailsScreen'}
+        component={TermDetailsScreen}
+      />
+      <StackNav.Screen name={'ReadingsScreen'} component={ReadingsScreen} />
+    </StackNav.Navigator>
+  );
+};
 
 const RootNavigator = () => {
   const dispatch = useAppDispatch();
@@ -56,23 +98,7 @@ const RootNavigator = () => {
     <SafeAreaView style={styles.container} edges={['top']}>
       <NavigationContainer>
         <DrawerNav.Navigator
-          initialRouteName="DashboardScreen"
-          screenOptions={{
-            header: ({scene}) => {
-              //@ts-ignore
-              const {canGoBack, openDrawer, goBack} =
-                scene.descriptor.navigation;
-
-              return (
-                <Topbar
-                  onPressLeftButton={goBack}
-                  onPressRightButton={openDrawer}
-                  canGoBack={canGoBack}
-                />
-              );
-            },
-            headerShown: true,
-          }}
+          initialRouteName="StackRootNavigator"
           drawerPosition="right"
           drawerType="slide"
           drawerStyle={styles.drawerContainer}
@@ -83,26 +109,8 @@ const RootNavigator = () => {
             />
           )}>
           <DrawerNav.Screen
-            name="DashboardScreen"
-            component={DashboardScreen}
-          />
-          <DrawerNav.Screen name="BibleScreen" component={BibleScreen} />
-          <DrawerNav.Screen name="ChaptersScreen" component={ChaptersScreen} />
-          <DrawerNav.Screen
-            name="ChapterDetailsScreen"
-            component={ChapterDetailsScreen}
-          />
-          <DrawerNav.Screen
-            name="TermsListScreen"
-            component={TermsListScreen}
-          />
-          <DrawerNav.Screen
-            name={'TermDetailsScreen'}
-            component={TermDetailsScreen}
-          />
-          <DrawerNav.Screen
-            name={'ReadingsScreen'}
-            component={ReadingsScreen}
+            name={'StackRootNavigator'}
+            component={StackRootNavigator}
           />
         </DrawerNav.Navigator>
       </NavigationContainer>

@@ -5,11 +5,18 @@ import {useAppDispatch, useAppSelector} from '../hooks/useAppDispatch';
 import * as actions from '../store/actions';
 
 // Components
-import {StyleSheet, ScrollView} from 'react-native';
+import {
+  StyleSheet,
+  ScrollView,
+  Text,
+  View,
+  ImageBackground,
+} from 'react-native';
 import TopRoundedContainer from '../components/TopRoundedContainer';
 import {ReadingListItem} from '../components/ReadingListItem';
 import ImageHeader, {ImageHeaderText} from '../components/ImageHeader';
 import Loader from '../components/Loader';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 // Navigation
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -22,6 +29,7 @@ import {remoteAsset} from '../utils/remoteAsset';
 
 // Styles
 import Colors from '../constants/Colors';
+import Fonts from '../constants/Fonts';
 
 type ReadingsScreenProps = {
   navigation: StackNavigationProp<RootNavigatorParamList, 'ReadingsScreen'>;
@@ -37,9 +45,9 @@ const ReadingsScreen: React.VFC<ReadingsScreenProps> = () => {
   const loading = useAppSelector(state => state.readings.areReadingsLoading);
 
   const mainReaddings = readings.filter(v => v.reading_type.type === 'Glowne');
-  // const additionalReadings = readings.filter(
-  //   v => v.reading_type.type === 'Poboczne',
-  // );
+  const additionalReadings = readings.filter(
+    v => v.reading_type.type === 'Poboczne',
+  );
 
   React.useEffect(() => {
     dispatch(actions.getCurrentReadings.request());
@@ -67,6 +75,21 @@ const ReadingsScreen: React.VFC<ReadingsScreenProps> = () => {
             onPressButton={() => null}
           />
         ))}
+
+        <View style={styles.rowContainer}>
+          {additionalReadings.map(v => (
+            <ImageBackground
+              style={styles.itemContainer}
+              key={v.id}
+              source={{uri: remoteAsset(v.reading_type.image.url)}}>
+              <TouchableOpacity style={styles.topContainer} activeOpacity={0.9}>
+                <Text style={styles.topContainerText}>
+                  {v.reading_type.name}
+                </Text>
+              </TouchableOpacity>
+            </ImageBackground>
+          ))}
+        </View>
       </TopRoundedContainer>
     </ScrollView>
   );
@@ -84,5 +107,28 @@ const styles = StyleSheet.create({
   },
   insideContainer: {
     marginTop: 30,
+  },
+  itemContainer: {
+    height: 130,
+    borderRadius: 15,
+    overflow: 'hidden',
+    marginVertical: 30,
+    flex: 1,
+    marginHorizontal: 5,
+  },
+  topContainer: {
+    backgroundColor: 'rgba(0,0,0,0.7)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 130,
+  },
+  topContainerText: {
+    fontFamily: Fonts.RobotoRegular,
+    fontSize: 16,
+    color: Colors.white,
+  },
+  rowContainer: {
+    flexDirection: 'row',
+    marginHorizontal: -5,
   },
 });
