@@ -19,6 +19,9 @@ import Colors from '../constants/Colors';
 import {useAppDispatch, useAppSelector} from '../hooks/useAppDispatch';
 import * as actions from '../store/actions';
 
+// Models
+import {Reading} from '../store/types/Reading.model';
+
 //screens
 import DashboardScreen from '../screens/DashboardScreen';
 import BibleScreen from '../screens/BibleScreen';
@@ -28,10 +31,8 @@ import TermsListScreen from '../screens/TermsListScreen';
 import TermDetailsScreen from '../screens/TermDetailsScreen';
 import ReadingsScreen from '../screens/ReadingsScreen';
 import ReadingsDrawerNavigator from './ReadingsDrawerNavigator';
-
-// Models
-import {Reading} from '../store/types/Reading.model';
 import HomiliesListScreen from '../screens/HomiliesListScreen';
+import NationalReadingsListScreen from '../screens/NationalReadingsScreen';
 
 export type RootDrawerParamList = {
   StackRootNavigator: undefined;
@@ -47,6 +48,7 @@ export type RootNavigatorParamList = {
   ReadingsScreen: undefined;
   ReadingsDrawerNavigator: {reading: Reading};
   HomiliesListScreen: undefined;
+  NationalReadingsListScreen: undefined;
 };
 
 const DrawerNav = createDrawerNavigator<RootDrawerParamList>();
@@ -91,6 +93,10 @@ const StackRootNavigator = () => {
       <StackNav.Screen
         name={'HomiliesListScreen'}
         component={HomiliesListScreen}
+      />
+      <StackNav.Screen
+        name={'NationalReadingsListScreen'}
+        component={NationalReadingsListScreen}
       />
     </StackNav.Navigator>
   );

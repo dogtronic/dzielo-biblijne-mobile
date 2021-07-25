@@ -21,3 +21,16 @@ export type GetHomiliesSuccessPayload = {
   areMoreData: boolean;
   withReset?: boolean;
 };
+
+export type GetNationalReadingsRequestPayload = {
+  limit: number;
+  offset: number;
+  filter?: string;
+  withReset?: boolean;
+};
+
+export type GetNationalReadingsSuccessPayload = {
+  nationalReadings: Reading[];
+  areMoreData: boolean;
+  withReset?: boolean;
+};

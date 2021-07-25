@@ -13,6 +13,9 @@ export type ReadingsState = {
   areHomiliesLoading: boolean;
   areMoreHomilies: boolean;
   homilies: Reading[];
+  areNationalReadingsLoading: boolean;
+  areMoreNationalReadings: boolean;
+  nationalReadings: Reading[];
 };
 
 const initialState: ReadingsState = {
@@ -24,6 +27,9 @@ const initialState: ReadingsState = {
   areHomiliesLoading: true,
   areMoreHomilies: true,
   homilies: [],
+  areNationalReadingsLoading: true,
+  areMoreNationalReadings: true,
+  nationalReadings: [],
 };
 
 export type ReadingsActions = ActionType<typeof actions>;
@@ -61,6 +67,18 @@ const readingsReducer = createReducer<ReadingsState, ReadingsActions>(
       ? action.payload.homilies
       : [...state.homilies, ...action.payload.homilies],
     areMoreHomilies: action.payload.areMoreData,
+  }))
+  .handleAction(actions.getNationalReadings.request, state => ({
+    ...state,
+    areNationalReadingsLoading: true,
+  }))
+  .handleAction(actions.getNationalReadings.success, (state, action) => ({
+    ...state,
+    areNationalReadingsLoading: false,
+    nationalReadings: action.payload.withReset
+      ? action.payload.nationalReadings
+      : [...state.nationalReadings, ...action.payload.nationalReadings],
+    areMoreNationalReadings: action.payload.areMoreData,
   }));
 
 export default readingsReducer;

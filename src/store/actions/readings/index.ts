@@ -3,6 +3,8 @@ import {
   GetCurrentReadingsSuccessPayload,
   GetHomiliesRequestPayload,
   GetHomiliesSuccessPayload,
+  GetNationalReadingsRequestPayload,
+  GetNationalReadingsSuccessPayload,
   GetReadingDetailsRequestPayload,
 } from './payloads';
 
@@ -26,3 +28,13 @@ export const getHomilies = createAsyncAction(
   'GET_HOMILIES_SUCCESS',
   'GET_HOMILIES_FAILURE',
 )<GetHomiliesRequestPayload, GetHomiliesSuccessPayload, undefined>();
+
+export const getNationalReadings = createAsyncAction(
+  'GET_NATIONAL_READINGS',
+  'GET_NATIONAL_READINGS_SUCCESS',
+  'GET_NATIONAL_READINGS_FAILURE',
+)<
+  GetNationalReadingsRequestPayload,
+  GetNationalReadingsSuccessPayload,
+  undefined
+>();
