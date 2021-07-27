@@ -1,10 +1,13 @@
 import {createAsyncAction} from 'typesafe-actions';
 import {
+  GetCuriositiesRequestPayload,
+  GetCuriositiesSuccessPayload,
   GetCurrentReadingsSuccessPayload,
   GetHomiliesRequestPayload,
   GetHomiliesSuccessPayload,
   GetNationalReadingsRequestPayload,
   GetNationalReadingsSuccessPayload,
+  GetPhotosSuccessPayload,
   GetReadingDetailsRequestPayload,
 } from './payloads';
 
@@ -38,3 +41,15 @@ export const getNationalReadings = createAsyncAction(
   GetNationalReadingsSuccessPayload,
   undefined
 >();
+
+export const getCuriosities = createAsyncAction(
+  'GET_CURIOSITIES',
+  'GET_CURIOSITIES_SUCCESS',
+  'GET_CURIOSITIES_FAILURE',
+)<GetCuriositiesRequestPayload, GetCuriositiesSuccessPayload, undefined>();
+
+export const getPhotos = createAsyncAction(
+  'GET_PHOTOS',
+  'GET_PHOTOS_SUCCESS',
+  'GET_PHOTOS_FAILURE',
+)<GetCuriositiesRequestPayload, GetPhotosSuccessPayload, undefined>();

@@ -17,7 +17,7 @@ import {useAppSelector} from '../hooks/useAppDispatch';
 
 type DrawerProps = {
   closeDrawer?: () => void;
-  navigate?: (name: string, params: any) => void;
+  navigate?: (name: string, params?: any) => void;
   reading: Reading;
 };
 
@@ -55,14 +55,14 @@ const ReadingDrawer: React.VFC<DrawerProps> = ({
     if (reading.curiosities.length) {
       menu.push({
         name: t('menu:curiosities'),
-        onPress: () => null,
+        onPress: () => navigate?.('CuriositiesScreen'),
       });
     }
 
     if (reading.photos.length) {
       menu.push({
         name: t('menu:photos'),
-        onPress: () => null,
+        onPress: () => navigate?.('PhotosScreen'),
       });
     }
 

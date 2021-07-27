@@ -21,6 +21,7 @@ import * as actions from '../store/actions';
 
 // Models
 import {Reading} from '../store/types/Reading.model';
+import {CuriosityBase} from '../store/types/Curiosity.model';
 
 //screens
 import DashboardScreen from '../screens/DashboardScreen';
@@ -35,6 +36,7 @@ import HomiliesListScreen from '../screens/HomiliesListScreen';
 import NationalReadingsListScreen from '../screens/NationalReadingsScreen';
 import ContactScreen from '../screens/ContactScreen';
 import RecommendedScreen from '../screens/RecommendedScreen';
+import CuriosityBaseScreen from '../screens/CuriosityBaseScreen';
 
 export type RootDrawerParamList = {
   StackRootNavigator: undefined;
@@ -53,6 +55,10 @@ export type RootNavigatorParamList = {
   NationalReadingsListScreen: undefined;
   ContactScreen: undefined;
   RecommendedScreen: undefined;
+  CuriosityBaseScreen: {
+    curiosities?: CuriosityBase[];
+    type: 'curiosity' | 'photo';
+  };
 };
 
 const DrawerNav = createDrawerNavigator<RootDrawerParamList>();
@@ -106,6 +112,10 @@ const StackRootNavigator = () => {
       <StackNav.Screen
         name={'RecommendedScreen'}
         component={RecommendedScreen}
+      />
+      <StackNav.Screen
+        name={'CuriosityBaseScreen'}
+        component={CuriosityBaseScreen}
       />
     </StackNav.Navigator>
   );

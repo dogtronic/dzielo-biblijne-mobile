@@ -11,6 +11,8 @@ export enum Endpoint {
   SectionTypes = 'section-types/',
   Contact = 'contact/',
   Recommended = 'recommended/',
+  Curiosities = 'curiosities/',
+  Photos = 'photos/',
 }
 
 export const Api = axios.create();

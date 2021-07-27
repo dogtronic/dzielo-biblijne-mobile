@@ -14,7 +14,7 @@ import {useTranslation} from 'react-i18next';
 
 type DrawerProps = {
   closeDrawer?: () => void;
-  navigate?: (name: string) => void;
+  navigate?: (name: string, params?: unknown) => void;
 };
 
 const Drawer: React.VFC<DrawerProps> = ({closeDrawer, navigate}) => {
@@ -58,11 +58,11 @@ const Drawer: React.VFC<DrawerProps> = ({closeDrawer, navigate}) => {
       },
       {
         name: t('menu:curiosities'),
-        onPress: () => null,
+        onPress: () => navigate?.('CuriosityBaseScreen', {type: 'curiosity'}),
       },
       {
         name: t('menu:biblemap'),
-        onPress: () => null,
+        onPress: () => navigate?.('CuriosityBaseScreen', {type: 'photo'}),
       },
       {
         name: t('menu:recommendations'),

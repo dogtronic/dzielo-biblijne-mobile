@@ -5,6 +5,9 @@ export default {
     show: 'Rozwiń',
     search: 'Szukaj',
     readMore: 'Czytaj więcej',
+    previous: 'Poprzedni',
+    random: 'Losowo',
+    next: 'Następny',
   },
   menu: {
     startPage: 'Strona startowa',
@@ -18,6 +21,7 @@ export default {
     biblemap: 'Bibliomapa',
     recommendations: 'Polecane',
     contact: 'Kontakt',
+    photos: 'Zdjęcia',
   },
   dashboard: {
     photoOfWeek: 'Zdjęcie tygodnia',

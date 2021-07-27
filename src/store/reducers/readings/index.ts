@@ -1,5 +1,6 @@
 import {createReducer, ActionType} from 'typesafe-actions';
 import * as actions from '../../actions/readings';
+import {Curiosity, Photo} from '../../types/Curiosity.model';
 
 // Models
 import {Reading, SectionType} from '../../types/Reading.model';
@@ -16,6 +17,13 @@ export type ReadingsState = {
   areNationalReadingsLoading: boolean;
   areMoreNationalReadings: boolean;
   nationalReadings: Reading[];
+
+  curiosities: Curiosity[];
+  areCuriositiesLoading: boolean;
+  areMoreCuriosities: boolean;
+  photos: Photo[];
+  arePhotosLoading: boolean;
+  areMorePhotos: boolean;
 };
 
 const initialState: ReadingsState = {
@@ -30,6 +38,13 @@ const initialState: ReadingsState = {
   areNationalReadingsLoading: true,
   areMoreNationalReadings: true,
   nationalReadings: [],
+
+  areCuriositiesLoading: false,
+  areMoreCuriosities: false,
+  curiosities: [],
+  arePhotosLoading: false,
+  areMorePhotos: false,
+  photos: [],
 };
 
 export type ReadingsActions = ActionType<typeof actions>;
@@ -79,6 +94,30 @@ const readingsReducer = createReducer<ReadingsState, ReadingsActions>(
       ? action.payload.nationalReadings
       : [...state.nationalReadings, ...action.payload.nationalReadings],
     areMoreNationalReadings: action.payload.areMoreData,
+  }))
+  .handleAction(actions.getCuriosities.request, state => ({
+    ...state,
+    areCuriositiesLoading: true,
+  }))
+  .handleAction(actions.getCuriosities.success, (state, action) => ({
+    ...state,
+    areCuriositiesLoading: false,
+    curiosities: action.payload.withReset
+      ? action.payload.curiosities
+      : [...state.curiosities, ...action.payload.curiosities],
+    areMoreCuriosities: action.payload.areMoreData,
+  }))
+  .handleAction(actions.getPhotos.request, state => ({
+    ...state,
+    arePhotosLoading: true,
+  }))
+  .handleAction(actions.getPhotos.success, (state, action) => ({
+    ...state,
+    arePhotosLoading: false,
+    photos: action.payload.withReset
+      ? action.payload.photos
+      : [...state.photos, ...action.payload.photos],
+    areMorePhotos: action.payload.areMoreData,
   }));
 
 export default readingsReducer;

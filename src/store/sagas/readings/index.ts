@@ -11,6 +11,7 @@ import dayjs from 'dayjs';
 
 // Models
 import {Reading, SectionType} from '../../types/Reading.model';
+import {Curiosity, Photo} from '../../types/Curiosity.model';
 
 export function* getCurrentReadings() {
   try {
@@ -98,9 +99,51 @@ export function* getNationalReadings(
   }
 }
 
+export function* getCuriosities(
+  action: ActionType<typeof actions.getCuriosities.request>,
+) {
+  try {
+    const response: AxiosResponse<Curiosity[]> = yield Api.get(
+      `${Endpoint.Curiosities}?_start=${action.payload.offset}&_limit=${action.payload.limit}`,
+    );
+
+    yield put(
+      actions.getCuriosities.success({
+        curiosities: response.data,
+        areMoreData: response.data.length >= 10,
+        withReset: action.payload.withReset,
+      }),
+    );
+  } catch (err) {
+    yield put(actions.getCuriosities.failure());
+  }
+}
+
+export function* getPhotos(
+  action: ActionType<typeof actions.getPhotos.request>,
+) {
+  try {
+    const response: AxiosResponse<Photo[]> = yield Api.get(
+      `${Endpoint.Photos}?_start=${action.payload.offset}&_limit=${action.payload.limit}`,
+    );
+
+    yield put(
+      actions.getPhotos.success({
+        photos: response.data,
+        areMoreData: response.data.length >= 10,
+        withReset: action.payload.withReset,
+      }),
+    );
+  } catch (err) {
+    yield put(actions.getPhotos.failure());
+  }
+}
+
 export const readingsSaga = [
   takeLatest(actions.getCurrentReadings.request, getCurrentReadings),
   takeLatest(actions.getReadingDetails.request, getReadingDetails),
   takeLatest(actions.getHomilies.request, getHomilies),
   takeLatest(actions.getNationalReadings.request, getNationalReadings),
+  takeLatest(actions.getCuriosities.request, getCuriosities),
+  takeLatest(actions.getPhotos.request, getPhotos),
 ];

@@ -23,6 +23,7 @@ import {
 // Screens
 import ReadingDetailsScreen from '../screens/ReadingDetailsScreen';
 import SectionDetailsScreen from '../screens/SectionDetailsScreen';
+import CuriosityBaseScreen from '../screens/CuriosityBaseScreen';
 
 export type ReadingsDrawerParamList = {
   ReadingsStackNavigator: {reading: Reading};
@@ -33,8 +34,8 @@ export type ReadingsStackParamList = {
     reading: Reading;
     section?: Section & {section_type: number};
     sectionType?: SectionType;
-    curiosities?: Curiosity[];
-    photos?: Photo[];
+    type?: 'curiosity' | 'photo';
+    curiosities: Curiosity[] | Photo[];
   };
 };
 
@@ -47,7 +48,7 @@ const ReadingsStackNavigator = ({route}) => {
 
   return (
     <StackNav.Navigator
-      initialRouteName="DashboardScreen"
+      initialRouteName="ReadingDetailsScreen"
       screenOptions={{
         headerShown: false,
       }}>
@@ -64,6 +65,22 @@ const ReadingsStackNavigator = ({route}) => {
           component={SectionDetailsScreen}
         />
       ))}
+
+      {reading.curiosities.length ? (
+        <StackNav.Screen
+          name="CuriositiesScreen"
+          component={CuriosityBaseScreen}
+          initialParams={{type: 'curiosity', curiosities: reading.curiosities}}
+        />
+      ) : undefined}
+
+      {reading.photos.length ? (
+        <StackNav.Screen
+          name="PhotosScreen"
+          component={CuriosityBaseScreen}
+          initialParams={{type: 'photo', curiosities: reading.photos}}
+        />
+      ) : undefined}
     </StackNav.Navigator>
   );
 };
