@@ -1,7 +1,14 @@
 import React from 'react';
 
 // Components
-import {StyleProp, StyleSheet, Text, View, ViewStyle} from 'react-native';
+import {
+  StyleProp,
+  StyleSheet,
+  Text,
+  TextStyle,
+  View,
+  ViewStyle,
+} from 'react-native';
 import ContentButton from './ContentButton';
 
 // Styles
@@ -19,6 +26,7 @@ type InfoBoxProps = {
   onPressButton?: () => void;
   position?: 'vertical' | 'horizontal';
   customButtonLabel?: string;
+  titleStyle?: StyleProp<TextStyle>;
 };
 
 export const InfoBoxContainer: React.FC<InfoBoxContainerProps> = ({
@@ -36,6 +44,7 @@ export const InfoBox: React.VFC<InfoBoxProps> = ({
   onPressButton,
   position = 'horizontal',
   customButtonLabel,
+  titleStyle,
 }) => (
   <View
     style={[
@@ -43,7 +52,9 @@ export const InfoBox: React.VFC<InfoBoxProps> = ({
       position === 'vertical' && styles.verticalContentContainer,
     ]}>
     <View style={[position === 'horizontal' && styles.textContainer]}>
-      <Text style={styles.titleText}>{title}</Text>
+      <Text style={[styles.titleText, titleStyle]} numberOfLines={1}>
+        {title}
+      </Text>
       <Text style={styles.descriptionText}>{description}</Text>
     </View>
     <ContentButton
@@ -70,6 +81,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flexDirection: 'row',
+    flex: 1,
   },
   buttonContainer: {
     alignSelf: 'flex-end',

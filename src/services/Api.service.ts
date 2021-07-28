@@ -13,6 +13,7 @@ export enum Endpoint {
   Recommended = 'recommended/',
   Curiosities = 'curiosities/',
   Photos = 'photos/',
+  Messages = 'messages/',
 }
 
 export const Api = axios.create();

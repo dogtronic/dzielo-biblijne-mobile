@@ -66,10 +66,12 @@ const BibleScreen: React.VFC<BibleScreenProps> = ({route}) => {
         <ImageHeaderText content={t('bible:chapter')} disabled />
       </ImageHeader>
 
-      <View style={styles.chaptersContainer}>
-        {chapters.map(v => (
-          <ChapterButton key={v.id} item={v} />
-        ))}
+      <View style={styles.chaptersMiddleContainer}>
+        <View style={styles.chaptersContainer}>
+          {chapters.map(v => (
+            <ChapterButton key={v.id} item={v} />
+          ))}
+        </View>
       </View>
     </ScrollView>
   );
@@ -93,11 +95,13 @@ const styles = StyleSheet.create({
   headerArrow: {
     marginHorizontal: 5,
   },
+  chaptersMiddleContainer: {
+    alignSelf: 'center',
+    marginHorizontal: 20,
+    marginVertical: 30,
+  },
   chaptersContainer: {
     flexWrap: 'wrap',
     flexDirection: 'row',
-    marginHorizontal: 20,
-    marginVertical: 30,
-    justifyContent: 'center',
   },
 });

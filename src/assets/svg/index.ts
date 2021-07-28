@@ -5,6 +5,7 @@ import CalendarIcon from './Calendar';
 import RightArrowIcon from './RightArrow';
 import SearchIcon from './SearchIcon';
 import BookIcon from './BookIcon';
+import BellIcon from './BellIcon';
 
 export {
   MenuIcon,
@@ -14,4 +15,5 @@ export {
   RightArrowIcon,
   SearchIcon,
   BookIcon,
+  BellIcon,
 };

@@ -1,7 +1,8 @@
 import React from 'react';
 
 // Components
-import {StyleSheet, Image, View} from 'react-native';
+import {StyleSheet, Image} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import {InfoBox, InfoBoxContainer} from './InfoBox';
 
 type ReadingListItemProps = {
@@ -21,7 +22,10 @@ export const ReadingListItem: React.FC<ReadingListItemProps> = ({
   children,
 }) => (
   <InfoBoxContainer containerStyle={styles.container}>
-    <View style={styles.insideContainer}>
+    <TouchableOpacity
+      style={styles.insideContainer}
+      onPress={onPressButton}
+      activeOpacity={0.7}>
       <Image style={styles.image} source={{uri}} resizeMode="cover" />
       <InfoBox
         title={title}
@@ -30,7 +34,7 @@ export const ReadingListItem: React.FC<ReadingListItemProps> = ({
         position="vertical"
         customButtonLabel={customButtonLabel}
       />
-    </View>
+    </TouchableOpacity>
     {children}
   </InfoBoxContainer>
 );

@@ -20,6 +20,7 @@ import {remoteAsset} from '../utils/remoteAsset';
 import dayjs from 'dayjs';
 import pl from 'dayjs/locale/pl';
 import Fonts from '../constants/Fonts';
+import {Notification} from '../components/Notification';
 
 type DashboardScreenProps = {
   navigation: StackNavigationProp<RootNavigatorParamList, 'DashboardScreen'>;
@@ -50,7 +51,13 @@ const DashboardScreen: React.VFC<DashboardScreenProps> = ({navigation}) => {
         </View>
       </View>
 
-      <TopRoundedContainer>
+      <Notification
+        title="Test"
+        description="asd as das dsad asd asd asd a s"
+        isRead
+      />
+
+      <TopRoundedContainer style={styles.textContainer}>
         <ReadingListItem
           title={t('dashboard:bibleHeader')}
           description={t('dashboard:bibleDescription')}
@@ -62,18 +69,23 @@ const DashboardScreen: React.VFC<DashboardScreenProps> = ({navigation}) => {
           title={t('dashboard:sundayReadingsHeader')}
           description={t('dashboard:sundayReadingsDescription')}
           uri={remoteAsset(sectionImages?.sunday_readings?.url)}
+          onPressButton={() => navigation.navigate('ReadingsScreen')}
         />
 
         <ReadingListItem
           title={t('dashboard:homilyHeader')}
           description={t('dashboard:homilyDescription')}
           uri={remoteAsset(sectionImages?.homily?.url)}
+          onPressButton={() => navigation.navigate('HomiliesListScreen')}
         />
 
         <ReadingListItem
           title={t('dashboard:nationalReadingsHeader')}
           description={t('dashboard:nationalReadingsDescription')}
           uri={remoteAsset(sectionImages?.national_readings?.url)}
+          onPressButton={() =>
+            navigation.navigate('NationalReadingsListScreen')
+          }
         />
       </TopRoundedContainer>
     </ScrollView>
@@ -87,7 +99,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   contentContainer: {
-    paddingVertical: 30,
+    paddingTop: 25,
+    flexGrow: 1,
+  },
+  textContainer: {
+    flexGrow: 1,
   },
   insideContainer: {
     marginHorizontal: 20,
@@ -95,7 +111,6 @@ const styles = StyleSheet.create({
   todayContainer: {
     marginBottom: 20,
     flexDirection: 'row',
-    alignItems: 'center',
   },
   todayText: {
     marginLeft: 10,

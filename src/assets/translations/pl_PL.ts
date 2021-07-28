@@ -8,6 +8,7 @@ export default {
     previous: 'Poprzedni',
     random: 'Losowo',
     next: 'Następny',
+    notification: 'Powiadomienie',
   },
   menu: {
     startPage: 'Strona startowa',

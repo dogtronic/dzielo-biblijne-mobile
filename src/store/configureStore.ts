@@ -11,12 +11,14 @@ import bibleReducer from './reducers/bible';
 import settingsReducer from './reducers/settings';
 import termsReducer from './reducers/terms';
 import readingsReducer from './reducers/readings';
+import messagesReducer from './reducers/messages';
 
 // Sagas
 import {booksSaga} from './sagas/bible';
 import {settingsSaga} from './sagas/settings';
 import {termsSaga} from './sagas/terms';
 import {readingsSaga} from './sagas/readings';
+import {messagesSaga} from './sagas/messages';
 
 const persistConfig = {
   key: 'store',
@@ -28,6 +30,7 @@ const reducers = combineReducers({
   settings: settingsReducer,
   terms: termsReducer,
   readings: readingsReducer,
+  messages: messagesReducer,
 });
 
 const sagaMiddleware = createSagaMiddleware();
@@ -40,7 +43,13 @@ export type StoreState = ReturnType<typeof reducers>;
 export type AppDispatch = typeof store.dispatch;
 
 function* saga() {
-  yield all([...booksSaga, ...settingsSaga, ...termsSaga, ...readingsSaga]);
+  yield all([
+    ...booksSaga,
+    ...settingsSaga,
+    ...termsSaga,
+    ...readingsSaga,
+    ...messagesSaga,
+  ]);
 }
 
 sagaMiddleware.run(saga);
