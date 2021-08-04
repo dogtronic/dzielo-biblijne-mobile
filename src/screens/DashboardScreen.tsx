@@ -1,26 +1,30 @@
 import React from 'react';
 
-//redux
+// Redux
 import {useAppSelector} from '../hooks/useAppDispatch';
+import * as actions from '../store/actions';
+import {useDispatch} from 'react-redux';
 
-//components
+// Components
 import {StyleSheet, ScrollView, View, Text} from 'react-native';
 import TopRoundedContainer from '../components/TopRoundedContainer';
 import {ReadingListItem} from '../components/ReadingListItem';
 import {CalendarIcon} from '../assets/svg';
+import {Notification} from '../components/Notification';
 
-//navigation
+// Navigation
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/core';
 import {RootNavigatorParamList} from '../navigation/RootNavigator';
 
-//utils
+// Utils
 import {useTranslation} from 'react-i18next';
 import {remoteAsset} from '../utils/remoteAsset';
 import dayjs from 'dayjs';
 import pl from 'dayjs/locale/pl';
+
+// Styles
 import Fonts from '../constants/Fonts';
-import {Notification} from '../components/Notification';
 
 type DashboardScreenProps = {
   navigation: StackNavigationProp<RootNavigatorParamList, 'DashboardScreen'>;
@@ -33,8 +37,22 @@ function capitalizeFirstLetter(string: string) {
 
 const DashboardScreen: React.VFC<DashboardScreenProps> = ({navigation}) => {
   const {t} = useTranslation();
+  const dispatch = useDispatch();
 
   const sectionImages = useAppSelector(state => state.settings.sectionImages);
+
+  const removedNotificationFromDashboard = useAppSelector(
+    state => state.user.removedNotificationsFromDashboard || {},
+  );
+  const readNotifications = useAppSelector(
+    state => state.user.readNotifications || {},
+  );
+
+  const newNotifications = useAppSelector(state =>
+    state.notifications.newNotifications.filter(
+      v => !removedNotificationFromDashboard[v.id],
+    ),
+  );
 
   const today = capitalizeFirstLetter(
     dayjs().locale(pl).format('dddd, D MMMM').toString(),
@@ -51,11 +69,22 @@ const DashboardScreen: React.VFC<DashboardScreenProps> = ({navigation}) => {
         </View>
       </View>
 
-      <Notification
-        title="Test"
-        description="asd as das dsad asd asd asd a s"
-        isRead
-      />
+      {newNotifications.map(v => (
+        <Notification
+          key={v.id.toString()}
+          title={v.title}
+          description={v.content}
+          isRead={readNotifications[v.id]}
+          onPressClose={() =>
+            dispatch(actions.setRemovedNotificationFromDashboard(v.id))
+          }
+          onPressButton={() =>
+            navigation.navigate('NotificationDetailsScreen', {
+              notificationId: v.id,
+            })
+          }
+        />
+      ))}
 
       <TopRoundedContainer style={styles.textContainer}>
         <ReadingListItem

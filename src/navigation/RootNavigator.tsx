@@ -37,6 +37,8 @@ import NationalReadingsListScreen from '../screens/NationalReadingsScreen';
 import ContactScreen from '../screens/ContactScreen';
 import RecommendedScreen from '../screens/RecommendedScreen';
 import CuriosityBaseScreen from '../screens/CuriosityBaseScreen';
+import NotificationsScreen from '../screens/NotificationsScreen';
+import NotificationDetailsScreen from '../screens/NotificationDetailsScreen';
 
 export type RootDrawerParamList = {
   StackRootNavigator: undefined;
@@ -59,6 +61,8 @@ export type RootNavigatorParamList = {
     curiosities?: CuriosityBase[];
     type: 'curiosity' | 'photo';
   };
+  NotificationsScreen: undefined;
+  NotificationDetailsScreen: {notificationId: number};
 };
 
 const DrawerNav = createDrawerNavigator<RootDrawerParamList>();
@@ -116,6 +120,14 @@ const StackRootNavigator = () => {
       <StackNav.Screen
         name={'CuriosityBaseScreen'}
         component={CuriosityBaseScreen}
+      />
+      <StackNav.Screen
+        name={'NotificationsScreen'}
+        component={NotificationsScreen}
+      />
+      <StackNav.Screen
+        name={'NotificationDetailsScreen'}
+        component={NotificationDetailsScreen}
       />
     </StackNav.Navigator>
   );

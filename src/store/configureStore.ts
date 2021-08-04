@@ -11,18 +11,20 @@ import bibleReducer from './reducers/bible';
 import settingsReducer from './reducers/settings';
 import termsReducer from './reducers/terms';
 import readingsReducer from './reducers/readings';
-import messagesReducer from './reducers/messages';
+import notificationsReducer from './reducers/notifications';
+import userReducer from './reducers/user';
 
 // Sagas
 import {booksSaga} from './sagas/bible';
 import {settingsSaga} from './sagas/settings';
 import {termsSaga} from './sagas/terms';
 import {readingsSaga} from './sagas/readings';
-import {messagesSaga} from './sagas/messages';
+import {notificationsSaga} from './sagas/notifications';
 
 const persistConfig = {
   key: 'store',
   storage: AsyncStorage,
+  blacklist: ['bible', 'settings', 'terms', 'readings', 'notifications'],
 };
 
 const reducers = combineReducers({
@@ -30,7 +32,8 @@ const reducers = combineReducers({
   settings: settingsReducer,
   terms: termsReducer,
   readings: readingsReducer,
-  messages: messagesReducer,
+  notifications: notificationsReducer,
+  user: userReducer,
 });
 
 const sagaMiddleware = createSagaMiddleware();
@@ -48,7 +51,7 @@ function* saga() {
     ...settingsSaga,
     ...termsSaga,
     ...readingsSaga,
-    ...messagesSaga,
+    ...notificationsSaga,
   ]);
 }
 

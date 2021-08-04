@@ -50,7 +50,7 @@ const Drawer: React.VFC<DrawerProps> = ({closeDrawer, navigate}) => {
     () => [
       {
         name: t('menu:announcements'),
-        onPress: () => null,
+        onPress: () => navigate?.('NotificationsScreen'),
       },
       {
         name: t('menu:words'),

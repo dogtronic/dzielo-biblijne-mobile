@@ -13,4 +13,5 @@ export interface SectionImages {
   bible_map: ImageSource | null;
   contact: ImageSource | null;
   recommended: ImageSource | null;
+  notifications: ImageSource | null;
 }

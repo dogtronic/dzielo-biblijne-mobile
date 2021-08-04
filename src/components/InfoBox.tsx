@@ -55,7 +55,9 @@ export const InfoBox: React.VFC<InfoBoxProps> = ({
       <Text style={[styles.titleText, titleStyle]} numberOfLines={1}>
         {title}
       </Text>
-      <Text style={styles.descriptionText}>{description}</Text>
+      <Text style={styles.descriptionText} numberOfLines={2}>
+        {description}
+      </Text>
     </View>
     <ContentButton
       onPress={onPressButton}

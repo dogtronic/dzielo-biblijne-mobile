@@ -9,11 +9,17 @@ import {Api, Endpoint} from '../../../services/Api.service';
 import {SectionImages} from '../../types/SectionImages.model';
 import {Information} from '../../types/Information.model';
 
+// Sagas
+import {getNewNotifications} from '../notifications';
+
 export function* getSettings() {
   try {
     const sectionImagesResponse: AxiosResponse<SectionImages> = yield Api.get(
       Endpoint.SectionImages,
     );
+
+    yield getNewNotifications();
+
     yield put(
       actions.getAppSettings.success({
         sectionImages: sectionImagesResponse.data,

@@ -1,0 +1,42 @@
+import {createReducer, ActionType} from 'typesafe-actions';
+import * as actions from '../../actions/user';
+
+export type UserState = {
+  readNotifications: {[key in number]: boolean};
+  removedNotificationsFromDashboard: {[key in number]: boolean};
+};
+
+const initialState: UserState = {
+  readNotifications: {},
+  removedNotificationsFromDashboard: {},
+};
+
+export type UserActions = ActionType<typeof actions>;
+
+const userReducer = createReducer<UserState, UserActions>(initialState)
+  .handleAction(actions.setReadNotification, (state, action) => {
+    const readNotificationsCopy = {...state.readNotifications};
+    readNotificationsCopy[action.payload] = true;
+
+    return {
+      ...state,
+      readNotifications: readNotificationsCopy,
+    };
+  })
+  .handleAction(
+    actions.setRemovedNotificationFromDashboard,
+    (state, action) => {
+      const removedNotificationsFromDashboardCopy = {
+        ...state.removedNotificationsFromDashboard,
+      };
+      removedNotificationsFromDashboardCopy[action.payload] = true;
+
+      return {
+        ...state,
+        removedNotificationsFromDashboard:
+          removedNotificationsFromDashboardCopy,
+      };
+    },
+  );
+
+export default userReducer;
