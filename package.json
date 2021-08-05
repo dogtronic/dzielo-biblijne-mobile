@@ -17,6 +17,7 @@
     "@react-navigation/stack": "^5.14.5",
     "axios": "^0.21.1",
     "dayjs": "^1.10.6",
+    "formik": "^2.2.9",
     "i18next": "^20.3.2",
     "luxon": "^1.28.0",
     "qs": "^6.10.1",

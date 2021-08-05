@@ -12,6 +12,8 @@ export type SettingsState = {
   isContactDetialsLoading: boolean;
   recommendedDetails?: Information;
   isRecommendedDetailsLoading: boolean;
+  isMessageToAdministratorSending: boolean;
+  messageSentInfo?: string;
 };
 
 const initialState: SettingsState = {
@@ -19,6 +21,7 @@ const initialState: SettingsState = {
   sectionImages: undefined,
   isContactDetialsLoading: true,
   isRecommendedDetailsLoading: true,
+  isMessageToAdministratorSending: false,
 };
 
 export type SettingsActions = ActionType<typeof actions>;
@@ -48,6 +51,18 @@ const settingsReducer = createReducer<SettingsState, SettingsActions>(
     ...state,
     isRecommendedDetailsLoading: false,
     recommendedDetails: action.payload,
-  }));
+  }))
+  .handleAction(actions.sendMessageToAdministrator.request, state => ({
+    ...state,
+    isMessageToAdministratorSending: true,
+  }))
+  .handleAction(
+    actions.sendMessageToAdministrator.success,
+    (state, action) => ({
+      ...state,
+      isMessageToAdministratorSending: false,
+      messageSentInfo: action.payload,
+    }),
+  );
 
 export default settingsReducer;

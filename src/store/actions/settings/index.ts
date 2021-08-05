@@ -1,6 +1,9 @@
 import {createAsyncAction} from 'typesafe-actions';
 import {Information} from '../../types/Information.model';
-import {GetAppSettingsResponsePayload} from './payloads';
+import {
+  GetAppSettingsResponsePayload,
+  SendMessageToAdministratorRequestPayload,
+} from './payloads';
 
 export const getAppSettings = createAsyncAction(
   'GET_APP_SETTINGS',
@@ -19,3 +22,9 @@ export const getRecommended = createAsyncAction(
   'GET_RECOMMENDED_SUCCESS',
   'GET_RECOMMENDED_FAILURE',
 )<undefined, Information, undefined>();
+
+export const sendMessageToAdministrator = createAsyncAction(
+  'SEND_MESSAGE_TO_ADMINISTRATOR',
+  'SEND_MESSAGE_TO_ADMINISTRATOR_SUCCESS',
+  'SEND_MESSAGE_TO_ADMINISTRATOR_FAILURE',
+)<SendMessageToAdministratorRequestPayload, string, string>();

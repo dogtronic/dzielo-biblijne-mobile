@@ -78,6 +78,6 @@ export default HtmlViewer;
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
+    paddingVertical: 20,
   },
 });

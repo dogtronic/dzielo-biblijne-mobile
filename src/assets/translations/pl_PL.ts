@@ -9,6 +9,13 @@ export default {
     random: 'Losowo',
     next: 'Następny',
     notification: 'Powiadomienie',
+    name: 'Imię',
+    message: 'Wiadomość',
+    send: 'Wyślij',
+    writeToUs: 'Napisz do nas',
+    requiredField: 'Pole jest wymagane!',
+    messageSent: 'Wiadomość została wysłana',
+    errorOccured: 'Wystąpił nieznany błąd. Spróbuj ponownie później.',
   },
   menu: {
     startPage: 'Strona startowa',

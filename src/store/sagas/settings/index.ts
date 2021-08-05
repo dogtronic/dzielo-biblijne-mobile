@@ -11,6 +11,8 @@ import {Information} from '../../types/Information.model';
 
 // Sagas
 import {getNewNotifications} from '../notifications';
+import {ActionType} from 'typesafe-actions';
+import i18n from '../../../assets/translations';
 
 export function* getSettings() {
   try {
@@ -52,8 +54,32 @@ export function* getRecommended() {
   }
 }
 
+export function* sendMessageToAdministrator(
+  action: ActionType<typeof actions.sendMessageToAdministrator.request>,
+) {
+  try {
+    yield Api.post(Endpoint.Messages, action.payload);
+
+    yield put(
+      actions.sendMessageToAdministrator.success(
+        i18n.t<string>('common:messageSent'),
+      ),
+    );
+  } catch (err) {
+    yield put(
+      actions.sendMessageToAdministrator.failure(
+        i18n.t<string>('common:errorOcurred'),
+      ),
+    );
+  }
+}
+
 export const settingsSaga = [
   takeLatest(actions.getAppSettings.request, getSettings),
   takeLatest(actions.getContact.request, getContact),
   takeLatest(actions.getRecommended.request, getRecommended),
+  takeLatest(
+    actions.sendMessageToAdministrator.request,
+    sendMessageToAdministrator,
+  ),
 ];

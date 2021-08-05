@@ -25,7 +25,6 @@ export function* getNotifications(
       }),
     );
   } catch (err) {
-    console.log(err);
     yield put(actions.getNotifications.failure());
   }
 }
@@ -38,11 +37,9 @@ export function* getNotificationDetails(
       `${Endpoint.Notifications}${action.payload.notificationId}`,
     );
 
-    const repsonse2: AxiosResponse<any> = yield Api.patch(
+    yield Api.patch(
       `${Endpoint.Notifications}${action.payload.notificationId}/view`,
     );
-
-    console.log(repsonse2.data);
 
     yield put(actions.getNotificationDetails.success(response.data));
   } catch (err) {
