@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
 //redux
 import {useAppDispatch, useAppSelector} from '../hooks/useAppDispatch';
@@ -34,16 +34,28 @@ type BibleScreenProps = {
 const BibleScreen: React.VFC<BibleScreenProps> = ({route}) => {
   const {chapterId} = route.params;
 
-  // const {t} = useTranslation();
   const dispatch = useAppDispatch();
 
   const chapter = useAppSelector(state => state.bible.chapterDetails);
   const sectionImages = useAppSelector(state => state.settings.sectionImages);
   const loading = useAppSelector(state => state.bible.isChapterDetailsLoading);
 
-  React.useEffect(() => {
+  useEffect(() => {
     dispatch(actions.getChapterDetails.request({chapterId}));
   }, [dispatch, chapterId]);
+
+  useEffect(() => {
+    if (chapter) {
+      dispatch(
+        actions.setLastReadBibleFragment({
+          chapterId: chapter.id,
+          bookId: chapter.bible_book.id,
+          siglum: chapter.bible_book.siglum,
+          chapterNumber: chapter.number,
+        }),
+      );
+    }
+  }, [chapter, dispatch]);
 
   if (loading) {
     return <Loader isAbsolute />;

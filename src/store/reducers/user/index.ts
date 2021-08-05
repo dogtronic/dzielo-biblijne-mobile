@@ -4,6 +4,12 @@ import * as actions from '../../actions/user';
 export type UserState = {
   readNotifications: {[key in number]: boolean};
   removedNotificationsFromDashboard: {[key in number]: boolean};
+  lastReadBibleFragment?: {
+    bookId: number;
+    siglum: string;
+    chapterId: number;
+    chapterNumber: number;
+  };
 };
 
 const initialState: UserState = {
@@ -37,6 +43,10 @@ const userReducer = createReducer<UserState, UserActions>(initialState)
           removedNotificationsFromDashboardCopy,
       };
     },
-  );
+  )
+  .handleAction(actions.setLastReadBibleFragment, (state, action) => ({
+    ...state,
+    lastReadBibleFragment: action.payload,
+  }));
 
 export default userReducer;

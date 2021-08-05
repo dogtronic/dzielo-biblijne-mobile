@@ -32,7 +32,7 @@ type BibleScreenProps = {
   route: RouteProp<RootNavigatorParamList, 'BibleScreen'>;
 };
 
-const BibleScreen: React.VFC<BibleScreenProps> = () => {
+const BibleScreen: React.VFC<BibleScreenProps> = ({navigation}) => {
   const {t} = useTranslation();
   const dispatch = useAppDispatch();
 
@@ -45,6 +45,10 @@ const BibleScreen: React.VFC<BibleScreenProps> = () => {
 
   const oldTestament = books.filter(v => v.testament === 'Stary');
   const newTestament = books.filter(v => v.testament === 'Nowy');
+
+  const lastReadFragment = useAppSelector(
+    state => state.user.lastReadBibleFragment,
+  );
 
   React.useEffect(() => {
     dispatch(actions.getBooks.request());
@@ -62,14 +66,21 @@ const BibleScreen: React.VFC<BibleScreenProps> = () => {
         <ImageHeaderText content={t('dashboard:bibleHeader')} />
       </ImageHeader>
 
-      <View style={styles.insideContainer}>
-        <InfoBoxContainer>
-          <InfoBox
-            title={t('bible:continueReading')}
-            description={'Mt 2, 14'}
-          />
-        </InfoBoxContainer>
-      </View>
+      {lastReadFragment && (
+        <View style={styles.insideContainer}>
+          <InfoBoxContainer>
+            <InfoBox
+              title={t('bible:continueReading')}
+              description={`${lastReadFragment.siglum} ${lastReadFragment.chapterNumber}`}
+              onPressButton={() =>
+                navigation.navigate('ChapterDetailsScreen', {
+                  chapterId: lastReadFragment.chapterId,
+                })
+              }
+            />
+          </InfoBoxContainer>
+        </View>
+      )}
 
       <TopRoundedContainer>
         <ReadingListItem
