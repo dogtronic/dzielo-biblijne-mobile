@@ -42,6 +42,7 @@ export default {
     homilyDescription: 'Nauczanie Kościoła',
     nationalReadingsHeader: 'Narodowe czytanie',
     nationalReadingsDescription: 'Pismo Święte',
+    photoOfTheWeek: 'Zdjęcie tygodnia',
   },
   bible: {
     continueReading: 'Kontynuuj czytanie',

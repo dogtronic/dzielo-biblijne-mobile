@@ -1,5 +1,6 @@
 import {createReducer, ActionType} from 'typesafe-actions';
 import * as actions from '../../actions/settings';
+import {Photo} from '../../types/Curiosity.model';
 import {Information} from '../../types/Information.model';
 
 // Models
@@ -14,6 +15,7 @@ export type SettingsState = {
   isRecommendedDetailsLoading: boolean;
   isMessageToAdministratorSending: boolean;
   messageSentInfo?: string;
+  photoOfTheWeek?: Photo;
 };
 
 const initialState: SettingsState = {
@@ -63,6 +65,10 @@ const settingsReducer = createReducer<SettingsState, SettingsActions>(
       isMessageToAdministratorSending: false,
       messageSentInfo: action.payload,
     }),
-  );
+  )
+  .handleAction(actions.getPhotoOfTheWeek.success, (state, action) => ({
+    ...state,
+    photoOfTheWeek: action.payload,
+  }));
 
 export default settingsReducer;

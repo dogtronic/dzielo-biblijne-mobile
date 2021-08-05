@@ -8,10 +8,13 @@ import {Api, Endpoint} from '../../../services/Api.service';
 // Models
 import {SectionImages} from '../../types/SectionImages.model';
 import {Information} from '../../types/Information.model';
+import {Photo} from '../../types/Curiosity.model';
 
 // Sagas
 import {getNewNotifications} from '../notifications';
 import {ActionType} from 'typesafe-actions';
+
+// Utils
 import i18n from '../../../assets/translations';
 
 export function* getSettings() {
@@ -21,6 +24,7 @@ export function* getSettings() {
     );
 
     yield getNewNotifications();
+    yield getPhotoOfTheWeek();
 
     yield put(
       actions.getAppSettings.success({
@@ -74,6 +78,20 @@ export function* sendMessageToAdministrator(
   }
 }
 
+export function* getPhotoOfTheWeek() {
+  try {
+    const response: AxiosResponse<Photo[]> = yield Api.get(
+      `${Endpoint.Photos}?_limit=1&is_visible_on_dashboard=true`,
+    );
+
+    if (response.data.length) {
+      yield put(actions.getPhotoOfTheWeek.success(response.data[0]));
+    }
+  } catch (err) {
+    yield put(actions.getPhotoOfTheWeek.failure());
+  }
+}
+
 export const settingsSaga = [
   takeLatest(actions.getAppSettings.request, getSettings),
   takeLatest(actions.getContact.request, getContact),
@@ -82,4 +100,5 @@ export const settingsSaga = [
     actions.sendMessageToAdministrator.request,
     sendMessageToAdministrator,
   ),
+  takeLatest(actions.getPhotoOfTheWeek.request, getPhotoOfTheWeek),
 ];

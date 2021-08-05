@@ -1,4 +1,5 @@
 import {createAsyncAction} from 'typesafe-actions';
+import {Photo} from '../../types/Curiosity.model';
 import {Information} from '../../types/Information.model';
 import {
   GetAppSettingsResponsePayload,
@@ -28,3 +29,9 @@ export const sendMessageToAdministrator = createAsyncAction(
   'SEND_MESSAGE_TO_ADMINISTRATOR_SUCCESS',
   'SEND_MESSAGE_TO_ADMINISTRATOR_FAILURE',
 )<SendMessageToAdministratorRequestPayload, string, string>();
+
+export const getPhotoOfTheWeek = createAsyncAction(
+  'GET_PHOTO_OF_THE_WEEK',
+  'GET_PHOTO_OF_THE_WEEK_SUCCESS',
+  'GET_PHOTO_OF_THE_WEEK_FAILURE',
+)<undefined, Photo, undefined>();

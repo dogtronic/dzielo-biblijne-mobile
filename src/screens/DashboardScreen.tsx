@@ -25,6 +25,7 @@ import pl from 'dayjs/locale/pl';
 
 // Styles
 import Fonts from '../constants/Fonts';
+import WeeklyPhoto from '../components/WeeklyPhoto';
 
 type DashboardScreenProps = {
   navigation: StackNavigationProp<RootNavigatorParamList, 'DashboardScreen'>;
@@ -54,6 +55,8 @@ const DashboardScreen: React.VFC<DashboardScreenProps> = ({navigation}) => {
     ),
   );
 
+  const photoOfTheWeek = useAppSelector(state => state.settings.photoOfTheWeek);
+
   const today = capitalizeFirstLetter(
     dayjs().locale(pl).format('dddd, D MMMM').toString(),
   );
@@ -68,6 +71,8 @@ const DashboardScreen: React.VFC<DashboardScreenProps> = ({navigation}) => {
           <Text style={styles.todayText}>{today}</Text>
         </View>
       </View>
+
+      {photoOfTheWeek && <WeeklyPhoto photo={photoOfTheWeek} />}
 
       {newNotifications.map(v => (
         <Notification
