@@ -74,7 +74,8 @@ const BibleScreen: React.VFC<BibleScreenProps> = ({route}) => {
   return (
     <ScrollView
       style={styles.container}
-      contentContainerStyle={styles.contentContainer}>
+      contentContainerStyle={styles.contentContainer}
+      showsVerticalScrollIndicator={false}>
       <ImageHeader
         uri={
           chapter?.bible_book.testament === 'Stary'
@@ -88,7 +89,7 @@ const BibleScreen: React.VFC<BibleScreenProps> = ({route}) => {
 
       <Text style={styles.title}>{chapter?.title}</Text>
 
-      <HtmlViewer html={chapter?.text} />
+      <HtmlViewer html={chapter?.text} containerStyle={styles.content} />
     </ScrollView>
   );
 };
@@ -99,9 +100,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background,
+    width: '100%',
   },
   contentContainer: {
     flexGrow: 1,
+  },
+  content: {
+    paddingHorizontal: 20,
   },
   headerArrow: {
     marginHorizontal: 5,

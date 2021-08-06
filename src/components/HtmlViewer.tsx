@@ -1,10 +1,20 @@
 import {useNavigation} from '@react-navigation/core';
 import React, {useCallback, useMemo, useState} from 'react';
 
-// components
+// Components
 import {StyleSheet, useWindowDimensions} from 'react-native';
-import RenderHtml from 'react-native-render-html';
+import RenderHtml, {defaultSystemFonts} from 'react-native-render-html';
 import TermModal from './TermModal';
+
+// Styles
+import Colors from '../constants/Colors';
+import Fonts from '../constants/Fonts';
+
+const systemFonts = [
+  ...defaultSystemFonts,
+  Fonts.RobotoLight,
+  Fonts.RobotoRegular,
+];
 
 type HtmlViewerProps = {
   html?: string;
@@ -63,6 +73,9 @@ const HtmlViewer: React.VFC<HtmlViewerProps> = ({html, containerStyle}) => {
         source={{html: html || ''}}
         baseStyle={{...styles.container, ...containerStyle}}
         renderersProps={renderersProps}
+        //@ts-ignore
+        tagsStyles={tagsStyles}
+        systemFonts={systemFonts}
       />
 
       <TermModal
@@ -81,3 +94,16 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
 });
+
+const tagsStyles = {
+  a: {
+    color: Colors.primary,
+    textDecorationLine: 'none',
+    fontFamily: Fonts.RobotoRegular,
+    fontWeight: '500',
+  },
+  p: {
+    fontFamily: Fonts.RobotoLight,
+    fontSize: 15,
+  },
+};
