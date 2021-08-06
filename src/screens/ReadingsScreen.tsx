@@ -17,6 +17,7 @@ import {ReadingListItem} from '../components/ReadingListItem';
 import ImageHeader, {ImageHeaderText} from '../components/ImageHeader';
 import Loader from '../components/Loader';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import ContentError from '../components/ContentError';
 
 // Navigation
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -43,6 +44,7 @@ const ReadingsScreen: React.VFC<ReadingsScreenProps> = ({navigation}) => {
   const sectionImages = useAppSelector(state => state.settings.sectionImages);
   const readings = useAppSelector(state => state.readings.readings);
   const loading = useAppSelector(state => state.readings.areReadingsLoading);
+  const error = useAppSelector(state => state.readings.readingsError);
 
   const mainReaddings =
     readings?.filter(v => v.reading_type.type === 'Glowne') || [];
@@ -55,6 +57,14 @@ const ReadingsScreen: React.VFC<ReadingsScreenProps> = ({navigation}) => {
 
   if (loading) {
     return <Loader isAbsolute />;
+  }
+
+  if (error) {
+    return (
+      <ContentError
+        onPressRefresh={() => dispatch(actions.getCurrentReadings.request())}
+      />
+    );
   }
 
   return (

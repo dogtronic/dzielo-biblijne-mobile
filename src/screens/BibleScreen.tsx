@@ -9,6 +9,7 @@ import TopRoundedContainer from '../components/TopRoundedContainer';
 import {ReadingListItem} from '../components/ReadingListItem';
 import ImageHeader, {ImageHeaderText} from '../components/ImageHeader';
 import {InfoBox, InfoBoxContainer} from '../components/InfoBox';
+import ContentError from '../components/ContentError';
 
 //navigation
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -42,6 +43,7 @@ const BibleScreen: React.VFC<BibleScreenProps> = ({navigation}) => {
   const books = useAppSelector(state => state.bible.books);
   const sectionImages = useAppSelector(state => state.settings.sectionImages);
   const loading = useAppSelector(state => state.bible.isBooksLoading);
+  const error = useAppSelector(state => state.bible.booksError);
 
   const oldTestament = books.filter(v => v.testament === 'Stary');
   const newTestament = books.filter(v => v.testament === 'Nowy');
@@ -56,6 +58,14 @@ const BibleScreen: React.VFC<BibleScreenProps> = ({navigation}) => {
 
   if (loading) {
     return <Loader isAbsolute />;
+  }
+
+  if (error) {
+    return (
+      <ContentError
+        onPressRefresh={() => dispatch(actions.getBooks.request())}
+      />
+    );
   }
 
   return (

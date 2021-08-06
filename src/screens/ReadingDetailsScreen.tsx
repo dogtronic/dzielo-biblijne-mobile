@@ -45,7 +45,7 @@ const ReadingDetailsScreen: React.VFC<ReadingDetailsScreenProps> = ({
       <TopRoundedContainer style={styles.textContainer}>
         <View style={styles.headerContainer}>
           <View style={styles.descriptionContainer}>
-            <Text style={styles.title}>{reading.description} </Text>
+            <Text style={styles.title}>{reading.description}</Text>
             <Text style={styles.description}>{reading.sub_description}</Text>
           </View>
 

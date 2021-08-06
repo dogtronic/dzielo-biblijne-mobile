@@ -1,15 +1,17 @@
 import React, {useMemo} from 'react';
 
-// components
-import {View, StyleSheet, Image, TouchableOpacity} from 'react-native';
+// Components
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import CrossBig from '../assets/svg/CrossBig';
 import {CloseIcon} from '../assets/svg';
 import DrawerButton from './DrawerButton';
+import {ScrollView} from 'react-native-gesture-handler';
+import LogoMediumIcon from '../assets/svg/LogoMediumIcon';
 
-// styles
+// Styles
 import Colors from '../constants/Colors';
 
-//utils
+// Utils
 import {useTranslation} from 'react-i18next';
 
 type DrawerProps = {
@@ -79,10 +81,8 @@ const Drawer: React.VFC<DrawerProps> = ({closeDrawer, navigate}) => {
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
-        <Image
-          source={require('../assets/images/logo_white_medium.png')}
-          style={styles.icon}
-        />
+        <LogoMediumIcon style={styles.icon} />
+
         <TouchableOpacity onPress={closeDrawer}>
           <CloseIcon />
         </TouchableOpacity>
@@ -90,7 +90,7 @@ const Drawer: React.VFC<DrawerProps> = ({closeDrawer, navigate}) => {
 
       <CrossBig style={styles.cross} />
 
-      <View style={styles.optionsContainer}>
+      <ScrollView style={styles.optionsContainer}>
         {topMenu.map((v, index) => (
           <DrawerButton key={index} title={v.name} onPress={v.onPress} />
         ))}
@@ -100,7 +100,7 @@ const Drawer: React.VFC<DrawerProps> = ({closeDrawer, navigate}) => {
         {bottomMenu.map((v, index) => (
           <DrawerButton key={index} title={v.name} onPress={v.onPress} />
         ))}
-      </View>
+      </ScrollView>
     </View>
   );
 };

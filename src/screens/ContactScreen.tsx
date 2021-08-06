@@ -10,6 +10,7 @@ import HtmlViewer from '../components/HtmlViewer';
 import Loader from '../components/Loader';
 import TopRoundedContainer from '../components/TopRoundedContainer';
 import Input from '../components/Input';
+import ContentError from '../components/ContentError';
 
 //navigation
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -50,6 +51,7 @@ const ContactScreen: React.VFC<ContactScreenProps> = () => {
   const loading = useAppSelector(
     state => state.settings.isContactDetialsLoading,
   );
+  const error = useAppSelector(state => state.settings.contactError);
 
   const isMessageSending = useAppSelector(
     state => state.settings.isMessageToAdministratorSending,
@@ -64,6 +66,14 @@ const ContactScreen: React.VFC<ContactScreenProps> = () => {
 
   if (loading) {
     return <Loader isAbsolute />;
+  }
+
+  if (error) {
+    return (
+      <ContentError
+        onPressRefresh={() => dispatch(actions.getContact.request())}
+      />
+    );
   }
 
   return (

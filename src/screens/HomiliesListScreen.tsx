@@ -9,6 +9,7 @@ import {StyleSheet, FlatList, View, Text} from 'react-native';
 import ImageHeader, {ImageHeaderText} from '../components/ImageHeader';
 import SearchInput from '../components/SearchInput';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import ContentError from '../components/ContentError';
 
 //navigation
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -46,6 +47,7 @@ const HomiliesListScreen: React.VFC<HomiliesListScreenProps> = ({
   const sectionImages = useAppSelector(state => state.settings.sectionImages);
   const loading = useAppSelector(state => state.readings.areHomiliesLoading);
   const areMoreData = useAppSelector(state => state.readings.areMoreHomilies);
+  const error = useAppSelector(state => state.readings.homiliesError);
 
   useEffect(() => {
     dispatch(
@@ -101,6 +103,22 @@ const HomiliesListScreen: React.VFC<HomiliesListScreenProps> = ({
     ),
     [navigation],
   );
+
+  if (error) {
+    return (
+      <ContentError
+        onPressRefresh={() =>
+          dispatch(
+            actions.getHomilies.request({
+              offset: 0,
+              limit: 10,
+              withReset: true,
+            }),
+          )
+        }
+      />
+    );
+  }
 
   return (
     <FlatList<Reading>

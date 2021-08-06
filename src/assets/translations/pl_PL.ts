@@ -16,6 +16,10 @@ export default {
     requiredField: 'Pole jest wymagane!',
     messageSent: 'Wiadomość została wysłana',
     errorOccured: 'Wystąpił nieznany błąd. Spróbuj ponownie później.',
+    serverErrorTitle: 'Wystąpił problem z połączeniem',
+    serverErrorDescription:
+      'Sprawdź połączenie z Internetem lub spróbuj ponownie później',
+    tryAgain: 'Spróbuj ponownie',
   },
   menu: {
     startPage: 'Strona startowa',

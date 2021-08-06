@@ -69,7 +69,7 @@ export const Notification: React.FC<NotificationProps> = ({
 const styles = StyleSheet.create({
   container: {
     marginVertical: 15,
-    marginHorizontal: 20,
+    marginHorizontal: 25,
   },
   insideContainer: {
     flexDirection: 'row',

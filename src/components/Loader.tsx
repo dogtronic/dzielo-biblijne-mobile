@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
   },
   absoluteContainer: {
     position: 'absolute',
+    backgroundColor: Colors.background,
     top: 0,
     left: 0,
     right: 0,

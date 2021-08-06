@@ -9,6 +9,7 @@ import ImageHeader, {ImageHeaderText} from '../components/ImageHeader';
 import HtmlViewer from '../components/HtmlViewer';
 import Loader from '../components/Loader';
 import TopRoundedContainer from '../components/TopRoundedContainer';
+import ContentError from '../components/ContentError';
 
 //navigation
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -39,6 +40,7 @@ const RecommendedScreen: React.VFC<RecommendedScreenProps> = () => {
   const loading = useAppSelector(
     state => state.settings.isRecommendedDetailsLoading,
   );
+  const error = useAppSelector(state => state.settings.recommendedError);
 
   React.useEffect(() => {
     dispatch(actions.getRecommended.request());
@@ -46,6 +48,14 @@ const RecommendedScreen: React.VFC<RecommendedScreenProps> = () => {
 
   if (loading) {
     return <Loader isAbsolute />;
+  }
+
+  if (error) {
+    return (
+      <ContentError
+        onPressRefresh={() => dispatch(actions.getRecommended.request())}
+      />
+    );
   }
 
   return (

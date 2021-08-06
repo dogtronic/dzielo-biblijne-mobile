@@ -9,6 +9,7 @@ import ImageHeader, {ImageHeaderText} from '../components/ImageHeader';
 import ChapterButton from '../components/ChapterButton';
 import Loader from '../components/Loader';
 import {RightArrowIcon} from '../assets/svg';
+import ContentError from '../components/ContentError';
 
 //navigation
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -42,6 +43,7 @@ const BibleScreen: React.VFC<BibleScreenProps> = ({route}) => {
   );
   const sectionImages = useAppSelector(state => state.settings.sectionImages);
   const loading = useAppSelector(state => state.bible.isChaptersLoading);
+  const error = useAppSelector(state => state.bible.chaptersError);
 
   React.useEffect(() => {
     dispatch(actions.getChapters.request({bookId}));
@@ -49,6 +51,14 @@ const BibleScreen: React.VFC<BibleScreenProps> = ({route}) => {
 
   if (loading) {
     return <Loader isAbsolute />;
+  }
+
+  if (error) {
+    return (
+      <ContentError
+        onPressRefresh={() => dispatch(actions.getChapters.request({bookId}))}
+      />
+    );
   }
 
   return (

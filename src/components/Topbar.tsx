@@ -1,8 +1,9 @@
 import React from 'react';
 
 // components
-import {View, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {BackIcon, MenuIcon} from '../assets/svg';
+import LogoSmallIcon from '../assets/svg/LogoSmallIcon';
 
 // styles
 import Colors from '../constants/Colors';
@@ -30,7 +31,7 @@ const Topbar: React.VFC<TopbarProps> = ({
         {isPossibleToBack && <BackIcon />}
       </TouchableOpacity>
 
-      <Image source={require('../assets/images/logo_white.png')} />
+      <LogoSmallIcon />
 
       <TouchableOpacity
         style={styles.buttonContainer}

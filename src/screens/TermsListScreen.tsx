@@ -8,6 +8,7 @@ import * as actions from '../store/actions';
 import {StyleSheet, FlatList, View, Text} from 'react-native';
 import ImageHeader, {ImageHeaderText} from '../components/ImageHeader';
 import SearchInput from '../components/SearchInput';
+import ContentError from '../components/ContentError';
 
 //navigation
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -44,6 +45,7 @@ const TermsListScreen: React.VFC<TermsListScreenProps> = ({navigation}) => {
   const sectionImages = useAppSelector(state => state.settings.sectionImages);
   const loading = useAppSelector(state => state.terms.areTermsLoading);
   const areMoreData = useAppSelector(state => state.terms.areMoreTerms);
+  const error = useAppSelector(state => state.terms.termsError);
 
   useEffect(() => {
     dispatch(actions.getTerms.request({offset: 0, limit: 10, withReset: true}));
@@ -97,6 +99,18 @@ const TermsListScreen: React.VFC<TermsListScreenProps> = ({navigation}) => {
     ),
     [navigation],
   );
+
+  if (error) {
+    return (
+      <ContentError
+        onPressRefresh={() =>
+          dispatch(
+            actions.getTerms.request({offset: 0, limit: 10, withReset: true}),
+          )
+        }
+      />
+    );
+  }
 
   return (
     <FlatList<Term>

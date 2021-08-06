@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 
 //redux
 import {useAppDispatch, useAppSelector} from '../hooks/useAppDispatch';
@@ -10,6 +10,7 @@ import ImageHeader, {ImageHeaderText} from '../components/ImageHeader';
 import TopRoundedContainer from '../components/TopRoundedContainer';
 import ContentButton from '../components/ContentButton';
 import Loader from '../components/Loader';
+import ContentError from '../components/ContentError';
 
 //navigation
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -68,8 +69,13 @@ const CuriosityBaseScreen: React.VFC<CuriosityBaseScreenProps> = ({route}) => {
       ? state.readings.areMoreCuriosities
       : state.readings.areMorePhotos,
   );
+  const error = useAppSelector(state =>
+    type === 'curiosity'
+      ? state.readings.curiositiesError
+      : state.readings.photosError,
+  );
 
-  useEffect(() => {
+  const getEntities = useCallback(() => {
     if (customCuriosities) {
       return;
     }
@@ -81,6 +87,10 @@ const CuriosityBaseScreen: React.VFC<CuriosityBaseScreenProps> = ({route}) => {
       dispatch(actions.getPhotos.request(params));
     }
   }, [dispatch, type, customCuriosities]);
+
+  useEffect(() => {
+    getEntities();
+  }, [getEntities]);
 
   const getCuriosities = debounce((withResetOffest?: boolean) => {
     let customOffset = offset;
@@ -125,6 +135,10 @@ const CuriosityBaseScreen: React.VFC<CuriosityBaseScreenProps> = ({route}) => {
 
   if (loading) {
     return <Loader isAbsolute />;
+  }
+
+  if (error) {
+    return <ContentError onPressRefresh={getEntities} />;
   }
 
   return (

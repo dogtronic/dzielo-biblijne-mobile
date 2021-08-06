@@ -9,6 +9,7 @@ import {StyleSheet, ScrollView, Text} from 'react-native';
 import ImageHeader, {ImageHeaderText} from '../components/ImageHeader';
 import TopRoundedContainer from '../components/TopRoundedContainer';
 import Loader from '../components/Loader';
+import ContentError from '../components/ContentError';
 
 //navigation
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -46,6 +47,7 @@ const NotificationDetailsScreen: React.VFC<NotificationDetailsScreenProps> = ({
   const loading = useAppSelector(
     state => state.notifications.isNotificationLoading,
   );
+  const error = useAppSelector(state => state.notifications.notificationsError);
 
   useEffect(() => {
     dispatch(actions.getNotificationDetails.request({notificationId}));
@@ -59,6 +61,16 @@ const NotificationDetailsScreen: React.VFC<NotificationDetailsScreenProps> = ({
 
   if (loading) {
     return <Loader isAbsolute />;
+  }
+
+  if (error) {
+    return (
+      <ContentError
+        onPressRefresh={() =>
+          dispatch(actions.getNotificationDetails.request({notificationId}))
+        }
+      />
+    );
   }
 
   return (

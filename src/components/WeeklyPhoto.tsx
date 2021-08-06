@@ -47,10 +47,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 25,
     borderRadius: 5,
     overflow: 'hidden',
+    marginTop: 20,
   },
   infoContainer: {
     marginHorizontal: 40,
-    marginBottom: 15,
     marginTop: '-8%',
   },
 });

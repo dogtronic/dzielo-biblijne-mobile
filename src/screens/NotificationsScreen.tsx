@@ -8,6 +8,7 @@ import * as actions from '../store/actions';
 import {StyleSheet, FlatList, View} from 'react-native';
 import ImageHeader, {ImageHeaderText} from '../components/ImageHeader';
 import {Notification as NotificationComponent} from '../components/Notification';
+import ContentError from '../components/ContentError';
 
 //navigation
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -52,6 +53,9 @@ const NotificationsScreen: React.VFC<NotificationsScreenProps> = ({
   );
   const areMoreData = useAppSelector(
     state => state.notifications.areMoreNotifications,
+  );
+  const error = useAppSelector(
+    state => state.notifications.notificationDetailsError,
   );
 
   const readNotifications = useAppSelector(
@@ -108,6 +112,22 @@ const NotificationsScreen: React.VFC<NotificationsScreenProps> = ({
     ),
     [navigation, readNotifications],
   );
+
+  if (error) {
+    return (
+      <ContentError
+        onPressRefresh={() =>
+          dispatch(
+            actions.getNotifications.request({
+              offset: 0,
+              limit: 10,
+              withReset: true,
+            }),
+          )
+        }
+      />
+    );
+  }
 
   return (
     <FlatList<Notification>

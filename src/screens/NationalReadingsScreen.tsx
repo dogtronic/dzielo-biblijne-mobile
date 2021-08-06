@@ -9,6 +9,7 @@ import {StyleSheet, FlatList, View, Text} from 'react-native';
 import ImageHeader, {ImageHeaderText} from '../components/ImageHeader';
 import SearchInput from '../components/SearchInput';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import ContentError from '../components/ContentError';
 
 //navigation
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -54,6 +55,7 @@ const NationalReadingsListScreen: React.VFC<NationalReadingsListScreenProps> =
     const areMoreData = useAppSelector(
       state => state.readings.areMoreNationalReadings,
     );
+    const error = useAppSelector(state => state.readings.nationalReadingsError);
 
     useEffect(() => {
       dispatch(
@@ -113,6 +115,22 @@ const NationalReadingsListScreen: React.VFC<NationalReadingsListScreenProps> =
       ),
       [navigation],
     );
+
+    if (error) {
+      return (
+        <ContentError
+          onPressRefresh={() =>
+            dispatch(
+              actions.getNationalReadings.request({
+                offset: 0,
+                limit: 10,
+                withReset: true,
+              }),
+            )
+          }
+        />
+      );
+    }
 
     return (
       <FlatList<Reading>

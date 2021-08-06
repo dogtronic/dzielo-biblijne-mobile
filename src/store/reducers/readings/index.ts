@@ -8,43 +8,54 @@ import {Reading, SectionType} from '../../types/Reading.model';
 export type ReadingsState = {
   readings: Reading[];
   areReadingsLoading: boolean;
+  readingsError: boolean;
   readingDetails?: Reading;
   isReadingLoading: boolean;
+  readingDetailsError: boolean;
   sections: SectionType[];
   areHomiliesLoading: boolean;
   areMoreHomilies: boolean;
+  homiliesError: boolean;
   homilies: Reading[];
   areNationalReadingsLoading: boolean;
   areMoreNationalReadings: boolean;
+  nationalReadingsError: boolean;
   nationalReadings: Reading[];
 
   curiosities: Curiosity[];
   areCuriositiesLoading: boolean;
   areMoreCuriosities: boolean;
+  curiositiesError: boolean;
   photos: Photo[];
   arePhotosLoading: boolean;
   areMorePhotos: boolean;
+  photosError: boolean;
 };
 
 const initialState: ReadingsState = {
   readings: [],
   areReadingsLoading: true,
+  readingsError: false,
   readingDetails: undefined,
+  readingDetailsError: false,
   isReadingLoading: true,
   sections: [],
   areHomiliesLoading: true,
   areMoreHomilies: true,
+  homiliesError: false,
   homilies: [],
   areNationalReadingsLoading: true,
   areMoreNationalReadings: true,
+  nationalReadingsError: false,
   nationalReadings: [],
-
   areCuriositiesLoading: false,
   areMoreCuriosities: false,
   curiosities: [],
+  curiositiesError: false,
   arePhotosLoading: false,
   areMorePhotos: false,
   photos: [],
+  photosError: false,
 };
 
 export type ReadingsActions = ActionType<typeof actions>;
@@ -55,6 +66,7 @@ const readingsReducer = createReducer<ReadingsState, ReadingsActions>(
   .handleAction(actions.getCurrentReadings.request, state => ({
     ...state,
     areReadingsLoading: true,
+    readingsError: false,
   }))
   .handleAction(actions.getCurrentReadings.success, (state, action) => ({
     ...state,
@@ -62,18 +74,30 @@ const readingsReducer = createReducer<ReadingsState, ReadingsActions>(
     readings: action.payload.readings,
     sections: action.payload.sections,
   }))
+  .handleAction(actions.getCurrentReadings.failure, state => ({
+    ...state,
+    areReadingsLoading: false,
+    readingsError: true,
+  }))
   .handleAction(actions.getReadingDetails.request, state => ({
     ...state,
     isReadingLoading: true,
+    readingDetailsError: false,
   }))
   .handleAction(actions.getReadingDetails.success, (state, action) => ({
     ...state,
     isReadingLoading: false,
     readingDetails: action.payload,
   }))
+  .handleAction(actions.getReadingDetails.failure, state => ({
+    ...state,
+    isReadingLoading: false,
+    readingDetailsError: true,
+  }))
   .handleAction(actions.getHomilies.request, state => ({
     ...state,
     areHomiliesLoading: true,
+    homiliesError: false,
   }))
   .handleAction(actions.getHomilies.success, (state, action) => ({
     ...state,
@@ -83,9 +107,15 @@ const readingsReducer = createReducer<ReadingsState, ReadingsActions>(
       : [...state.homilies, ...action.payload.homilies],
     areMoreHomilies: action.payload.areMoreData,
   }))
+  .handleAction(actions.getHomilies.failure, state => ({
+    ...state,
+    areHomiliesLoading: false,
+    homiliesError: true,
+  }))
   .handleAction(actions.getNationalReadings.request, state => ({
     ...state,
     areNationalReadingsLoading: true,
+    nationalReadingsError: false,
   }))
   .handleAction(actions.getNationalReadings.success, (state, action) => ({
     ...state,
@@ -95,9 +125,15 @@ const readingsReducer = createReducer<ReadingsState, ReadingsActions>(
       : [...state.nationalReadings, ...action.payload.nationalReadings],
     areMoreNationalReadings: action.payload.areMoreData,
   }))
+  .handleAction(actions.getNationalReadings.failure, state => ({
+    ...state,
+    areNationalReadingsLoading: false,
+    nationalReadingsError: true,
+  }))
   .handleAction(actions.getCuriosities.request, state => ({
     ...state,
     areCuriositiesLoading: true,
+    curiositiesError: false,
   }))
   .handleAction(actions.getCuriosities.success, (state, action) => ({
     ...state,
@@ -107,9 +143,15 @@ const readingsReducer = createReducer<ReadingsState, ReadingsActions>(
       : [...state.curiosities, ...action.payload.curiosities],
     areMoreCuriosities: action.payload.areMoreData,
   }))
+  .handleAction(actions.getCuriosities.failure, state => ({
+    ...state,
+    areCuriositiesLoading: false,
+    curiositiesError: true,
+  }))
   .handleAction(actions.getPhotos.request, state => ({
     ...state,
     arePhotosLoading: true,
+    photosError: false,
   }))
   .handleAction(actions.getPhotos.success, (state, action) => ({
     ...state,
@@ -118,6 +160,11 @@ const readingsReducer = createReducer<ReadingsState, ReadingsActions>(
       ? action.payload.photos
       : [...state.photos, ...action.payload.photos],
     areMorePhotos: action.payload.areMoreData,
+  }))
+  .handleAction(actions.getPhotos.failure, state => ({
+    ...state,
+    arePhotosLoading: false,
+    photosError: true,
   }));
 
 export default readingsReducer;

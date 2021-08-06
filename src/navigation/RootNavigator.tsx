@@ -1,10 +1,11 @@
 import * as React from 'react';
 
 // Components
-import {StyleSheet, Dimensions} from 'react-native';
+import {StyleSheet, Dimensions, View} from 'react-native';
 import Topbar from '../components/Topbar';
 import Drawer from '../components/Drawer';
 import Loader from '../components/Loader';
+import ContentError from '../components/ContentError';
 
 // Navigation
 import {createDrawerNavigator} from '@react-navigation/drawer';
@@ -137,13 +138,26 @@ const RootNavigator = () => {
   const dispatch = useAppDispatch();
 
   const loading = useAppSelector(state => state.settings.isSettingsLoading);
+  const error = useAppSelector(state => state.settings.settingsError);
 
   React.useEffect(() => {
     dispatch(actions.getAppSettings.request());
   }, [dispatch]);
 
   if (loading) {
-    return <Loader isAbsolute />;
+    return (
+      <View style={styles.loaderContainer}>
+        <Loader isAbsolute />
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <ContentError
+        onPressRefresh={() => dispatch(actions.getAppSettings.request())}
+      />
+    );
   }
 
   return (
@@ -176,6 +190,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.primary,
+  },
+  loaderContainer: {
+    flex: 1,
+    backgroundColor: Colors.background,
   },
   drawerContainer: {
     width: Dimensions.get('window').width,

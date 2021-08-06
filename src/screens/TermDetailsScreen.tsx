@@ -8,6 +8,7 @@ import * as actions from '../store/actions';
 import {StyleSheet, ScrollView, Text} from 'react-native';
 import ImageHeader, {ImageHeaderText} from '../components/ImageHeader';
 import TopRoundedContainer from '../components/TopRoundedContainer';
+import ContentError from '../components/ContentError';
 
 //navigation
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -37,6 +38,7 @@ const TermDetailsScreen: React.VFC<TermDetailsScreenProps> = ({route}) => {
   const term = useAppSelector(state => state.terms.termDetails);
   const sectionImages = useAppSelector(state => state.settings.sectionImages);
   const loading = useAppSelector(state => state.terms.isTermDetailsLoading);
+  const error = useAppSelector(state => state.terms.termDetailsError);
 
   React.useEffect(() => {
     dispatch(actions.getTermDetails.request({termId}));
@@ -44,6 +46,16 @@ const TermDetailsScreen: React.VFC<TermDetailsScreenProps> = ({route}) => {
 
   if (loading) {
     return <Loader isAbsolute />;
+  }
+
+  if (error) {
+    return (
+      <ContentError
+        onPressRefresh={() =>
+          dispatch(actions.getTermDetails.request({termId}))
+        }
+      />
+    );
   }
 
   return (

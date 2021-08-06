@@ -11,6 +11,7 @@ import TopRoundedContainer from '../components/TopRoundedContainer';
 import {ReadingListItem} from '../components/ReadingListItem';
 import {CalendarIcon} from '../assets/svg';
 import {Notification} from '../components/Notification';
+import WeeklyPhoto from '../components/WeeklyPhoto';
 
 // Navigation
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -25,7 +26,7 @@ import pl from 'dayjs/locale/pl';
 
 // Styles
 import Fonts from '../constants/Fonts';
-import WeeklyPhoto from '../components/WeeklyPhoto';
+import Colors from '../constants/Colors';
 
 type DashboardScreenProps = {
   navigation: StackNavigationProp<RootNavigatorParamList, 'DashboardScreen'>;
@@ -131,6 +132,7 @@ export default DashboardScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: Colors.background,
   },
   contentContainer: {
     paddingTop: 25,
@@ -138,12 +140,12 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     flexGrow: 1,
+    marginTop: 20,
   },
   insideContainer: {
-    marginHorizontal: 20,
+    marginHorizontal: 25,
   },
   todayContainer: {
-    marginBottom: 20,
     flexDirection: 'row',
   },
   todayText: {
