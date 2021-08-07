@@ -13,7 +13,7 @@ export function* getNotifications(
   action: ActionType<typeof actions.getNotifications.request>,
 ) {
   try {
-    let link = `${Endpoint.Notifications}?_start=${action.payload.offset}&_limit=${action.payload.limit}`;
+    let link = `${Endpoint.Notifications}?_start=${action.payload.offset}&_limit=${action.payload.limit}&_sort=created_at:DESC`;
 
     const response: AxiosResponse<Notification[]> = yield Api.get(link);
 

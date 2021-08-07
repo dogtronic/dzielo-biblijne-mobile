@@ -64,7 +64,7 @@ const Drawer: React.VFC<DrawerProps> = ({closeDrawer, navigate}) => {
       },
       {
         name: t('menu:biblemap'),
-        onPress: () => navigate?.('CuriosityBaseScreen', {type: 'photo'}),
+        onPress: () => navigate?.('BibleMapScreen'),
       },
       {
         name: t('menu:recommendations'),

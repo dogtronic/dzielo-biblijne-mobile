@@ -13,6 +13,7 @@ import termsReducer from './reducers/terms';
 import readingsReducer from './reducers/readings';
 import notificationsReducer from './reducers/notifications';
 import userReducer from './reducers/user';
+import mapReducer from './reducers/map';
 
 // Sagas
 import {booksSaga} from './sagas/bible';
@@ -20,11 +21,12 @@ import {settingsSaga} from './sagas/settings';
 import {termsSaga} from './sagas/terms';
 import {readingsSaga} from './sagas/readings';
 import {notificationsSaga} from './sagas/notifications';
+import {mapSaga} from './sagas/map';
 
 const persistConfig = {
   key: 'store',
   storage: AsyncStorage,
-  blacklist: ['bible', 'settings', 'terms', 'readings', 'notifications'],
+  blacklist: ['bible', 'settings', 'terms', 'readings', 'notifications', 'map'],
 };
 
 const reducers = combineReducers({
@@ -34,6 +36,7 @@ const reducers = combineReducers({
   readings: readingsReducer,
   notifications: notificationsReducer,
   user: userReducer,
+  map: mapReducer,
 });
 
 const sagaMiddleware = createSagaMiddleware();
@@ -52,6 +55,7 @@ function* saga() {
     ...termsSaga,
     ...readingsSaga,
     ...notificationsSaga,
+    ...mapSaga,
   ]);
 }
 

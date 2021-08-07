@@ -5686,6 +5686,11 @@ react-native-iphone-x-helper@^1.3.0:
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.3.1.tgz#20c603e9a0e765fd6f97396638bdeb0e5a60b010"
   integrity sha512-HOf0jzRnq2/aFUcdCJ9w9JGzN3gdEg0zFE4FyYlp4jtidqU03D5X7ZegGKfT1EWteR0gPBGp9ye5T5FvSWi9Yg==
 
+react-native-maps-osmdroid@^0.26.1-rc1:
+  version "0.26.1-rc1"
+  resolved "https://registry.yarnpkg.com/react-native-maps-osmdroid/-/react-native-maps-osmdroid-0.26.1-rc1.tgz#22414d6f1b057cedba786ba83cd1a0e8ee1e8c86"
+  integrity sha512-B2a23lDl/oE8UzdMB5tveBUjU7beiGvGutu/nWSAvr9C6f9qie7tTFJ9tCOTPXYtbGTP0hWH37FzPNtD/KXgtg==
+
 react-native-modal@^12.0.2:
   version "12.0.2"
   resolved "https://registry.yarnpkg.com/react-native-modal/-/react-native-modal-12.0.2.tgz#c7d737330600916d1ff9527e1000629bde2f63c6"
