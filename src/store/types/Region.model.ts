@@ -25,6 +25,6 @@ export interface Country {
   alpha2: string;
   alpha3: string;
   numeric: number;
-  latitude: number;
-  longitude: number;
+  lat: number;
+  lng: number;
 }

@@ -1,15 +1,24 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 //redux
 import {useAppDispatch, useAppSelector} from '../hooks/useAppDispatch';
 import * as actions from '../store/actions';
 
 //components
-import {StyleSheet, ScrollView, Text, Image} from 'react-native';
+import {StyleSheet, ScrollView} from 'react-native';
 import ImageHeader, {ImageHeaderText} from '../components/ImageHeader';
 import TopRoundedContainer from '../components/TopRoundedContainer';
 import ContentError from '../components/ContentError';
-import MapView, {Marker} from 'react-native-maps-osmdroid';
+import MapView from 'react-native-maps-osmdroid';
+import MapMarker from '../components/MapMarker';
+import PlaceModal from '../components/PlaceModal';
+import MapControl from '../components/MapControl';
+import {
+  DisableFullScreenIcon,
+  FullScreenIcon,
+  MapMinusIcon,
+} from '../assets/svg';
+import Loader from '../components/Loader';
 
 //navigation
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -19,30 +28,49 @@ import {RootNavigatorParamList} from '../navigation/RootNavigator';
 //utils
 import {remoteAsset} from '../utils/remoteAsset';
 import {useTranslation} from 'react-i18next';
+import {getLatLngCenter} from '../utils/getLatLngCenter';
+import {polishCountriesTranslations} from '../assets/translations/countries';
 
 // Styles
-import Loader from '../components/Loader';
 import Colors from '../constants/Colors';
 import Fonts from '../constants/Fonts';
-import {Country, Region} from '../store/types/Region.model';
+
+// Models
+import {Country, Place, Region} from '../store/types/Region.model';
 
 type BibleMapScreenProps = {
   navigation: StackNavigationProp<RootNavigatorParamList, 'BibleMapScreen'>;
   route: RouteProp<RootNavigatorParamList, 'BibleMapScreen'>;
 };
 
+const altitude: {[key in string]: number} = {
+  '3': 10311040,
+  '4': 5932713,
+  '5': 2966357,
+  '6': 1483178,
+  '7': 741589,
+  '8': 243624,
+  '10': 100000,
+  '11': 36310,
+};
+
 const BibleMapScreen: React.VFC<BibleMapScreenProps> = () => {
   const {t} = useTranslation();
   const dispatch = useAppDispatch();
 
+  const mapRef = useRef<MapView>(null);
+
+  const [fullScreen, setFullScreen] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
   const [selectedRegion, setSelectedRegion] = useState<Region | null>(null);
+  const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
 
   const countries = useAppSelector(state => state.map.countries);
   const regions = useAppSelector(state => state.map.regions);
   const places = useAppSelector(state => state.map.places);
   const sectionImages = useAppSelector(state => state.settings.sectionImages);
   const loading = useAppSelector(state => state.map.areRegionsLoading);
+  const placesLoading = useAppSelector(state => state.map.arePlacesLoading);
   const error = useAppSelector(state => state.map.regionsError);
 
   useEffect(() => {
@@ -54,8 +82,71 @@ const BibleMapScreen: React.VFC<BibleMapScreenProps> = () => {
   }, [selectedRegion, dispatch]);
 
   useEffect(() => {
+    if (countries) {
+      const point = getLatLngCenter(countries);
+      mapRef.current?.setCamera({
+        center: {
+          latitude: point.lat,
+          longitude: point.lng,
+        },
+      });
+    }
+  }, [countries]);
+
+  useEffect(() => {
     dispatch(actions.getRegions.request());
   }, [dispatch]);
+
+  const animateMap = useCallback(
+    ({lat, lng, zoom}: {lat: number; lng: number; zoom?: number}) => {
+      mapRef.current?.animateCamera({
+        center: {
+          latitude: lat,
+          longitude: lng,
+        },
+        zoom,
+        altitude: zoom ? altitude[zoom?.toString()] : undefined,
+      });
+    },
+    [mapRef],
+  );
+
+  useEffect(() => {
+    if (places.length) {
+      const point = getLatLngCenter(places);
+      animateMap({lat: point.lat, lng: point.lng, zoom: 10});
+    }
+  }, [places, animateMap]);
+
+  const zoomOut = useCallback(() => {
+    if (selectedRegion) {
+      setSelectedRegion(null);
+      const selectedRegions = regions.filter(
+        w => w.country === selectedCountry?.alpha2,
+      );
+      const point = getLatLngCenter(selectedRegions);
+      animateMap({lat: point.lat, lng: point.lng, zoom: 7});
+      return;
+    }
+
+    if (selectedCountry) {
+      setSelectedCountry(null);
+      const point = getLatLngCenter(countries);
+      animateMap({lat: point.lat, lng: point.lng, zoom: 5});
+      return;
+    }
+  }, [selectedRegion, selectedCountry, countries, animateMap, regions]);
+
+  const selectCountry = useCallback(
+    (v: Country) => {
+      setSelectedCountry(v);
+
+      const selectedRegions = regions.filter(w => w.country === v.alpha2);
+      const point = getLatLngCenter(selectedRegions);
+      animateMap({lat: point.lat, lng: point.lng, zoom: 7});
+    },
+    [animateMap, regions],
+  );
 
   if (loading) {
     return <Loader isAbsolute />;
@@ -73,27 +164,29 @@ const BibleMapScreen: React.VFC<BibleMapScreenProps> = () => {
     <ScrollView
       style={styles.container}
       contentContainerStyle={styles.contentContainer}>
-      <ImageHeader uri={remoteAsset(sectionImages?.bible_map?.url) || ''}>
-        <ImageHeaderText content={t('menu:biblemap')} />
-      </ImageHeader>
+      {!fullScreen && (
+        <ImageHeader uri={remoteAsset(sectionImages?.bible_map?.url) || ''}>
+          <ImageHeaderText content={t('menu:biblemap')} />
+        </ImageHeader>
+      )}
 
-      <TopRoundedContainer style={styles.textContainer}>
-        <MapView style={{flex: 1}}>
+      <TopRoundedContainer
+        style={[
+          styles.textContainer,
+          fullScreen && styles.fullScreenTopContainer,
+        ]}>
+        <MapView ref={mapRef} style={styles.mapContainer}>
           {!selectedCountry &&
             countries.map(v => (
-              <Marker
+              <MapMarker
                 key={v.alpha2}
                 coordinate={{
-                  latitude: v.latitude,
-                  longitude: v.longitude,
+                  latitude: v.lat,
+                  longitude: v.lng,
                 }}
-                onPress={() => setSelectedCountry(v)}>
-                <Text style={styles.markerText}>{v.country}</Text>
-                <Image
-                  style={styles.markerImage}
-                  source={require('../assets/images/map_pin.png')}
-                />
-              </Marker>
+                onPress={() => selectCountry(v)}
+                title={polishCountriesTranslations[v.alpha2].name_pl}
+              />
             ))}
 
           {selectedCountry &&
@@ -101,37 +194,52 @@ const BibleMapScreen: React.VFC<BibleMapScreenProps> = () => {
             regions
               .filter(v => v.country === selectedCountry.alpha2)
               .map(region => (
-                <Marker
+                <MapMarker
                   key={region.id.toString()}
                   coordinate={{
                     latitude: region.lat,
                     longitude: region.lng,
                   }}
-                  onPress={() => setSelectedRegion(region)}>
-                  <Text style={styles.markerText}>{region.name}</Text>
-                  <Image
-                    style={styles.markerImage}
-                    source={require('../assets/images/map_pin.png')}
-                  />
-                </Marker>
+                  onPress={() => setSelectedRegion(region)}
+                  title={region.name}
+                />
               ))}
 
           {selectedRegion &&
             places.map(place => (
-              <Marker
+              <MapMarker
                 key={place.id.toString()}
                 coordinate={{
                   latitude: place.lat,
                   longitude: place.lng,
-                }}>
-                <Text style={styles.markerText}>{place.name}</Text>
-                <Image
-                  style={styles.markerImage}
-                  source={require('../assets/images/map_pin.png')}
-                />
-              </Marker>
+                }}
+                title={place.name}
+                onPress={() => setSelectedPlace(place)}
+              />
             ))}
         </MapView>
+
+        <MapControl
+          containerStyle={styles.fullScreenButton}
+          onPress={() => setFullScreen(!fullScreen)}>
+          {fullScreen ? <DisableFullScreenIcon /> : <FullScreenIcon />}
+        </MapControl>
+
+        {selectedCountry && (
+          <MapControl containerStyle={styles.zoomOutButton} onPress={zoomOut}>
+            <MapMinusIcon />
+          </MapControl>
+        )}
+
+        <PlaceModal
+          place={selectedPlace}
+          isVisible={!!selectedPlace}
+          toggleModal={() => setSelectedPlace(null)}
+        />
+
+        {placesLoading && (
+          <Loader isAbsolute backgroundColor={'rgba(255,255,255,0.3)'} />
+        )}
       </TopRoundedContainer>
     </ScrollView>
   );
@@ -146,6 +254,9 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flexGrow: 1,
+  },
+  mapContainer: {
+    flex: 1,
   },
   textContainer: {
     marginTop: 40,
@@ -162,17 +273,17 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.RobotoLight,
     marginTop: 30,
   },
-  markerText: {
-    backgroundColor: 'rgba(0,0,0,0.7)',
-    color: Colors.white,
-    paddingVertical: 3,
-    paddingHorizontal: 10,
-    marginBottom: 5,
-    borderRadius: 5,
+  fullScreenButton: {
+    top: 20,
+    right: 20,
   },
-  markerImage: {
-    height: 40,
-    width: 40,
-    alignSelf: 'center',
+  zoomOutButton: {
+    top: 20,
+    right: 80,
+  },
+  fullScreenTopContainer: {
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
+    marginTop: 0,
   },
 });

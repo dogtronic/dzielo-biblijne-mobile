@@ -20,7 +20,7 @@ const initialState: MapState = {
   areRegionsLoading: true,
   regionsError: false,
   places: [],
-  arePlacesLoading: true,
+  arePlacesLoading: false,
   placesError: false,
   countries: [],
 };

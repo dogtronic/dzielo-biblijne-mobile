@@ -6,6 +6,9 @@ import RightArrowIcon from './RightArrow';
 import SearchIcon from './SearchIcon';
 import BookIcon from './BookIcon';
 import BellIcon from './BellIcon';
+import DisableFullScreenIcon from './DisableFullScreenIcon';
+import FullScreenIcon from './FullScreenIcon';
+import MapMinusIcon from './MapMinusIcon';
 
 export {
   MenuIcon,
@@ -16,4 +19,7 @@ export {
   SearchIcon,
   BookIcon,
   BellIcon,
+  DisableFullScreenIcon,
+  FullScreenIcon,
+  MapMinusIcon,
 };
