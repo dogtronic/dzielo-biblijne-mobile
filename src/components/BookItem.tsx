@@ -31,7 +31,9 @@ export const BookItem: React.VFC<BookItemProps> = ({item, withoutTopLine}) => {
             testament: item.testament,
           })
         }>
-        <Text style={styles.text}>{item.name}</Text>
+        <Text style={styles.text} numberOfLines={1}>
+          {item.name}
+        </Text>
       </TouchableOpacity>
     </View>
   );

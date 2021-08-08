@@ -18,6 +18,7 @@ import ImageHeader, {ImageHeaderText} from '../components/ImageHeader';
 import Loader from '../components/Loader';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import ContentError from '../components/ContentError';
+import EmptyData from '../components/EmptyData';
 
 // Navigation
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -56,7 +57,7 @@ const ReadingsScreen: React.VFC<ReadingsScreenProps> = ({navigation}) => {
   }, [dispatch]);
 
   if (loading) {
-    return <Loader isAbsolute />;
+    return <Loader />;
   }
 
   if (error) {
@@ -77,6 +78,8 @@ const ReadingsScreen: React.VFC<ReadingsScreenProps> = ({navigation}) => {
       </ImageHeader>
 
       <TopRoundedContainer style={styles.insideContainer}>
+        {!mainReaddings.length && !additionalReadings.length && <EmptyData />}
+
         {mainReaddings.map(v => (
           <ReadingListItem
             key={v.id}

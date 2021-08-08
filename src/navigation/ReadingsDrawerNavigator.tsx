@@ -93,7 +93,7 @@ const ReadingsDrawerNavigator = ({route}) => {
     <DrawerNav.Navigator
       initialRouteName="ReadingsStackNavigator"
       drawerPosition="right"
-      drawerType="front"
+      drawerType="slide"
       drawerStyle={styles.drawerContainer}
       drawerContent={props => (
         <ReadingDrawer

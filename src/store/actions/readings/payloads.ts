@@ -41,6 +41,7 @@ export type GetCuriositiesRequestPayload = {
   offset: number;
   filter?: string;
   withReset?: boolean;
+  random?: boolean;
 };
 
 export type GetCuriositiesSuccessPayload = {

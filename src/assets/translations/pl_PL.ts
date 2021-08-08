@@ -20,6 +20,8 @@ export default {
     serverErrorDescription:
       'Sprawdź połączenie z Internetem lub spróbuj ponownie później',
     tryAgain: 'Spróbuj ponownie',
+    nextChapter: 'Następny rodział',
+    dataNotFound: 'Nie znaleziono danych',
   },
   menu: {
     startPage: 'Strona startowa',

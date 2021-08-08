@@ -25,12 +25,14 @@ export const ReadingListItem: React.FC<ReadingListItemProps> = ({
 }) => (
   <ViewOverflow>
     <InfoBoxContainer containerStyle={styles.container}>
-      <Image style={styles.image} source={{uri}} resizeMode="cover" />
-      <TouchableOpacity onPress={onPressButton} activeOpacity={0.7}>
+      <TouchableOpacity
+        onPress={onPressButton}
+        activeOpacity={0.7}
+        style={styles.rowContainer}>
+        <Image style={styles.image} source={{uri}} resizeMode="cover" />
         <InfoBox
           title={title}
           description={description}
-          onPressButton={onPressButton}
           position="vertical"
           customButtonLabel={customButtonLabel}
         />
@@ -44,15 +46,16 @@ export const ReadingListItem: React.FC<ReadingListItemProps> = ({
 const styles = StyleSheet.create({
   container: {
     marginTop: 28,
-    flexDirection: 'row',
   },
-
+  rowContainer: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    marginTop: -28,
+  },
   image: {
     height: 110,
     width: 110,
     borderRadius: 10,
     marginRight: 15,
-    marginTop: -28,
-    overflow: 'visible',
   },
 });

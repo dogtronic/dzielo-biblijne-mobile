@@ -93,7 +93,7 @@ const BibleScreen: React.VFC<BibleScreenProps> = ({navigation}) => {
         </View>
       )}
 
-      <TopRoundedContainer>
+      <TopRoundedContainer style={styles.textContainer}>
         <ReadingListItem
           title={t('bible:oldTestamentHeader')}
           description={t('bible:oldTestamentDescription')}
@@ -133,12 +133,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.background,
   },
+  textContainer: {
+    marginTop: 30,
+  },
   contentContainer: {
     flexGrow: 1,
   },
   insideContainer: {
     marginTop: 20,
-    marginBottom: 40,
     marginHorizontal: 20,
   },
 });

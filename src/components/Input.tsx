@@ -71,14 +71,16 @@ const styles = StyleSheet.create({
   },
   container: {
     color: Colors.black,
-    height: 34,
+    height: 44,
     padding: 0,
     paddingHorizontal: 10,
     fontSize: 16,
     fontFamily: Fonts.RobotoLight,
+    alignItems: 'flex-start',
   },
   multiline: {
-    height: 135,
+    height: 'auto',
+    minHeight: 44,
   },
   errorText: {
     color: Colors.primary,

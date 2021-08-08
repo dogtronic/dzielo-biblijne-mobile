@@ -4,7 +4,13 @@ import React, {useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from '../hooks/useAppDispatch';
 
 //components
-import {StyleSheet, ScrollView, Text, useWindowDimensions} from 'react-native';
+import {
+  StyleSheet,
+  ScrollView,
+  Text,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import ImageHeader, {ImageHeaderText} from '../components/ImageHeader';
 import {RightArrowIcon} from '../assets/svg';
 import HtmlViewer from '../components/HtmlViewer';
@@ -23,6 +29,8 @@ import * as actions from '../store/actions';
 // Styles
 import Colors from '../constants/Colors';
 import Fonts from '../constants/Fonts';
+import ContentButton from '../components/ContentButton';
+import {useTranslation} from 'react-i18next';
 
 type BibleScreenProps = {
   navigation: StackNavigationProp<
@@ -35,10 +43,14 @@ type BibleScreenProps = {
 const BibleScreen: React.VFC<BibleScreenProps> = ({route, navigation}) => {
   const {chapterId} = route.params;
 
+  const {t} = useTranslation();
   const dispatch = useAppDispatch();
   const windowWidth = useWindowDimensions().width;
 
   const chapter = useAppSelector(state => state.bible.chapterDetails);
+  const {isNextChapter, isPreviousChapter} = useAppSelector(
+    state => state.bible,
+  );
   const sectionImages = useAppSelector(state => state.settings.sectionImages);
   const loading = useAppSelector(state => state.bible.isChapterDetailsLoading);
   const error = useAppSelector(state => state.bible.chapterDetailsError);
@@ -108,6 +120,30 @@ const BibleScreen: React.VFC<BibleScreenProps> = ({route, navigation}) => {
       <Text style={styles.title}>{chapter?.title}</Text>
 
       <HtmlViewer html={chapter?.text} containerStyle={styles.content} />
+
+      <View style={styles.buttonsContainer}>
+        <ContentButton
+          title={t('common:previous')}
+          onPress={() =>
+            isPreviousChapter &&
+            navigation.navigate('ChapterDetailsScreen', {
+              chapterId: isPreviousChapter,
+            })
+          }
+          disabled={isPreviousChapter === undefined}
+        />
+
+        <ContentButton
+          title={t('common:nextChapter')}
+          onPress={() =>
+            isNextChapter &&
+            navigation.navigate('ChapterDetailsScreen', {
+              chapterId: isNextChapter,
+            })
+          }
+          disabled={isNextChapter === undefined}
+        />
+      </View>
     </ScrollView>
   );
 };
@@ -133,6 +169,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: Fonts.RobotoRegular,
     marginTop: 20,
+    marginHorizontal: 20,
+  },
+  buttonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 50,
     marginHorizontal: 20,
   },
 });

@@ -4,7 +4,8 @@ import React, {useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from '../hooks/useAppDispatch';
 
 //components
-import {StyleSheet, ScrollView, Text} from 'react-native';
+import {StyleSheet, Text} from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import ImageHeader, {ImageHeaderText} from '../components/ImageHeader';
 import HtmlViewer from '../components/HtmlViewer';
 import Loader from '../components/Loader';
@@ -77,11 +78,13 @@ const ContactScreen: React.VFC<ContactScreenProps> = () => {
   }
 
   return (
-    <ScrollView
+    <KeyboardAwareScrollView
+      showsVerticalScrollIndicator={false}
       bounces={false}
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
-      keyboardShouldPersistTaps={'handled'}>
+      keyboardShouldPersistTaps={'handled'}
+      extraHeight={140}>
       <ImageHeader uri={remoteAsset(sectionImages?.contact?.url) || ''}>
         <ImageHeaderText content={t('menu:contact')} />
       </ImageHeader>
@@ -137,7 +140,7 @@ const ContactScreen: React.VFC<ContactScreenProps> = () => {
           )}
         </Formik>
       </TopRoundedContainer>
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 };
 

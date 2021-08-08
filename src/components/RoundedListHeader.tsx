@@ -9,8 +9,9 @@ import GlobalStyles from '../constants/GlobalStyles';
 
 const RoundedListHeader: React.VFC = () => (
   <>
-    <View style={[GlobalStyles.shadow, styles.topContainer]} />
-    <View style={styles.bottomContainer} />
+    <View style={[GlobalStyles.shadow, styles.topContainer]}>
+      <View style={styles.bottomContainer} />
+    </View>
   </>
 );
 
@@ -23,10 +24,12 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
+    marginTop: 30,
   },
   bottomContainer: {
-    height: 10,
+    height: 30,
     width: '100%',
     backgroundColor: Colors.white,
+    marginTop: 30,
   },
 });

@@ -44,7 +44,7 @@ const CuriosityBaseScreen: React.VFC<CuriosityBaseScreenProps> = ({route}) => {
   const {t} = useTranslation();
   const dispatch = useAppDispatch();
 
-  const [offset, setOffest] = useState(10);
+  const [offset, setOffest] = useState(50);
   const [curiosityIndex, setCuriosityIndex] = useState(0);
 
   const sectionImages = useAppSelector(state => state.settings.sectionImages);
@@ -80,7 +80,7 @@ const CuriosityBaseScreen: React.VFC<CuriosityBaseScreenProps> = ({route}) => {
       return;
     }
 
-    const params = {offset: 0, limit: 10, withReset: true};
+    const params = {offset: 0, limit: 50, withReset: true};
     if (type === 'curiosity') {
       dispatch(actions.getCuriosities.request(params));
     } else {
@@ -92,28 +92,32 @@ const CuriosityBaseScreen: React.VFC<CuriosityBaseScreenProps> = ({route}) => {
     getEntities();
   }, [getEntities]);
 
-  const getCuriosities = debounce((withResetOffest?: boolean) => {
-    let customOffset = offset;
+  const getCuriosities = debounce(
+    (withResetOffest?: boolean, random?: boolean) => {
+      let customOffset = offset;
 
-    if (withResetOffest) {
-      setOffest(0);
-      customOffset = 0;
-    }
+      if (withResetOffest) {
+        setOffest(0);
+        customOffset = 0;
+      }
 
-    const params = {
-      offset: withResetOffest ? 0 : offset,
-      limit: 10,
-      withReset: withResetOffest,
-    };
+      const params = {
+        offset: withResetOffest ? 0 : offset,
+        limit: 50,
+        withReset: withResetOffest,
+        random,
+      };
 
-    if (type === 'curiosity') {
-      dispatch(actions.getCuriosities.request(params));
-    } else {
-      dispatch(actions.getPhotos.request(params));
-    }
+      if (type === 'curiosity') {
+        dispatch(actions.getCuriosities.request(params));
+      } else {
+        dispatch(actions.getPhotos.request(params));
+      }
 
-    setOffest(customOffset + 10);
-  }, 200);
+      setOffest(customOffset + 50);
+    },
+    200,
+  );
 
   const nextCuriosity = () => {
     if (
@@ -183,7 +187,12 @@ const CuriosityBaseScreen: React.VFC<CuriosityBaseScreenProps> = ({route}) => {
             disabled={curiosityIndex === 0}
           />
 
-          {!customCuriosities && <ContentButton title={t('common:random')} />}
+          {!customCuriosities && (
+            <ContentButton
+              title={t('common:random')}
+              onPress={() => getCuriosities(true, true)}
+            />
+          )}
 
           <ContentButton
             title={t('common:next')}

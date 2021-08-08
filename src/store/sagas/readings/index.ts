@@ -109,8 +109,10 @@ export function* getCuriosities(
 
     yield put(
       actions.getCuriosities.success({
-        curiosities: response.data,
-        areMoreData: response.data.length >= 10,
+        curiosities: action.payload.random
+          ? response.data.sort(() => Math.random() - 0.5)
+          : response.data,
+        areMoreData: response.data.length >= 50,
         withReset: action.payload.withReset,
       }),
     );
@@ -129,8 +131,10 @@ export function* getPhotos(
 
     yield put(
       actions.getPhotos.success({
-        photos: response.data,
-        areMoreData: response.data.length >= 10,
+        photos: action.payload.random
+          ? response.data.sort(() => Math.random() - 0.5)
+          : response.data,
+        areMoreData: response.data.length >= 50,
         withReset: action.payload.withReset,
       }),
     );

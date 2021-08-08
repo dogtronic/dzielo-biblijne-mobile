@@ -1,8 +1,9 @@
 import React from 'react';
 
 // Components
-import {StyleSheet, Text, Image} from 'react-native';
+import {StyleSheet, Text} from 'react-native';
 import {Marker} from 'react-native-maps-osmdroid';
+import {MarkerIcon} from '../assets/svg';
 
 // Styles
 import Colors from '../constants/Colors';
@@ -20,10 +21,7 @@ const MapMarker: React.FC<MapMarkerProps> = ({coordinate, onPress, title}) => {
   return (
     <Marker coordinate={coordinate} onPress={onPress}>
       <Text style={styles.markerText}>{title}</Text>
-      <Image
-        style={styles.markerImage}
-        source={require('../assets/images/map_pin.png')}
-      />
+      <MarkerIcon style={styles.markerImage} />
     </Marker>
   );
 };

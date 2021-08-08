@@ -64,6 +64,7 @@ const DashboardScreen: React.VFC<DashboardScreenProps> = ({navigation}) => {
 
   return (
     <ScrollView
+      bounces={false}
       style={styles.container}
       contentContainerStyle={styles.contentContainer}>
       <View style={styles.insideContainer}>

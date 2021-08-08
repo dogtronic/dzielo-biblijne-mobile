@@ -40,7 +40,7 @@ export default SearchInput;
 
 const styles = StyleSheet.create({
   container: {
-    height: 34,
+    height: 44,
     backgroundColor: Colors.white,
     color: Colors.white,
     paddingHorizontal: 10,
@@ -48,10 +48,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 30,
+    marginTop: 30,
   },
   input: {
-    height: 34,
+    height: 44,
     flex: 1,
     marginRight: 15,
     fontFamily: Fonts.RobotoLight,

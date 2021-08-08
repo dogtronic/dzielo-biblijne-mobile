@@ -1,6 +1,7 @@
 import {createAsyncAction} from 'typesafe-actions';
 import {
   GetChapterDetailsRequestPayload,
+  GetChapterDetailsSuccessPayload,
   GetChaptersRequestPayload,
 } from './payloads';
 
@@ -24,4 +25,8 @@ export const getChapterDetails = createAsyncAction(
   'GET_CHAPTER_DETAILS',
   'GET_CHAPTER_DETAILS_SUCCESS',
   'GET_CHAPTER_DETAILS_FAILURE',
-)<GetChapterDetailsRequestPayload, Chapter, undefined>();
+)<
+  GetChapterDetailsRequestPayload,
+  GetChapterDetailsSuccessPayload,
+  undefined
+>();

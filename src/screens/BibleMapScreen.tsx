@@ -51,7 +51,7 @@ const altitude: {[key in string]: number} = {
   '7': 741589,
   '8': 243624,
   '10': 100000,
-  '11': 36310,
+  '12': 36310,
 };
 
 const BibleMapScreen: React.VFC<BibleMapScreenProps> = () => {
@@ -81,22 +81,6 @@ const BibleMapScreen: React.VFC<BibleMapScreenProps> = () => {
     }
   }, [selectedRegion, dispatch]);
 
-  useEffect(() => {
-    if (countries) {
-      const point = getLatLngCenter(countries);
-      mapRef.current?.setCamera({
-        center: {
-          latitude: point.lat,
-          longitude: point.lng,
-        },
-      });
-    }
-  }, [countries]);
-
-  useEffect(() => {
-    dispatch(actions.getRegions.request());
-  }, [dispatch]);
-
   const animateMap = useCallback(
     ({lat, lng, zoom}: {lat: number; lng: number; zoom?: number}) => {
       mapRef.current?.animateCamera({
@@ -112,9 +96,20 @@ const BibleMapScreen: React.VFC<BibleMapScreenProps> = () => {
   );
 
   useEffect(() => {
+    if (countries) {
+      const point = getLatLngCenter(countries);
+      animateMap({lat: point.lat, lng: point.lng, zoom: 5});
+    }
+  }, [countries, animateMap]);
+
+  useEffect(() => {
+    dispatch(actions.getRegions.request());
+  }, [dispatch]);
+
+  useEffect(() => {
     if (places.length) {
       const point = getLatLngCenter(places);
-      animateMap({lat: point.lat, lng: point.lng, zoom: 10});
+      animateMap({lat: point.lat, lng: point.lng, zoom: 12});
     }
   }, [places, animateMap]);
 
@@ -176,7 +171,7 @@ const BibleMapScreen: React.VFC<BibleMapScreenProps> = () => {
           styles.textContainer,
           fullScreen && styles.fullScreenTopContainer,
         ]}>
-        <MapView ref={mapRef} style={styles.mapContainer}>
+        <MapView ref={mapRef} style={styles.mapContainer} rotateEnabled={false}>
           {!selectedCountry &&
             countries.map(v => (
               <MapMarker
@@ -264,6 +259,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
     paddingVertical: 0,
     overflow: 'hidden',
+    backgroundColor: 'red',
+    paddingBottom: 0,
   },
   title: {
     fontSize: 16,

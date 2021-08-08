@@ -27,6 +27,7 @@ import Fonts from '../constants/Fonts';
 
 // Models
 import {Notification} from '../store/types/Notification.model';
+import RoundedListHeader from '../components/RoundedListHeader';
 
 type NotificationsScreenProps = {
   navigation: StackNavigationProp<
@@ -138,6 +139,8 @@ const NotificationsScreen: React.VFC<NotificationsScreenProps> = ({
             uri={remoteAsset(sectionImages?.notifications?.url) || ''}>
             <ImageHeaderText content={t('menu:announcements')} />
           </ImageHeader>
+
+          <RoundedListHeader />
         </View>
       }
       ListFooterComponent={
@@ -148,6 +151,7 @@ const NotificationsScreen: React.VFC<NotificationsScreenProps> = ({
         ) : undefined
       }
       style={styles.container}
+      contentContainerStyle={styles.contentContainer}
       data={notifications}
       renderItem={renderItem}
       keyExtractor={item => item.id.toString()}
@@ -164,9 +168,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.white,
   },
+  contentContainer: {
+    flexGrow: 1,
+  },
   headerContainer: {
     backgroundColor: Colors.background,
-    paddingBottom: 30,
+    marginBottom: -30,
   },
   loaderContainer: {
     height: 80,

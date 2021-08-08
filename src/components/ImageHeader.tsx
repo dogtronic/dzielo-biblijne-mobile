@@ -1,15 +1,9 @@
 import React from 'react';
 
 // Components
-import {
-  StyleSheet,
-  Text,
-  Image,
-  View,
-  TextStyle,
-  StyleProp,
-} from 'react-native';
+import {StyleSheet, Text, View, TextStyle, StyleProp} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import FastImage from 'react-native-fast-image';
 
 // Styles
 import Colors from '../constants/Colors';
@@ -31,7 +25,7 @@ type ImageHeaderTextProps = {
 
 const ImageHeader: React.FC<ImageHeaderProps> = ({uri, children, subTitle}) => (
   <>
-    <Image source={{uri}} style={styles.image} />
+    <FastImage source={{uri}} style={styles.image} />
     <View style={[styles.container, GlobalStyles.shadow]}>
       <View style={styles.textContainer}>{children}</View>
       {subTitle && <Text style={styles.subTitle}>{subTitle}</Text>}

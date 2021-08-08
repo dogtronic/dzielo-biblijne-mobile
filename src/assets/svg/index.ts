@@ -9,6 +9,7 @@ import BellIcon from './BellIcon';
 import DisableFullScreenIcon from './DisableFullScreenIcon';
 import FullScreenIcon from './FullScreenIcon';
 import MapMinusIcon from './MapMinusIcon';
+import MarkerIcon from './MarkerIcon';
 
 export {
   MenuIcon,
@@ -22,4 +23,5 @@ export {
   DisableFullScreenIcon,
   FullScreenIcon,
   MapMinusIcon,
+  MarkerIcon,
 };

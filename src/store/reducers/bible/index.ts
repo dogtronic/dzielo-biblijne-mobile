@@ -15,6 +15,8 @@ export type BibleState = {
   chapterDetails?: Chapter;
   isChapterDetailsLoading: boolean;
   chapterDetailsError: boolean;
+  isNextChapter?: number;
+  isPreviousChapter?: number;
 };
 
 const initialState: BibleState = {
@@ -66,11 +68,15 @@ const bibleReducer = createReducer<BibleState, BibleActions>(initialState)
     ...state,
     isChapterDetailsLoading: true,
     chapterDetailsError: false,
+    isNextChapter: undefined,
+    isPreviousChapter: undefined,
   }))
   .handleAction(actions.getChapterDetails.success, (state, action) => ({
     ...state,
     isChapterDetailsLoading: false,
-    chapterDetails: action.payload,
+    chapterDetails: action.payload.chapter,
+    isNextChapter: action.payload.isNextChapter,
+    isPreviousChapter: action.payload.isPreviousChapter,
   }))
   .handleAction(actions.getChapterDetails.failure, state => ({
     ...state,

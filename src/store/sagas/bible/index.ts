@@ -48,8 +48,31 @@ export function* getChapterDetails(
       `${Endpoint.Chapters}${action.payload.chapterId}`,
     );
 
-    yield put(actions.getChapterDetails.success(response.data));
+    const nextChapterResponse: AxiosResponse<Chapter[]> = yield Api.get(
+      `${Endpoint.Chapters}?number=${response.data.number + 1}&bible_book.id=${
+        response.data.bible_book.id
+      }`,
+    );
+
+    const prevChapterResponse: AxiosResponse<Chapter[]> = yield Api.get(
+      `${Endpoint.Chapters}?number=${response.data.number - 1}&bible_book.id=${
+        response.data.bible_book.id
+      }`,
+    );
+
+    yield put(
+      actions.getChapterDetails.success({
+        chapter: response.data,
+        isNextChapter: nextChapterResponse?.data?.length
+          ? nextChapterResponse.data[0].id
+          : undefined,
+        isPreviousChapter: prevChapterResponse?.data?.length
+          ? prevChapterResponse.data[0].id
+          : undefined,
+      }),
+    );
   } catch (err) {
+    console.log(err);
     yield put(actions.getChapterDetails.failure());
   }
 }

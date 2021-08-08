@@ -23,7 +23,7 @@ const ChapterButton: React.VFC<ChapterButtonProps> = ({item}) => {
 
   return (
     <TouchableOpacity
-      activeOpacity={0.6}
+      activeOpacity={0.8}
       style={[styles.container, GlobalStyles.shadow]}
       onPress={() =>
         navigation.navigate('ChapterDetailsScreen', {chapterId: item.id})
