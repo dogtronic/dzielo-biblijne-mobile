@@ -4,7 +4,7 @@ import React, {useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from '../hooks/useAppDispatch';
 
 //components
-import {StyleSheet, ScrollView, Text} from 'react-native';
+import {StyleSheet, ScrollView, Text, useWindowDimensions} from 'react-native';
 import ImageHeader, {ImageHeaderText} from '../components/ImageHeader';
 import {RightArrowIcon} from '../assets/svg';
 import HtmlViewer from '../components/HtmlViewer';
@@ -32,10 +32,11 @@ type BibleScreenProps = {
   route: RouteProp<RootNavigatorParamList, 'ChapterDetailsScreen'>;
 };
 
-const BibleScreen: React.VFC<BibleScreenProps> = ({route}) => {
+const BibleScreen: React.VFC<BibleScreenProps> = ({route, navigation}) => {
   const {chapterId} = route.params;
 
   const dispatch = useAppDispatch();
+  const windowWidth = useWindowDimensions().width;
 
   const chapter = useAppSelector(state => state.bible.chapterDetails);
   const sectionImages = useAppSelector(state => state.settings.sectionImages);
@@ -73,6 +74,7 @@ const BibleScreen: React.VFC<BibleScreenProps> = ({route}) => {
 
   return (
     <ScrollView
+      bounces={false}
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
       showsVerticalScrollIndicator={false}>
@@ -82,9 +84,25 @@ const BibleScreen: React.VFC<BibleScreenProps> = ({route}) => {
             ? remoteAsset(sectionImages?.old_testament?.url) || ''
             : remoteAsset(sectionImages?.new_testament?.url) || ''
         }>
-        <ImageHeaderText content={chapter?.bible_book.name || ''} underline />
+        <ImageHeaderText
+          content={chapter?.bible_book.name || ''}
+          underline
+          onPress={() => navigation.navigate('BibleScreen')}
+          textStyle={{maxWidth: windowWidth - 130}}
+        />
         <RightArrowIcon style={styles.headerArrow} />
-        <ImageHeaderText content={chapter?.number.toString()} underline />
+        {chapter?.bible_book && (
+          <ImageHeaderText
+            content={chapter?.number.toString()}
+            underline
+            onPress={() =>
+              navigation.navigate('ChaptersScreen', {
+                bookId: chapter?.bible_book.id,
+                testament: chapter?.bible_book.testament,
+              })
+            }
+          />
+        )}
       </ImageHeader>
 
       <Text style={styles.title}>{chapter?.title}</Text>

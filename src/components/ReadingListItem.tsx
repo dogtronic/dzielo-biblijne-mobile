@@ -4,6 +4,8 @@ import React from 'react';
 import {StyleSheet, Image} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {InfoBox, InfoBoxContainer} from './InfoBox';
+//@ts-ignore - missing ts definitions
+import ViewOverflow from 'react-native-view-overflow';
 
 type ReadingListItemProps = {
   title: string;
@@ -21,36 +23,36 @@ export const ReadingListItem: React.FC<ReadingListItemProps> = ({
   customButtonLabel,
   children,
 }) => (
-  <InfoBoxContainer containerStyle={styles.container}>
-    <TouchableOpacity
-      style={styles.insideContainer}
-      onPress={onPressButton}
-      activeOpacity={0.7}>
+  <ViewOverflow>
+    <InfoBoxContainer containerStyle={styles.container}>
       <Image style={styles.image} source={{uri}} resizeMode="cover" />
-      <InfoBox
-        title={title}
-        description={description}
-        onPressButton={onPressButton}
-        position="vertical"
-        customButtonLabel={customButtonLabel}
-      />
-    </TouchableOpacity>
-    {children}
-  </InfoBoxContainer>
+      <TouchableOpacity onPress={onPressButton} activeOpacity={0.7}>
+        <InfoBox
+          title={title}
+          description={description}
+          onPressButton={onPressButton}
+          position="vertical"
+          customButtonLabel={customButtonLabel}
+        />
+      </TouchableOpacity>
+
+      {children}
+    </InfoBoxContainer>
+  </ViewOverflow>
 );
 
 const styles = StyleSheet.create({
   container: {
     marginTop: 28,
-  },
-  insideContainer: {
     flexDirection: 'row',
   },
+
   image: {
     height: 110,
     width: 110,
     borderRadius: 10,
     marginRight: 15,
     marginTop: -28,
+    overflow: 'visible',
   },
 });

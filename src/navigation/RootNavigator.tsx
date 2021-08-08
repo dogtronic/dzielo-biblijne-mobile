@@ -11,7 +11,10 @@ import ContentError from '../components/ContentError';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {NavigationContainer} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {createStackNavigator} from '@react-navigation/stack';
+import {
+  CardStyleInterpolators,
+  createStackNavigator,
+} from '@react-navigation/stack';
 
 // Styles
 import Colors from '../constants/Colors';
@@ -89,6 +92,7 @@ const StackRootNavigator = () => {
           );
         },
         headerShown: true,
+        cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}>
       <StackNav.Screen name="DashboardScreen" component={DashboardScreen} />
       <StackNav.Screen name="BibleScreen" component={BibleScreen} />
@@ -169,7 +173,7 @@ const RootNavigator = () => {
         <DrawerNav.Navigator
           initialRouteName="StackRootNavigator"
           drawerPosition="right"
-          drawerType="slide"
+          drawerType="front"
           drawerStyle={styles.drawerContainer}
           drawerContent={props => (
             <Drawer

@@ -143,6 +143,7 @@ const CuriosityBaseScreen: React.VFC<CuriosityBaseScreenProps> = ({route}) => {
 
   return (
     <ScrollView
+      bounces={false}
       contentContainerStyle={styles.contentContainer}
       style={styles.container}>
       <ImageHeader

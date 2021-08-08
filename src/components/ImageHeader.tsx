@@ -1,7 +1,15 @@
 import React from 'react';
 
 // Components
-import {StyleSheet, Text, Image, View} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  Image,
+  View,
+  TextStyle,
+  StyleProp,
+} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 // Styles
 import Colors from '../constants/Colors';
@@ -17,6 +25,8 @@ type ImageHeaderTextProps = {
   content?: string;
   underline?: boolean;
   disabled?: boolean;
+  onPress?: () => void;
+  textStyle?: StyleProp<TextStyle>;
 };
 
 const ImageHeader: React.FC<ImageHeaderProps> = ({uri, children, subTitle}) => (
@@ -33,15 +43,21 @@ export const ImageHeaderText: React.VFC<ImageHeaderTextProps> = ({
   content,
   underline,
   disabled,
+  onPress,
+  textStyle,
 }) => (
-  <Text
-    style={[
-      styles.headerText,
-      underline && styles.underlineText,
-      disabled && styles.disabledText,
-    ]}>
-    {content}
-  </Text>
+  <TouchableOpacity onPress={onPress} activeOpacity={onPress ? 0.7 : 1}>
+    <Text
+      style={[
+        styles.headerText,
+        underline && styles.underlineText,
+        disabled && styles.disabledText,
+        textStyle,
+      ]}
+      numberOfLines={1}>
+      {content}
+    </Text>
+  </TouchableOpacity>
 );
 
 export default ImageHeader;
@@ -65,6 +81,7 @@ const styles = StyleSheet.create({
   textContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    maxWidth: '94%',
   },
   headerText: {
     color: Colors.primary,
@@ -80,7 +97,9 @@ const styles = StyleSheet.create({
   },
   subTitle: {
     color: Colors.gray,
-    fontSize: 12,
-    fontFamily: Fonts.MartelRegular,
+    fontSize: 13,
+    fontFamily: Fonts.RobotoLight,
+    marginTop: -5,
+    marginBottom: 2,
   },
 });

@@ -70,6 +70,7 @@ const BibleScreen: React.VFC<BibleScreenProps> = ({navigation}) => {
 
   return (
     <ScrollView
+      bounces={false}
       style={styles.container}
       contentContainerStyle={styles.contentContainer}>
       <ImageHeader uri={remoteAsset(sectionImages?.bible?.url) || ''}>

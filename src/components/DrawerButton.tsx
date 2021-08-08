@@ -5,6 +5,7 @@ import {StyleSheet, TouchableOpacity, Text} from 'react-native';
 
 // styles
 import Colors from '../constants/Colors';
+import Fonts from '../constants/Fonts';
 
 type DrawerButtonProps = {
   onPress?: () => void;
@@ -28,5 +29,6 @@ const styles = StyleSheet.create({
   text: {
     color: Colors.white,
     fontSize: 15,
+    fontFamily: Fonts.RobotoRegular,
   },
 });

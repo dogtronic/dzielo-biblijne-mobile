@@ -162,6 +162,7 @@ const BibleMapScreen: React.VFC<BibleMapScreenProps> = () => {
 
   return (
     <ScrollView
+      bounces={false}
       style={styles.container}
       contentContainerStyle={styles.contentContainer}>
       {!fullScreen && (

@@ -75,6 +75,7 @@ const NotificationDetailsScreen: React.VFC<NotificationDetailsScreenProps> = ({
 
   return (
     <ScrollView
+      bounces={false}
       style={styles.container}
       contentContainerStyle={styles.contentContainer}>
       <ImageHeader uri={remoteAsset(sectionImages?.notifications?.url) || ''}>

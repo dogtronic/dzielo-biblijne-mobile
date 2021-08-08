@@ -131,6 +131,7 @@ const NotificationsScreen: React.VFC<NotificationsScreenProps> = ({
 
   return (
     <FlatList<Notification>
+      bounces={false}
       ListHeaderComponent={
         <View style={styles.headerContainer}>
           <ImageHeader

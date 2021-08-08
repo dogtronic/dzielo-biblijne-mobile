@@ -1,27 +1,28 @@
 import React, {useCallback, useState, useEffect} from 'react';
 
-//redux
+// Redux
 import {useAppDispatch, useAppSelector} from '../hooks/useAppDispatch';
 import * as actions from '../store/actions';
 
-//components
+// Components
 import {StyleSheet, FlatList, View, Text} from 'react-native';
 import ImageHeader, {ImageHeaderText} from '../components/ImageHeader';
 import SearchInput from '../components/SearchInput';
 import ContentError from '../components/ContentError';
+import RoundedListHeader from '../components/RoundedListHeader';
+import Loader from '../components/Loader';
 
-//navigation
+// Navigation
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/core';
 import {RootNavigatorParamList} from '../navigation/RootNavigator';
 
-//utils
+// Utils
 import {useTranslation} from 'react-i18next';
 import {remoteAsset} from '../utils/remoteAsset';
 import {debounce} from 'ts-debounce';
 
 // Styles
-import Loader from '../components/Loader';
 import Colors from '../constants/Colors';
 import Fonts from '../constants/Fonts';
 
@@ -114,6 +115,7 @@ const TermsListScreen: React.VFC<TermsListScreenProps> = ({navigation}) => {
 
   return (
     <FlatList<Term>
+      bounces={false}
       ListHeaderComponent={
         <View style={styles.headerContainer}>
           <ImageHeader uri={remoteAsset(sectionImages?.terms?.url) || ''}>
@@ -121,6 +123,8 @@ const TermsListScreen: React.VFC<TermsListScreenProps> = ({navigation}) => {
           </ImageHeader>
 
           <SearchInput value={filter} onChange={onChangeText} />
+
+          <RoundedListHeader />
         </View>
       }
       ItemSeparatorComponent={() => <View style={styles.separator} />}
@@ -135,7 +139,7 @@ const TermsListScreen: React.VFC<TermsListScreenProps> = ({navigation}) => {
       data={terms}
       renderItem={renderItem}
       keyExtractor={item => item.id.toString()}
-      onEndReachedThreshold={100}
+      onEndReachedThreshold={200}
       onEndReached={onReachEnd}
     />
   );
@@ -150,6 +154,7 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     backgroundColor: Colors.background,
+    marginBottom: -30,
   },
   separator: {
     height: 1,

@@ -68,7 +68,7 @@ export const Notification: React.FC<NotificationProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 15,
+    marginTop: 15,
     marginHorizontal: 25,
   },
   insideContainer: {

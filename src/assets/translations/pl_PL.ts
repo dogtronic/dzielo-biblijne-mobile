@@ -55,5 +55,6 @@ export default {
     newTestamentHeader: 'Nowy Testament',
     newTestamentDescription: 'Listy i Ewangelie',
     chapter: 'Rozdział',
+    archive: 'Archiwum',
   },
 };

@@ -32,6 +32,7 @@ const SectionDetailsScreen: React.VFC<SectionDetailsScreenProps> = ({
 
   return (
     <ScrollView
+      bounces={false}
       style={styles.container}
       contentContainerStyle={styles.contentContainer}>
       <ImageHeader uri={remoteAsset(reading.reading_type.image.url) || ''}>

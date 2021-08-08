@@ -60,6 +60,7 @@ const TermDetailsScreen: React.VFC<TermDetailsScreenProps> = ({route}) => {
 
   return (
     <ScrollView
+      bounces={false}
       style={styles.container}
       contentContainerStyle={styles.contentContainer}>
       <ImageHeader uri={remoteAsset(sectionImages?.terms?.url) || ''}>

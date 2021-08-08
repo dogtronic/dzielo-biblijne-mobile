@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 
 //redux
 import {useAppDispatch, useAppSelector} from '../hooks/useAppDispatch';
 
 //components
-import {StyleSheet, ScrollView, View} from 'react-native';
+import {StyleSheet, ScrollView, View, useWindowDimensions} from 'react-native';
 import ImageHeader, {ImageHeaderText} from '../components/ImageHeader';
 import ChapterButton from '../components/ChapterButton';
 import Loader from '../components/Loader';
@@ -29,11 +29,17 @@ type BibleScreenProps = {
   route: RouteProp<RootNavigatorParamList, 'ChaptersScreen'>;
 };
 
-const BibleScreen: React.VFC<BibleScreenProps> = ({route}) => {
+const BibleScreen: React.VFC<BibleScreenProps> = ({route, navigation}) => {
   const {bookId, testament} = route.params;
 
   const {t} = useTranslation();
   const dispatch = useAppDispatch();
+  const windowWidth = useWindowDimensions().width;
+
+  const containerWidth = useMemo(
+    () => Math.floor(windowWidth / 48) * 48 - 35,
+    [windowWidth],
+  );
 
   const book = useAppSelector(state =>
     state.bible.books.find(v => v.id === bookId),
@@ -63,6 +69,7 @@ const BibleScreen: React.VFC<BibleScreenProps> = ({route}) => {
 
   return (
     <ScrollView
+      bounces={false}
       style={styles.container}
       contentContainerStyle={styles.contentContainer}>
       <ImageHeader
@@ -71,13 +78,18 @@ const BibleScreen: React.VFC<BibleScreenProps> = ({route}) => {
             ? remoteAsset(sectionImages?.old_testament?.url) || ''
             : remoteAsset(sectionImages?.new_testament?.url) || ''
         }>
-        <ImageHeaderText content={book?.name || ''} underline />
+        <ImageHeaderText
+          content={book?.name || ''}
+          underline
+          onPress={navigation.goBack}
+          textStyle={{maxWidth: windowWidth - 190}}
+        />
         <RightArrowIcon style={styles.headerArrow} />
         <ImageHeaderText content={t('bible:chapter')} disabled />
       </ImageHeader>
 
       <View style={styles.chaptersMiddleContainer}>
-        <View style={styles.chaptersContainer}>
+        <View style={[styles.chaptersContainer, {width: containerWidth}]}>
           {chapters.map(v => (
             <ChapterButton key={v.id} item={v} />
           ))}

@@ -69,6 +69,7 @@ const ReadingsScreen: React.VFC<ReadingsScreenProps> = ({navigation}) => {
 
   return (
     <ScrollView
+      bounces={false}
       style={styles.container}
       contentContainerStyle={styles.contentContainer}>
       <ImageHeader uri={remoteAsset(sectionImages?.sunday_readings?.url) || ''}>

@@ -83,7 +83,9 @@ const Drawer: React.VFC<DrawerProps> = ({closeDrawer, navigate}) => {
       <View style={styles.logoContainer}>
         <LogoMediumIcon style={styles.icon} />
 
-        <TouchableOpacity onPress={closeDrawer}>
+        <TouchableOpacity
+          onPress={closeDrawer}
+          hitSlop={{top: 15, bottom: 15, left: 15, right: 15}}>
           <CloseIcon />
         </TouchableOpacity>
       </View>

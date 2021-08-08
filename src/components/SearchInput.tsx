@@ -44,8 +44,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     color: Colors.white,
     paddingHorizontal: 10,
-    fontFamily: Fonts.RobotoLight,
-    fontSize: 16,
+
     marginHorizontal: 30,
     flexDirection: 'row',
     alignItems: 'center',
@@ -55,5 +54,7 @@ const styles = StyleSheet.create({
     height: 34,
     flex: 1,
     marginRight: 15,
+    fontFamily: Fonts.RobotoLight,
+    fontSize: 15,
   },
 });

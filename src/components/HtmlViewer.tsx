@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
 const tagsStyles = {
   a: {
     color: Colors.primary,
-    textDecorationLine: 'none',
+    textDecorationColor: Colors.primary,
     fontFamily: Fonts.RobotoRegular,
     fontWeight: '500',
   },

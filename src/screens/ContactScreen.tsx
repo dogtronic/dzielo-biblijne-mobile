@@ -78,6 +78,7 @@ const ContactScreen: React.VFC<ContactScreenProps> = () => {
 
   return (
     <ScrollView
+      bounces={false}
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
       keyboardShouldPersistTaps={'handled'}>

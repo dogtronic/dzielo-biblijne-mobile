@@ -1,3 +1,3 @@
 export const Config = {
-  baseUrl: 'http://localhost:1337/',
+  baseUrl: 'http://192.168.1.41:1337/',
 };

@@ -60,6 +60,7 @@ const RecommendedScreen: React.VFC<RecommendedScreenProps> = () => {
 
   return (
     <ScrollView
+      bounces={false}
       style={styles.container}
       contentContainerStyle={styles.contentContainer}>
       <ImageHeader uri={remoteAsset(sectionImages?.contact?.url) || ''}>
