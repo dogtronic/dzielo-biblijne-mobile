@@ -47,6 +47,7 @@ const CuriosityBaseScreen: React.VFC<CuriosityBaseScreenProps> = ({route}) => {
   const [offset, setOffest] = useState(50);
   const [curiosityIndex, setCuriosityIndex] = useState(0);
 
+  const fontSize = useAppSelector(state => state.user.fontSize);
   const sectionImages = useAppSelector(state => state.settings.sectionImages);
 
   const curiosities: CuriosityBase[] = useAppSelector(state =>
@@ -177,7 +178,9 @@ const CuriosityBaseScreen: React.VFC<CuriosityBaseScreenProps> = ({route}) => {
           <Text style={styles.title}>{currentCuriosity.title}</Text>
         )}
         {currentCuriosity?.comment && (
-          <Text style={styles.description}>{currentCuriosity.comment}</Text>
+          <Text style={[styles.description, {fontSize}]}>
+            {currentCuriosity.comment}
+          </Text>
         )}
 
         <View style={styles.buttonsContainer}>

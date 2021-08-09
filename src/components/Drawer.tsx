@@ -79,6 +79,10 @@ const Drawer: React.VFC<DrawerProps> = ({closeDrawer, navigate}) => {
         name: t('menu:contact'),
         onPress: () => navigate?.('ContactScreen'),
       },
+      {
+        name: t('menu:settings'),
+        onPress: () => navigate?.('SettingsScreen'),
+      },
     ],
     [t, navigate],
   );

@@ -1,6 +1,9 @@
 import {useNavigation} from '@react-navigation/core';
 import React, {useCallback, useMemo, useState} from 'react';
 
+// Redux
+import {useAppSelector} from '../hooks/useAppDispatch';
+
 // Components
 import {StyleSheet, useWindowDimensions} from 'react-native';
 import RenderHtml, {defaultSystemFonts} from 'react-native-render-html';
@@ -27,6 +30,8 @@ const HtmlViewer: React.VFC<HtmlViewerProps> = ({html, containerStyle}) => {
 
   const [termModalVisible, setTermModalVisible] = useState(false);
   const [termId, setTermId] = useState<number | undefined>(undefined);
+
+  const fontSize = useAppSelector(state => state.user.fontSize);
 
   const toggleTermModal = useCallback(
     (id?: number) => {
@@ -74,7 +79,7 @@ const HtmlViewer: React.VFC<HtmlViewerProps> = ({html, containerStyle}) => {
         baseStyle={{...styles.container, ...containerStyle}}
         renderersProps={renderersProps}
         //@ts-ignore
-        tagsStyles={tagsStyles}
+        tagsStyles={{...tagsStyles, p: {...tagsStyles.p, fontSize}}}
         systemFonts={systemFonts}
       />
 

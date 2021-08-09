@@ -15,4 +15,5 @@ export interface SectionImages {
   recommended: ImageSource | null;
   notifications: ImageSource | null;
   bible_dictionary: ImageSource | null;
+  settings: ImageSource | null;
 }

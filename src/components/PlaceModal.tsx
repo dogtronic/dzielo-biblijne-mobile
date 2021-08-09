@@ -21,7 +21,10 @@ import Fonts from '../constants/Fonts';
 
 // Models
 import {Place} from '../store/types/Region.model';
+
+// Utils
 import {remoteAsset} from '../utils/remoteAsset';
+import {useAppSelector} from '../hooks/useAppDispatch';
 
 export type TermModalProps = {
   isVisible?: boolean;
@@ -35,6 +38,8 @@ const PlaceModal: React.VFC<TermModalProps> = ({
   toggleModal,
 }) => {
   const {t} = useTranslation();
+
+  const fontSize = useAppSelector(state => state.user.fontSize);
 
   return (
     <Modal
@@ -73,7 +78,9 @@ const PlaceModal: React.VFC<TermModalProps> = ({
               />
             )}
 
-            <Text style={styles.description}>{place?.description}</Text>
+            <Text style={[styles.description, {fontSize}]}>
+              {place?.description}
+            </Text>
           </View>
         </ScrollView>
       </View>

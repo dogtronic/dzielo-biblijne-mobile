@@ -44,6 +44,7 @@ import CuriosityBaseScreen from '../screens/CuriosityBaseScreen';
 import NotificationsScreen from '../screens/NotificationsScreen';
 import NotificationDetailsScreen from '../screens/NotificationDetailsScreen';
 import BibleMapScreen from '../screens/BibleMapScreen';
+import SettingsScreen from '../screens/SettingsScreen';
 
 export type RootDrawerParamList = {
   StackRootNavigator: undefined;
@@ -69,6 +70,7 @@ export type RootNavigatorParamList = {
   NotificationsScreen: undefined;
   NotificationDetailsScreen: {notificationId: number};
   BibleMapScreen: undefined;
+  SettingsScreen: undefined;
 };
 
 const DrawerNav = createDrawerNavigator<RootDrawerParamList>();
@@ -136,6 +138,7 @@ const StackRootNavigator = () => {
         name={'NotificationDetailsScreen'}
         component={NotificationDetailsScreen}
       />
+      <StackNav.Screen name={'SettingsScreen'} component={SettingsScreen} />
       <StackNav.Screen name={'BibleMapScreen'} component={BibleMapScreen} />
     </StackNav.Navigator>
   );

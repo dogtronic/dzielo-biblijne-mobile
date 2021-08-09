@@ -48,6 +48,7 @@ const NotificationDetailsScreen: React.VFC<NotificationDetailsScreenProps> = ({
     state => state.notifications.isNotificationLoading,
   );
   const error = useAppSelector(state => state.notifications.notificationsError);
+  const fontSize = useAppSelector(state => state.user.fontSize);
 
   useEffect(() => {
     dispatch(actions.getNotificationDetails.request({notificationId}));
@@ -84,7 +85,9 @@ const NotificationDetailsScreen: React.VFC<NotificationDetailsScreenProps> = ({
 
       <TopRoundedContainer style={styles.textContainer}>
         <Text style={styles.title}>{notification?.title}</Text>
-        <Text style={styles.description}>{notification?.content}</Text>
+        <Text style={[styles.description, {fontSize}]}>
+          {notification?.content}
+        </Text>
       </TopRoundedContainer>
     </ScrollView>
   );

@@ -37,6 +37,7 @@ export default {
     recommendations: 'Polecane',
     contact: 'Kontakt',
     photos: 'Zdjęcia',
+    settings: 'Ustawienia',
   },
   dashboard: {
     photoOfWeek: 'Zdjęcie tygodnia',
@@ -59,5 +60,11 @@ export default {
     newTestamentDescription: 'Listy i Ewangelie',
     chapter: 'Rozdział',
     archive: 'Archiwum',
+  },
+  settings: {
+    fontSize: 'Rozmiar tekstu',
+    sampleText: 'Przykładowy tekst',
+    loremIpsum:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
   },
 };

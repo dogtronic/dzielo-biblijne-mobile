@@ -10,11 +10,13 @@ export type UserState = {
     chapterId: number;
     chapterNumber: number;
   };
+  fontSize: number;
 };
 
 const initialState: UserState = {
   readNotifications: {},
   removedNotificationsFromDashboard: {},
+  fontSize: 15,
 };
 
 export type UserActions = ActionType<typeof actions>;
@@ -47,6 +49,10 @@ const userReducer = createReducer<UserState, UserActions>(initialState)
   .handleAction(actions.setLastReadBibleFragment, (state, action) => ({
     ...state,
     lastReadBibleFragment: action.payload,
+  }))
+  .handleAction(actions.setFontSize, (state, action) => ({
+    ...state,
+    fontSize: action.payload,
   }));
 
 export default userReducer;

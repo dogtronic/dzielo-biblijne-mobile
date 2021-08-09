@@ -39,6 +39,7 @@ const TermDetailsScreen: React.VFC<TermDetailsScreenProps> = ({route}) => {
   const sectionImages = useAppSelector(state => state.settings.sectionImages);
   const loading = useAppSelector(state => state.terms.isTermDetailsLoading);
   const error = useAppSelector(state => state.terms.termDetailsError);
+  const fontSize = useAppSelector(state => state.user.fontSize);
 
   React.useEffect(() => {
     dispatch(actions.getTermDetails.request({termId, type}));
@@ -78,7 +79,9 @@ const TermDetailsScreen: React.VFC<TermDetailsScreenProps> = ({route}) => {
 
       <TopRoundedContainer style={styles.textContainer}>
         <Text style={styles.title}>{term?.term}</Text>
-        <Text style={styles.description}>{term?.description}</Text>
+        <Text style={[styles.description, {fontSize}]}>
+          {term?.description}
+        </Text>
       </TopRoundedContainer>
     </ScrollView>
   );

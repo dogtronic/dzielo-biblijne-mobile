@@ -12,3 +12,5 @@ export const setRemovedNotificationFromDashboard = createAction(
 export const setLastReadBibleFragment = createAction(
   'SET_LAST_READ_BIBLE_FRAGMENT',
 )<SetLastBibleFragmentPayload>();
+
+export const setFontSize = createAction('SET_FONT_SIZE')<number>();
