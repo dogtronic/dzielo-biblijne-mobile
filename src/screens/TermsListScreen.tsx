@@ -35,9 +35,14 @@ type TermsListScreenProps = {
   route: RouteProp<RootNavigatorParamList, 'TermsListScreen'>;
 };
 
-const TermsListScreen: React.VFC<TermsListScreenProps> = ({navigation}) => {
+const TermsListScreen: React.VFC<TermsListScreenProps> = ({
+  navigation,
+  route,
+}) => {
   const {t} = useTranslation();
   const dispatch = useAppDispatch();
+
+  const {type} = route.params;
 
   const [offset, setOffest] = useState(10);
   const [filter, setFilter] = useState('');
@@ -49,14 +54,16 @@ const TermsListScreen: React.VFC<TermsListScreenProps> = ({navigation}) => {
   const error = useAppSelector(state => state.terms.termsError);
 
   useEffect(() => {
-    dispatch(actions.getTerms.request({offset: 0, limit: 10, withReset: true}));
-  }, [dispatch]);
+    dispatch(
+      actions.getTerms.request({offset: 0, limit: 10, withReset: true, type}),
+    );
+  }, [dispatch, type]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const getTerms = useCallback(
     debounce((withResetOffest?: boolean, customFilter?: string) => {
       let customOffset = offset;
-      console.log('call');
+
       if (withResetOffest) {
         setOffest(0);
         customOffset = 0;
@@ -68,12 +75,13 @@ const TermsListScreen: React.VFC<TermsListScreenProps> = ({navigation}) => {
           limit: 10,
           filter: customFilter,
           withReset: withResetOffest,
+          type,
         }),
       );
 
       setOffest(customOffset + 10);
     }, 600),
-    [offset],
+    [offset, type],
   );
 
   const onChangeText = (value: string) => {
@@ -92,14 +100,14 @@ const TermsListScreen: React.VFC<TermsListScreenProps> = ({navigation}) => {
       <TouchableOpacity
         style={styles.itemContainer}
         onPress={() =>
-          navigation.navigate('TermDetailsScreen', {termId: item.id})
+          navigation.navigate('TermDetailsScreen', {termId: item.id, type})
         }>
         <Text style={styles.itemText} numberOfLines={1}>
           {item.term}
         </Text>
       </TouchableOpacity>
     ),
-    [navigation],
+    [navigation, type],
   );
 
   if (error) {
@@ -107,7 +115,12 @@ const TermsListScreen: React.VFC<TermsListScreenProps> = ({navigation}) => {
       <ContentError
         onPressRefresh={() =>
           dispatch(
-            actions.getTerms.request({offset: 0, limit: 10, withReset: true}),
+            actions.getTerms.request({
+              offset: 0,
+              limit: 10,
+              withReset: true,
+              type,
+            }),
           )
         }
       />
@@ -119,8 +132,17 @@ const TermsListScreen: React.VFC<TermsListScreenProps> = ({navigation}) => {
       bounces={false}
       ListHeaderComponent={
         <View style={styles.headerContainer}>
-          <ImageHeader uri={remoteAsset(sectionImages?.terms?.url) || ''}>
-            <ImageHeaderText content={t('menu:words')} />
+          <ImageHeader
+            uri={
+              (type === 'words'
+                ? remoteAsset(sectionImages?.terms?.url)
+                : remoteAsset(sectionImages?.bible_dictionary?.url)) || ''
+            }>
+            <ImageHeaderText
+              content={
+                type === 'words' ? t('menu:words') : t('menu:bibleDictionary')
+              }
+            />
           </ImageHeader>
 
           <SearchInput value={filter} onChange={onChangeText} />

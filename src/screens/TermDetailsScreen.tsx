@@ -30,7 +30,7 @@ type TermDetailsScreenProps = {
 };
 
 const TermDetailsScreen: React.VFC<TermDetailsScreenProps> = ({route}) => {
-  const {termId} = route.params;
+  const {termId, type} = route.params;
 
   const {t} = useTranslation();
   const dispatch = useAppDispatch();
@@ -41,8 +41,8 @@ const TermDetailsScreen: React.VFC<TermDetailsScreenProps> = ({route}) => {
   const error = useAppSelector(state => state.terms.termDetailsError);
 
   React.useEffect(() => {
-    dispatch(actions.getTermDetails.request({termId}));
-  }, [dispatch, termId]);
+    dispatch(actions.getTermDetails.request({termId, type}));
+  }, [dispatch, termId, type]);
 
   if (loading) {
     return <Loader isAbsolute />;
@@ -52,7 +52,7 @@ const TermDetailsScreen: React.VFC<TermDetailsScreenProps> = ({route}) => {
     return (
       <ContentError
         onPressRefresh={() =>
-          dispatch(actions.getTermDetails.request({termId}))
+          dispatch(actions.getTermDetails.request({termId, type}))
         }
       />
     );
@@ -63,8 +63,17 @@ const TermDetailsScreen: React.VFC<TermDetailsScreenProps> = ({route}) => {
       bounces={false}
       style={styles.container}
       contentContainerStyle={styles.contentContainer}>
-      <ImageHeader uri={remoteAsset(sectionImages?.terms?.url) || ''}>
-        <ImageHeaderText content={t('menu:words')} />
+      <ImageHeader
+        uri={
+          (type === 'words'
+            ? remoteAsset(sectionImages?.terms?.url)
+            : remoteAsset(sectionImages?.bible_dictionary?.url)) || ''
+        }>
+        <ImageHeaderText
+          content={
+            type === 'words' ? t('menu:words') : t('menu:bibleDictionary')
+          }
+        />
       </ImageHeader>
 
       <TopRoundedContainer style={styles.textContainer}>

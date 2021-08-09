@@ -54,8 +54,8 @@ export type RootNavigatorParamList = {
   BibleScreen: undefined;
   ChaptersScreen: {bookId: number; testament: 'Nowy' | 'Stary'};
   ChapterDetailsScreen: {chapterId: number};
-  TermsListScreen: undefined;
-  TermDetailsScreen: {termId: number};
+  TermsListScreen: {type: 'words' | 'bible-dictionary'};
+  TermDetailsScreen: {termId: number; type: 'words' | 'bible-dictionary'};
   ReadingsScreen: undefined;
   ReadingsDrawerNavigator: {reading: Reading; isSundayReading?: boolean};
   HomiliesListScreen: undefined;

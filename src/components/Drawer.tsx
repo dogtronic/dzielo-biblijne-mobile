@@ -56,7 +56,12 @@ const Drawer: React.VFC<DrawerProps> = ({closeDrawer, navigate}) => {
       },
       {
         name: t('menu:words'),
-        onPress: () => navigate?.('TermsListScreen'),
+        onPress: () => navigate?.('TermsListScreen', {type: 'words'}),
+      },
+      {
+        name: t('menu:bibleDictionary'),
+        onPress: () =>
+          navigate?.('TermsListScreen', {type: 'bible-dictionary'}),
       },
       {
         name: t('menu:curiosities'),

@@ -5,6 +5,7 @@ export type GetTermsRequestPayload = {
   offset: number;
   filter?: string;
   withReset?: boolean;
+  type: 'words' | 'bible-dictionary';
 };
 
 export type GetTermsSuccessPayload = {
@@ -15,4 +16,5 @@ export type GetTermsSuccessPayload = {
 
 export type GetTermDetailsRequestPayload = {
   termId: number;
+  type: 'words' | 'bible-dictionary';
 };

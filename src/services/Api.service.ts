@@ -6,6 +6,7 @@ export enum Endpoint {
   BibleBooks = 'bible-books/',
   Chapters = 'chapters/',
   Terms = 'terms/',
+  BibleDictionary = 'bible-dictionaries/',
   Readings = 'readings/',
   Sections = 'sections/',
   SectionTypes = 'section-types/',

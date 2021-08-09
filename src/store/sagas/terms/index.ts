@@ -11,7 +11,11 @@ import {Term} from '../../types/Term.model';
 
 export function* getTerms(action: ActionType<typeof actions.getTerms.request>) {
   try {
-    let link = `${Endpoint.Terms}?_start=${action.payload.offset}&_limit=${action.payload.limit}`;
+    let link = `${
+      action.payload.type === 'words'
+        ? Endpoint.Terms
+        : Endpoint.BibleDictionary
+    }?_start=${action.payload.offset}&_limit=${action.payload.limit}`;
 
     if (action.payload.filter) {
       link += `&term_contains=${action.payload.filter}`;
@@ -28,6 +32,7 @@ export function* getTerms(action: ActionType<typeof actions.getTerms.request>) {
     );
   } catch (err) {
     yield put(actions.getTerms.failure());
+    console.log(err);
   }
 }
 
@@ -36,7 +41,11 @@ export function* getTermDetails(
 ) {
   try {
     const response: AxiosResponse<Term> = yield Api.get(
-      `${Endpoint.Terms}${action.payload.termId}`,
+      `${
+        action.payload.type === 'words'
+          ? Endpoint.Terms
+          : Endpoint.BibleDictionary
+      }${action.payload.termId}`,
     );
 
     yield put(actions.getTermDetails.success(response.data));

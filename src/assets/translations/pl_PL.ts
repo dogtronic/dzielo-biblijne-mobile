@@ -31,6 +31,7 @@ export default {
     nationalReadings: 'Narodowe czytanie',
     announcements: 'Ogłoszenia',
     words: 'Słowa',
+    bibleDictionary: 'Słownik biblijny',
     curiosities: 'Ciekawostki',
     biblemap: 'Bibliomapa',
     recommendations: 'Polecane',
