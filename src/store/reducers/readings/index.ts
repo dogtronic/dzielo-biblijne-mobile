@@ -71,7 +71,9 @@ const readingsReducer = createReducer<ReadingsState, ReadingsActions>(
   .handleAction(actions.getCurrentReadings.success, (state, action) => ({
     ...state,
     areReadingsLoading: false,
-    readings: action.payload.readings,
+    readings: action.payload.readings.sort((v, w) =>
+      v.reading_type.priority > w.reading_type.priority ? -1 : 1,
+    ),
     sections: action.payload.sections,
   }))
   .handleAction(actions.getCurrentReadings.failure, state => ({

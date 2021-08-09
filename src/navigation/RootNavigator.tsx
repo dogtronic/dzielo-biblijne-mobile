@@ -57,7 +57,7 @@ export type RootNavigatorParamList = {
   TermsListScreen: undefined;
   TermDetailsScreen: {termId: number};
   ReadingsScreen: undefined;
-  ReadingsDrawerNavigator: {reading: Reading};
+  ReadingsDrawerNavigator: {reading: Reading; isSundayReading?: boolean};
   HomiliesListScreen: undefined;
   NationalReadingsListScreen: undefined;
   ContactScreen: undefined;

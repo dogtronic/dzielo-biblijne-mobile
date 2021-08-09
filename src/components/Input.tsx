@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useRef} from 'react';
 
 // Components
 import {TextInput, StyleSheet, Text, View} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 // Styles
 import Colors from '../constants/Colors';
@@ -27,15 +28,20 @@ const Input: React.FC<InputProps> = ({
   maxLength,
   onBlur,
 }) => {
+  const inputRef = useRef<TextInput>(null);
+
   return (
     <View>
-      <View
+      <TouchableOpacity
         style={[
           styles.mainContainer,
           GlobalStyles.shadow,
           multiline && styles.mainMultiline,
-        ]}>
+        ]}
+        activeOpacity={1}
+        onPress={() => inputRef.current?.focus()}>
         <TextInput
+          ref={inputRef}
           style={[styles.container, multiline && styles.multiline]}
           value={value}
           onChangeText={onChange}
@@ -46,7 +52,7 @@ const Input: React.FC<InputProps> = ({
           multiline={multiline}
           onBlur={onBlur}
         />
-      </View>
+      </TouchableOpacity>
       {multiline && (
         <Text style={styles.charNumber}>
           {value.length}/{maxLength}

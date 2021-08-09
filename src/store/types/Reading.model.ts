@@ -5,6 +5,7 @@ export interface ReadingType {
   name: string;
   image: ImageSource;
   type: 'Glowne' | 'Poboczne';
+  priority: number;
 }
 
 export interface SectionType {

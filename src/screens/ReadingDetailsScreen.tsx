@@ -19,6 +19,8 @@ import Fonts from '../constants/Fonts';
 import HtmlViewer from '../components/HtmlViewer';
 import {BookIcon} from '../assets/svg';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {useAppSelector} from '../hooks/useAppDispatch';
+import ContentButton from '../components/ContentButton';
 
 type ReadingDetailsScreenProps = {
   navigation: StackNavigationProp<
@@ -32,7 +34,10 @@ const ReadingDetailsScreen: React.VFC<ReadingDetailsScreenProps> = ({
   route,
   navigation,
 }) => {
-  const {reading} = route.params;
+  const {reading, isSundayReading} = route.params;
+
+  const readings = useAppSelector(state => state.readings.readings);
+  const index = readings.findIndex(v => v.id === reading.id);
 
   return (
     <ScrollView
@@ -60,6 +65,38 @@ const ReadingDetailsScreen: React.VFC<ReadingDetailsScreenProps> = ({
         </View>
 
         <HtmlViewer html={reading.content} containerStyle={styles.htmlViewer} />
+
+        {isSundayReading && (
+          <View style={styles.buttonsContainer}>
+            {index > 0 ? (
+              <ContentButton
+                title={readings[index - 1].reading_type.name}
+                onPress={() =>
+                  navigation.navigate('ReadingDetailsScreen', {
+                    reading: readings[index - 1],
+                    isSundayReading,
+                  })
+                }
+              />
+            ) : (
+              <View />
+            )}
+
+            {index < readings.length - 1 ? (
+              <ContentButton
+                title={readings[index + 1].reading_type.name}
+                onPress={() =>
+                  navigation.navigate('ReadingDetailsScreen', {
+                    reading: readings[index + 1],
+                    isSundayReading,
+                  })
+                }
+              />
+            ) : (
+              <View />
+            )}
+          </View>
+        )}
       </TopRoundedContainer>
     </ScrollView>
   );
@@ -77,6 +114,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     marginTop: 40,
+    paddingVertical: 30,
   },
   title: {
     fontSize: 16,
@@ -107,5 +145,10 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 5,
     borderBottomLeftRadius: 5,
     marginRight: -25,
+  },
+  buttonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 50,
   },
 });

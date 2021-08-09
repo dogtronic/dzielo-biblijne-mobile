@@ -228,6 +228,7 @@ const styles = StyleSheet.create({
   textContainer: {
     marginTop: 35,
     flexGrow: 1,
+    paddingVertical: 30,
   },
   title: {
     fontSize: 16,

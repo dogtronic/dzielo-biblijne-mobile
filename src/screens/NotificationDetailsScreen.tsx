@@ -102,6 +102,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     marginTop: 40,
+    paddingVertical: 30,
   },
   title: {
     fontSize: 16,

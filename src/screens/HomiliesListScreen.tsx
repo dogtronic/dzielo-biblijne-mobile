@@ -56,8 +56,9 @@ const HomiliesListScreen: React.VFC<HomiliesListScreenProps> = ({
     );
   }, [dispatch]);
 
-  const getHomilies = debounce(
-    (withResetOffest?: boolean, customFilter?: string) => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const getHomilies = useCallback(
+    debounce((withResetOffest?: boolean, customFilter?: string) => {
       let customOffset = offset;
 
       if (withResetOffest) {
@@ -75,8 +76,8 @@ const HomiliesListScreen: React.VFC<HomiliesListScreenProps> = ({
       );
 
       setOffest(customOffset + 10);
-    },
-    400,
+    }, 400),
+    [offset],
   );
 
   const onChangeText = (value: string) => {

@@ -52,10 +52,11 @@ const TermsListScreen: React.VFC<TermsListScreenProps> = ({navigation}) => {
     dispatch(actions.getTerms.request({offset: 0, limit: 10, withReset: true}));
   }, [dispatch]);
 
-  const getTerms = debounce(
-    (withResetOffest?: boolean, customFilter?: string) => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const getTerms = useCallback(
+    debounce((withResetOffest?: boolean, customFilter?: string) => {
       let customOffset = offset;
-
+      console.log('call');
       if (withResetOffest) {
         setOffest(0);
         customOffset = 0;
@@ -71,8 +72,8 @@ const TermsListScreen: React.VFC<TermsListScreenProps> = ({navigation}) => {
       );
 
       setOffest(customOffset + 10);
-    },
-    400,
+    }, 600),
+    [offset],
   );
 
   const onChangeText = (value: string) => {

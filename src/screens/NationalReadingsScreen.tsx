@@ -68,8 +68,9 @@ const NationalReadingsListScreen: React.VFC<NationalReadingsListScreenProps> =
       );
     }, [dispatch]);
 
-    const getNationalReadings = debounce(
-      (withResetOffest?: boolean, customFilter?: string) => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const getNationalReadings = useCallback(
+      debounce((withResetOffest?: boolean, customFilter?: string) => {
         let customOffset = offset;
 
         if (withResetOffest) {
@@ -87,8 +88,8 @@ const NationalReadingsListScreen: React.VFC<NationalReadingsListScreenProps> =
         );
 
         setOffest(customOffset + 10);
-      },
-      400,
+      }, 400),
+      [offset],
     );
 
     const onChangeText = (value: string) => {

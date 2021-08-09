@@ -87,7 +87,10 @@ const ReadingsScreen: React.VFC<ReadingsScreenProps> = ({navigation}) => {
             description={v.description}
             uri={remoteAsset(v.reading_type.image.url)}
             onPressButton={() =>
-              navigation.navigate('ReadingsDrawerNavigator', {reading: v})
+              navigation.navigate('ReadingsDrawerNavigator', {
+                reading: v,
+                isSundayReading: true,
+              })
             }
           />
         ))}
@@ -98,7 +101,15 @@ const ReadingsScreen: React.VFC<ReadingsScreenProps> = ({navigation}) => {
               style={styles.itemContainer}
               key={v.id}
               source={{uri: remoteAsset(v.reading_type.image.url)}}>
-              <TouchableOpacity style={styles.topContainer} activeOpacity={0.9}>
+              <TouchableOpacity
+                style={styles.topContainer}
+                activeOpacity={0.9}
+                onPress={() =>
+                  navigation.navigate('ReadingsDrawerNavigator', {
+                    reading: v,
+                    isSundayReading: true,
+                  })
+                }>
                 <Text style={styles.topContainerText}>
                   {v.reading_type.name}
                 </Text>

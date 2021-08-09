@@ -26,7 +26,7 @@ import SectionDetailsScreen from '../screens/SectionDetailsScreen';
 import CuriosityBaseScreen from '../screens/CuriosityBaseScreen';
 
 export type ReadingsDrawerParamList = {
-  ReadingsStackNavigator: {reading: Reading};
+  ReadingsStackNavigator: {reading: Reading; isSundayReading?: boolean};
 };
 
 export type ReadingsStackParamList = {
@@ -35,7 +35,8 @@ export type ReadingsStackParamList = {
     section?: Section & {section_type: number};
     sectionType?: SectionType;
     type?: 'curiosity' | 'photo';
-    curiosities: Curiosity[] | Photo[];
+    curiosities?: Curiosity[] | Photo[];
+    isSundayReading?: boolean;
   };
 };
 
@@ -45,6 +46,7 @@ const StackNav = createStackNavigator<ReadingsStackParamList>();
 //@ts-ignore
 const ReadingsStackNavigator = ({route}) => {
   const reading: Reading = route.params.reading;
+  const isSundayReading = route.params.isSundayReading;
 
   return (
     <StackNav.Navigator
@@ -55,7 +57,7 @@ const ReadingsStackNavigator = ({route}) => {
       <StackNav.Screen
         name="ReadingDetailsScreen"
         component={ReadingDetailsScreen}
-        initialParams={{reading}}
+        initialParams={{reading, isSundayReading}}
       />
 
       {reading.sections.map(v => (
@@ -88,6 +90,7 @@ const ReadingsStackNavigator = ({route}) => {
 //@ts-ignore
 const ReadingsDrawerNavigator = ({route}) => {
   const reading = route.params.reading;
+  const isSundayReading = route.params.isSundayReading;
 
   return (
     <DrawerNav.Navigator
@@ -105,7 +108,7 @@ const ReadingsDrawerNavigator = ({route}) => {
       <DrawerNav.Screen
         name={'ReadingsStackNavigator'}
         component={ReadingsStackNavigator}
-        initialParams={{reading}}
+        initialParams={{reading, isSundayReading}}
       />
     </DrawerNav.Navigator>
   );

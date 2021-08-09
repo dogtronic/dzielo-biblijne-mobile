@@ -31,6 +31,7 @@ import Colors from '../constants/Colors';
 import Fonts from '../constants/Fonts';
 import ContentButton from '../components/ContentButton';
 import {useTranslation} from 'react-i18next';
+import TopRoundedContainer from '../components/TopRoundedContainer';
 
 type BibleScreenProps = {
   navigation: StackNavigationProp<
@@ -117,33 +118,35 @@ const BibleScreen: React.VFC<BibleScreenProps> = ({route, navigation}) => {
         )}
       </ImageHeader>
 
-      <Text style={styles.title}>{chapter?.title}</Text>
+      <TopRoundedContainer style={styles.textContainer}>
+        <Text style={styles.title}>{chapter?.title}</Text>
 
-      <HtmlViewer html={chapter?.text} containerStyle={styles.content} />
+        <HtmlViewer html={chapter?.text} containerStyle={styles.content} />
 
-      <View style={styles.buttonsContainer}>
-        <ContentButton
-          title={t('common:previous')}
-          onPress={() =>
-            isPreviousChapter &&
-            navigation.navigate('ChapterDetailsScreen', {
-              chapterId: isPreviousChapter,
-            })
-          }
-          disabled={isPreviousChapter === undefined}
-        />
+        <View style={styles.buttonsContainer}>
+          <ContentButton
+            title={t('common:previous')}
+            onPress={() =>
+              isPreviousChapter &&
+              navigation.navigate('ChapterDetailsScreen', {
+                chapterId: isPreviousChapter,
+              })
+            }
+            disabled={isPreviousChapter === undefined}
+          />
 
-        <ContentButton
-          title={t('common:nextChapter')}
-          onPress={() =>
-            isNextChapter &&
-            navigation.navigate('ChapterDetailsScreen', {
-              chapterId: isNextChapter,
-            })
-          }
-          disabled={isNextChapter === undefined}
-        />
-      </View>
+          <ContentButton
+            title={t('common:nextChapter')}
+            onPress={() =>
+              isNextChapter &&
+              navigation.navigate('ChapterDetailsScreen', {
+                chapterId: isNextChapter,
+              })
+            }
+            disabled={isNextChapter === undefined}
+          />
+        </View>
+      </TopRoundedContainer>
     </ScrollView>
   );
 };
@@ -176,5 +179,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 50,
     marginHorizontal: 20,
+  },
+  textContainer: {
+    paddingHorizontal: 0,
+    marginTop: 30,
   },
 });
