@@ -32,7 +32,6 @@ export function* getTerms(action: ActionType<typeof actions.getTerms.request>) {
     );
   } catch (err) {
     yield put(actions.getTerms.failure());
-    console.log(err);
   }
 }
 

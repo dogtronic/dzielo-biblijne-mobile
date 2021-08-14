@@ -3,10 +3,9 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent" android:background="@color/primary_dark">
     <ImageView android:src="@drawable/background"
-        android:layout_width="match_parent"
-        android:layout_height="635dp"
-        android:paddingTop="100dp"
-        android:paddingLeft="100dp"
+        android:layout_width="314dp"
+        android:layout_height="540dp"
+
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         />
@@ -18,16 +17,16 @@
         android:layout_marginBottom="50dp"
         />
 
-    <ImageView android:src="@drawable/logo_main"
-        android:layout_height="200dp"
-        android:layout_width="250dp"
+    <ImageView android:src="@drawable/logo_main2"
+        android:layout_height="409px"
+        android:layout_width="442px"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         />
 
-    <ImageView android:src="@drawable/collaborators"
-        android:layout_height="100dp"
-        android:layout_width="150dp"
+    <ImageView android:src="@drawable/collaborators2"
+        android:layout_width="356px"
+        android:layout_height="156dp"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="50dp"

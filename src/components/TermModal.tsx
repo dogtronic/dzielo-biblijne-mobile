@@ -23,12 +23,14 @@ export type TermModalProps = {
   isVisible?: boolean;
   toggleModal?: () => void;
   termId?: number;
+  type?: 'words' | 'bible-dictionary';
 };
 
 const TermModal: React.VFC<TermModalProps> = ({
   isVisible,
   termId,
   toggleModal,
+  type,
 }) => {
   const {t} = useTranslation();
   const dispatch = useAppDispatch();
@@ -38,10 +40,10 @@ const TermModal: React.VFC<TermModalProps> = ({
   const loading = useAppSelector(state => state.terms.isTermDetailsLoading);
 
   React.useEffect(() => {
-    if (termId) {
-      dispatch(actions.getTermDetails.request({termId}));
+    if (termId && type) {
+      dispatch(actions.getTermDetails.request({termId, type}));
     }
-  }, [dispatch, termId]);
+  }, [dispatch, termId, type]);
 
   return (
     <Modal
@@ -78,7 +80,7 @@ const TermModal: React.VFC<TermModalProps> = ({
               title={t('common:readMore')}
               onPress={() => {
                 toggleModal?.();
-                navigation.navigate('TermDetailsScreen', {termId});
+                navigation.navigate('TermDetailsScreen', {termId, type});
               }}
             />
           </View>

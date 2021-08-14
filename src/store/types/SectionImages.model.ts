@@ -1,6 +1,10 @@
 import {ImageSource} from './ImageSource.model';
 
 export interface SectionImages {
+  id?: unknown;
+  created_at?: unknown;
+  updated_at?: unknown;
+
   bible: ImageSource | null;
   sunday_readings: ImageSource | null;
   homily: ImageSource | null;

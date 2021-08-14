@@ -62,7 +62,7 @@ export default {
     archive: 'Archiwum',
   },
   settings: {
-    fontSize: 'Rozmiar tekstu',
+    fontSize: 'Rozmiar tekstu treści w aplikacji',
     sampleText: 'Przykładowy tekst',
     loremIpsum:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
