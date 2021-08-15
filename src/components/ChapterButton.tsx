@@ -12,14 +12,14 @@ import GlobalStyles from '../constants/GlobalStyles';
 import {Chapter} from '../store/types/Chapter.model';
 
 // Helpers
-import {useNavigation} from '@react-navigation/core';
+import {useAppNavigation} from '../hooks/useAppNavigation';
 
 type ChapterButtonProps = {
   item: Chapter;
 };
 
 const ChapterButton: React.VFC<ChapterButtonProps> = ({item}) => {
-  const navigation = useNavigation();
+  const navigation = useAppNavigation();
 
   return (
     <TouchableOpacity

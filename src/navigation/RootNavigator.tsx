@@ -54,6 +54,7 @@ export type RootDrawerParamList = {
 };
 
 export type RootNavigatorParamList = {
+  UnifiedScreen: undefined;
   DashboardScreen: undefined;
   BibleScreen: undefined;
   ChaptersScreen: {bookId: number; testament: 'Nowy' | 'Stary'};

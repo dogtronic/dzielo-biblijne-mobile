@@ -1,4 +1,3 @@
-import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 
 // Components
@@ -11,13 +10,16 @@ import Fonts from '../constants/Fonts';
 // Models
 import {BibleBook} from '../store/types/BibleBook.model';
 
+// Utils
+import {useAppNavigation} from '../hooks/useAppNavigation';
+
 type BookItemProps = {
   item: BibleBook;
   withoutTopLine?: boolean;
 };
 
 export const BookItem: React.VFC<BookItemProps> = ({item, withoutTopLine}) => {
-  const navigation = useNavigation();
+  const navigation = useAppNavigation();
 
   return (
     <View

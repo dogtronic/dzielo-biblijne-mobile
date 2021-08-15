@@ -13,7 +13,7 @@ import Loader from './Loader';
 
 // Utils
 import {useTranslation} from 'react-i18next';
-import {useNavigation} from '@react-navigation/core';
+import {useAppNavigation} from '../hooks/useAppNavigation';
 
 // Styles
 import Colors from '../constants/Colors';
@@ -34,7 +34,7 @@ const TermModal: React.VFC<TermModalProps> = ({
 }) => {
   const {t} = useTranslation();
   const dispatch = useAppDispatch();
-  const navigation = useNavigation();
+  const navigation = useAppNavigation();
 
   const term = useAppSelector(state => state.terms.termDetails);
   const loading = useAppSelector(state => state.terms.isTermDetailsLoading);
@@ -80,7 +80,9 @@ const TermModal: React.VFC<TermModalProps> = ({
               title={t('common:readMore')}
               onPress={() => {
                 toggleModal?.();
-                navigation.navigate('TermDetailsScreen', {termId, type});
+                if (termId && type) {
+                  navigation.navigate('TermDetailsScreen', {termId, type});
+                }
               }}
             />
           </View>

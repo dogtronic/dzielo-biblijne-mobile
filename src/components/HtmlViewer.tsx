@@ -13,7 +13,7 @@ import Colors from '../constants/Colors';
 import Fonts from '../constants/Fonts';
 
 // Utils
-import {useNavigation} from '@react-navigation/core';
+import {useAppNavigation} from '../hooks/useAppNavigation';
 
 const systemFonts = [
   ...defaultSystemFonts,
@@ -28,7 +28,7 @@ type HtmlViewerProps = {
 
 const HtmlViewer: React.VFC<HtmlViewerProps> = ({html, containerStyle}) => {
   const {width} = useWindowDimensions();
-  const navigation = useNavigation();
+  const navigation = useAppNavigation();
 
   const [termModalVisible, setTermModalVisible] = useState(false);
   const [termId, setTermId] = useState<number | undefined>(undefined);

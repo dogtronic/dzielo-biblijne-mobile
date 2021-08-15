@@ -7,7 +7,7 @@ import {InfoBox, InfoBoxContainer} from './InfoBox';
 // Utils
 import {useTranslation} from 'react-i18next';
 import {remoteAsset} from '../utils/remoteAsset';
-import {useNavigation} from '@react-navigation/native';
+import {useAppNavigation} from '../hooks/useAppNavigation';
 
 // Models
 import {Photo} from '../store/types/Curiosity.model';
@@ -18,7 +18,7 @@ type WeeklyPhotoProps = {
 
 const WeeklyPhoto: React.VFC<WeeklyPhotoProps> = ({photo}) => {
   const {t} = useTranslation();
-  const navigation = useNavigation();
+  const navigation = useAppNavigation();
 
   return (
     <>
@@ -31,7 +31,10 @@ const WeeklyPhoto: React.VFC<WeeklyPhotoProps> = ({photo}) => {
           title={t('dashboard:photoOfTheWeek')}
           description={photo.comment}
           onPressButton={() =>
-            navigation.navigate('CuriosityBaseScreen', {curiosities: [photo]})
+            navigation.navigate('CuriosityBaseScreen', {
+              curiosities: [photo],
+              type: 'photo',
+            })
           }
         />
       </InfoBoxContainer>
