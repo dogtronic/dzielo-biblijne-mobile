@@ -14,6 +14,10 @@ import Colors from '../constants/Colors';
 // Utils
 import {useTranslation} from 'react-i18next';
 
+// Models
+import {TermType} from '../store/types/Term.model';
+import {CuriosityType} from '../store/types/Curiosity.model';
+
 type DrawerProps = {
   closeDrawer?: () => void;
   navigate?: (name: string, params?: unknown) => void;
@@ -56,16 +60,17 @@ const Drawer: React.VFC<DrawerProps> = ({closeDrawer, navigate}) => {
       },
       {
         name: t('menu:words'),
-        onPress: () => navigate?.('TermsListScreen', {type: 'words'}),
+        onPress: () => navigate?.('TermsListScreen', {type: TermType.Words}),
       },
       {
         name: t('menu:bibleDictionary'),
         onPress: () =>
-          navigate?.('TermsListScreen', {type: 'bible-dictionary'}),
+          navigate?.('TermsListScreen', {type: TermType.BibleDictionary}),
       },
       {
         name: t('menu:curiosities'),
-        onPress: () => navigate?.('CuriosityBaseScreen', {type: 'curiosity'}),
+        onPress: () =>
+          navigate?.('CuriosityBaseScreen', {type: CuriosityType.Curiosity}),
       },
       {
         name: t('menu:biblemap'),

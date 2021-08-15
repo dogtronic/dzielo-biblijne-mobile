@@ -7,15 +7,18 @@ import * as actions from '../store/actions';
 // Components
 import {StyleSheet, ScrollView, Text} from 'react-native';
 import ContentError from '../components/ContentError';
+import Loader from '../components/Loader';
 
 // Styles
-import Loader from '../components/Loader';
 import Colors from '../constants/Colors';
 import Fonts from '../constants/Fonts';
 
+// Models
+import {TermType} from '../store/types/Term.model';
+
 type TermDetailsTablet = {
   termId?: number;
-  type: 'words' | 'bible-dictionary';
+  type: TermType;
 };
 
 const TermDetailsTablet: React.VFC<TermDetailsTablet> = ({termId, type}) => {

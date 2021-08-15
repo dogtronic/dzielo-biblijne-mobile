@@ -28,7 +28,7 @@ import Colors from '../constants/Colors';
 import Fonts from '../constants/Fonts';
 
 // Models
-import {Term} from '../store/types/Term.model';
+import {Term, TermType} from '../store/types/Term.model';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import TopRoundedContainer from '../components/TopRoundedContainer';
 import TermDetailsTablet from '../components/TermDetailsTablet';
@@ -156,13 +156,15 @@ const TermsListScreen: React.VFC<TermsListScreenProps> = ({
         <View style={styles.headerContainerTablet}>
           <ImageHeader
             uri={
-              (type === 'words'
+              (type === TermType.Words
                 ? remoteAsset(sectionImages?.terms?.url)
                 : remoteAsset(sectionImages?.bible_dictionary?.url)) || ''
             }>
             <ImageHeaderText
               content={
-                type === 'words' ? t('menu:words') : t('menu:bibleDictionary')
+                type === TermType.Words
+                  ? t('menu:words')
+                  : t('menu:bibleDictionary')
               }
             />
           </ImageHeader>
@@ -202,13 +204,15 @@ const TermsListScreen: React.VFC<TermsListScreenProps> = ({
         <View style={styles.headerContainer}>
           <ImageHeader
             uri={
-              (type === 'words'
+              (type === TermType.Words
                 ? remoteAsset(sectionImages?.terms?.url)
                 : remoteAsset(sectionImages?.bible_dictionary?.url)) || ''
             }>
             <ImageHeaderText
               content={
-                type === 'words' ? t('menu:words') : t('menu:bibleDictionary')
+                type === TermType.Words
+                  ? t('menu:words')
+                  : t('menu:bibleDictionary')
               }
             />
           </ImageHeader>

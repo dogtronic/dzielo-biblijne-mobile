@@ -8,6 +8,11 @@ export interface CuriosityBase {
   is_visible_on_dashboard: boolean;
 }
 
+export enum CuriosityType {
+  Photo = 'photo',
+  Curiosity = 'curiosity',
+}
+
 export interface Curiosity extends CuriosityBase {
   image?: ImageSource;
   comment: string;

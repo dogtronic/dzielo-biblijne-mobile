@@ -19,11 +19,14 @@ import {useAppNavigation} from '../hooks/useAppNavigation';
 import Colors from '../constants/Colors';
 import Fonts from '../constants/Fonts';
 
+// Models
+import {TermType} from '../store/types/Term.model';
+
 export type TermModalProps = {
   isVisible?: boolean;
   toggleModal?: () => void;
   termId?: number;
-  type?: 'words' | 'bible-dictionary';
+  type?: TermType;
 };
 
 const TermModal: React.VFC<TermModalProps> = ({
@@ -52,7 +55,6 @@ const TermModal: React.VFC<TermModalProps> = ({
       backdropColor={'rgba(0,0,0,0.4)'}
       useNativeDriver={true}
       statusBarTranslucent
-      // deviceHeight={deviceHeight}
       swipeDirection={['up', 'left', 'right', 'down']}
       onBackButtonPress={toggleModal}
       onBackdropPress={toggleModal}>

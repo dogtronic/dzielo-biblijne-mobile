@@ -15,6 +15,9 @@ import Fonts from '../constants/Fonts';
 // Utils
 import {useAppNavigation} from '../hooks/useAppNavigation';
 
+// Models
+import {TermType} from '../store/types/Term.model';
+
 const systemFonts = [
   ...defaultSystemFonts,
   Fonts.RobotoLight,
@@ -32,14 +35,12 @@ const HtmlViewer: React.VFC<HtmlViewerProps> = ({html, containerStyle}) => {
 
   const [termModalVisible, setTermModalVisible] = useState(false);
   const [termId, setTermId] = useState<number | undefined>(undefined);
-  const [termType, setTermType] = useState<
-    'words' | 'bible-dictionary' | undefined
-  >(undefined);
+  const [termType, setTermType] = useState<TermType | undefined>(undefined);
 
   const fontSize = useAppSelector(state => state.user.fontSize);
 
   const toggleTermModal = useCallback(
-    (id?: number, type?: 'words' | 'bible-dictionary') => {
+    (id?: number, type?: TermType) => {
       setTermId(id);
       setTermType(type);
       setTermModalVisible(!termModalVisible);
@@ -52,11 +53,14 @@ const HtmlViewer: React.VFC<HtmlViewerProps> = ({html, containerStyle}) => {
       if (href.includes('term')) {
         const termLink = href.substring(href.indexOf('terms/'));
         const termLinkParams = termLink.split('/');
-        toggleTermModal(parseInt(termLinkParams[4], 10), 'words');
+        toggleTermModal(parseInt(termLinkParams[4], 10), TermType.Words);
       } else if (href.includes('bible-dictionary')) {
         const termLink = href.substring(href.indexOf('bible-dictionary/'));
         const termLinkParams = termLink.split('/');
-        toggleTermModal(parseInt(termLinkParams[1], 10), 'bible-dictionary');
+        toggleTermModal(
+          parseInt(termLinkParams[1], 10),
+          TermType.BibleDictionary,
+        );
       } else if (href.includes('bible')) {
         const bibleLink = href.substring(href.indexOf('bible/'));
         const bibleLinkParams = bibleLink.split('/');

@@ -10,7 +10,7 @@ import {remoteAsset} from '../utils/remoteAsset';
 import {useAppNavigation} from '../hooks/useAppNavigation';
 
 // Models
-import {Photo} from '../store/types/Curiosity.model';
+import {CuriosityType, Photo} from '../store/types/Curiosity.model';
 
 type WeeklyPhotoProps = {
   photo: Photo;
@@ -33,7 +33,7 @@ const WeeklyPhoto: React.VFC<WeeklyPhotoProps> = ({photo}) => {
           onPressButton={() =>
             navigation.navigate('CuriosityBaseScreen', {
               curiosities: [photo],
-              type: 'photo',
+              type: CuriosityType.Photo,
             })
           }
         />

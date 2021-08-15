@@ -1,11 +1,11 @@
-import {Term} from '../../types/Term.model';
+import {Term, TermType} from '../../types/Term.model';
 
 export type GetTermsRequestPayload = {
   limit: number;
   offset: number;
   filter?: string;
   withReset?: boolean;
-  type: 'words' | 'bible-dictionary';
+  type: TermType;
 };
 
 export type GetTermsSuccessPayload = {
@@ -16,5 +16,5 @@ export type GetTermsSuccessPayload = {
 
 export type GetTermDetailsRequestPayload = {
   termId: number;
-  type: 'words' | 'bible-dictionary';
+  type: TermType;
 };

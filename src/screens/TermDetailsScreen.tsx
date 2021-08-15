@@ -9,6 +9,7 @@ import {StyleSheet, ScrollView, Text} from 'react-native';
 import ImageHeader, {ImageHeaderText} from '../components/ImageHeader';
 import TopRoundedContainer from '../components/TopRoundedContainer';
 import ContentError from '../components/ContentError';
+import Loader from '../components/Loader';
 
 //navigation
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -20,9 +21,11 @@ import {remoteAsset} from '../utils/remoteAsset';
 import {useTranslation} from 'react-i18next';
 
 // Styles
-import Loader from '../components/Loader';
 import Colors from '../constants/Colors';
 import Fonts from '../constants/Fonts';
+
+// Models
+import {TermType} from '../store/types/Term.model';
 
 type TermDetailsScreenProps = {
   navigation: StackNavigationProp<RootNavigatorParamList, 'TermDetailsScreen'>;
@@ -66,13 +69,15 @@ const TermDetailsScreen: React.VFC<TermDetailsScreenProps> = ({route}) => {
       contentContainerStyle={styles.contentContainer}>
       <ImageHeader
         uri={
-          (type === 'words'
+          (type === TermType.Words
             ? remoteAsset(sectionImages?.terms?.url)
             : remoteAsset(sectionImages?.bible_dictionary?.url)) || ''
         }>
         <ImageHeaderText
           content={
-            type === 'words' ? t('menu:words') : t('menu:bibleDictionary')
+            type === TermType.Words
+              ? t('menu:words')
+              : t('menu:bibleDictionary')
           }
         />
       </ImageHeader>

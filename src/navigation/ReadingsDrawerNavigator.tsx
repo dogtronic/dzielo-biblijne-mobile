@@ -19,6 +19,7 @@ import {
   Section,
   SectionType,
 } from '../store/types/Reading.model';
+import {CuriosityType} from '../store/types/Curiosity.model';
 
 // Screens
 import ReadingDetailsScreen from '../screens/ReadingDetailsScreen';
@@ -34,7 +35,7 @@ export type ReadingsStackParamList = {
     reading: Reading;
     section?: Section & {section_type: number};
     sectionType?: SectionType;
-    type?: 'curiosity' | 'photo';
+    type?: CuriosityType;
     curiosities?: Curiosity[] | Photo[];
     isSundayReading?: boolean;
   };
@@ -72,7 +73,10 @@ const ReadingsStackNavigator = ({route}) => {
         <StackNav.Screen
           name="CuriositiesScreen"
           component={CuriosityBaseScreen}
-          initialParams={{type: 'curiosity', curiosities: reading.curiosities}}
+          initialParams={{
+            type: CuriosityType.Curiosity,
+            curiosities: reading.curiosities,
+          }}
         />
       ) : undefined}
 
@@ -80,7 +84,10 @@ const ReadingsStackNavigator = ({route}) => {
         <StackNav.Screen
           name="PhotosScreen"
           component={CuriosityBaseScreen}
-          initialParams={{type: 'photo', curiosities: reading.photos}}
+          initialParams={{
+            type: CuriosityType.Photo,
+            curiosities: reading.photos,
+          }}
         />
       ) : undefined}
     </StackNav.Navigator>

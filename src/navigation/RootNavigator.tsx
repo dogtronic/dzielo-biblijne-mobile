@@ -25,7 +25,8 @@ import * as actions from '../store/actions';
 
 // Models
 import {Reading} from '../store/types/Reading.model';
-import {CuriosityBase} from '../store/types/Curiosity.model';
+import {CuriosityBase, CuriosityType} from '../store/types/Curiosity.model';
+import {TermType} from '../store/types/Term.model';
 
 // Utils
 import DeviceInfo from 'react-native-device-info';
@@ -59,8 +60,8 @@ export type RootNavigatorParamList = {
   BibleScreen: undefined;
   ChaptersScreen: {bookId: number; testament: 'Nowy' | 'Stary'};
   ChapterDetailsScreen: {chapterId: number};
-  TermsListScreen: {type: 'words' | 'bible-dictionary'};
-  TermDetailsScreen: {termId: number; type: 'words' | 'bible-dictionary'};
+  TermsListScreen: {type: TermType};
+  TermDetailsScreen: {termId: number; type: TermType};
   ReadingsScreen: undefined;
   ReadingsDrawerNavigator: {reading: Reading; isSundayReading?: boolean};
   HomiliesListScreen: undefined;
@@ -69,7 +70,7 @@ export type RootNavigatorParamList = {
   RecommendedScreen: undefined;
   CuriosityBaseScreen: {
     curiosities?: CuriosityBase[];
-    type: 'curiosity' | 'photo';
+    type: CuriosityType;
   };
   NotificationsScreen: undefined;
   NotificationDetailsScreen: {notificationId: number};

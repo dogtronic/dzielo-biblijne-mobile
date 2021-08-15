@@ -7,12 +7,12 @@ import {AxiosResponse} from 'axios';
 import {Api, Endpoint} from '../../../services/Api.service';
 
 // Models
-import {Term} from '../../types/Term.model';
+import {Term, TermType} from '../../types/Term.model';
 
 export function* getTerms(action: ActionType<typeof actions.getTerms.request>) {
   try {
     let link = `${
-      action.payload.type === 'words'
+      action.payload.type === TermType.Words
         ? Endpoint.Terms
         : Endpoint.BibleDictionary
     }?_start=${action.payload.offset}&_limit=${action.payload.limit}`;
@@ -41,7 +41,7 @@ export function* getTermDetails(
   try {
     const response: AxiosResponse<Term> = yield Api.get(
       `${
-        action.payload.type === 'words'
+        action.payload.type === TermType.Words
           ? Endpoint.Terms
           : Endpoint.BibleDictionary
       }${action.payload.termId}`,
