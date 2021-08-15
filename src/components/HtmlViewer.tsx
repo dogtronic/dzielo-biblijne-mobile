@@ -53,10 +53,12 @@ const HtmlViewer: React.VFC<HtmlViewerProps> = ({html, containerStyle}) => {
       if (href.includes('term')) {
         const termLink = href.substring(href.indexOf('terms/'));
         const termLinkParams = termLink.split('/');
+
         toggleTermModal(parseInt(termLinkParams[4], 10), TermType.Words);
       } else if (href.includes('bible-dictionary')) {
         const termLink = href.substring(href.indexOf('bible-dictionary/'));
         const termLinkParams = termLink.split('/');
+
         toggleTermModal(
           parseInt(termLinkParams[1], 10),
           TermType.BibleDictionary,
@@ -64,6 +66,7 @@ const HtmlViewer: React.VFC<HtmlViewerProps> = ({html, containerStyle}) => {
       } else if (href.includes('bible')) {
         const bibleLink = href.substring(href.indexOf('bible/'));
         const bibleLinkParams = bibleLink.split('/');
+
         navigation.navigate('ChapterDetailsScreen', {
           chapterId: parseInt(bibleLinkParams[1], 10),
         });

@@ -1,11 +1,11 @@
 import React from 'react';
 
 // components
-import {StyleSheet, TouchableOpacity, Text} from 'react-native';
+import {StyleSheet, TouchableOpacity} from 'react-native';
+import Typography, {TypographyType} from './Typography';
 
 // styles
 import Colors from '../constants/Colors';
-import Fonts from '../constants/Fonts';
 
 type DrawerButtonProps = {
   onPress?: () => void;
@@ -15,7 +15,9 @@ type DrawerButtonProps = {
 const DrawerButton: React.VFC<DrawerButtonProps> = ({onPress, title}) => {
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
-      <Text style={styles.text}>{title}</Text>
+      <Typography type={TypographyType.SmallTitle} style={styles.text}>
+        {title}
+      </Typography>
     </TouchableOpacity>
   );
 };
@@ -28,7 +30,5 @@ const styles = StyleSheet.create({
   },
   text: {
     color: Colors.white,
-    fontSize: 15,
-    fontFamily: Fonts.RobotoRegular,
   },
 });

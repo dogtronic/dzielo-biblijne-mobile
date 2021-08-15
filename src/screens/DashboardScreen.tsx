@@ -6,12 +6,13 @@ import * as actions from '../store/actions';
 import {useDispatch} from 'react-redux';
 
 // Components
-import {StyleSheet, ScrollView, View, Text} from 'react-native';
+import {StyleSheet, ScrollView, View} from 'react-native';
 import TopRoundedContainer from '../components/TopRoundedContainer';
 import {ReadingListItem} from '../components/ReadingListItem';
 import {CalendarIcon} from '../assets/svg';
 import {Notification} from '../components/Notification';
 import WeeklyPhoto from '../components/WeeklyPhoto';
+import Typography, {TypographyType} from '../components/Typography';
 
 // Navigation
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -26,7 +27,6 @@ import pl from 'dayjs/locale/pl';
 import DeviceInfo from 'react-native-device-info';
 
 // Styles
-import Fonts from '../constants/Fonts';
 import Colors from '../constants/Colors';
 
 type DashboardScreenProps = {
@@ -73,7 +73,9 @@ const DashboardScreen: React.VFC<DashboardScreenProps> = ({navigation}) => {
       <View style={styles.insideContainer}>
         <View style={styles.todayContainer}>
           <CalendarIcon />
-          <Text style={styles.todayText}>{today}</Text>
+          <Typography style={styles.todayText} type={TypographyType.Header}>
+            {today}
+          </Typography>
         </View>
       </View>
 
@@ -173,8 +175,6 @@ const styles = StyleSheet.create({
   },
   todayText: {
     marginLeft: 10,
-    fontSize: 16,
-    fontFamily: Fonts.MartelRegular,
   },
   tabletTopContainer: {
     flexDirection: 'row',

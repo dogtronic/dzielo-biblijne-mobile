@@ -2,7 +2,6 @@ import React from 'react';
 
 // Components
 import {
-  Text,
   View,
   TouchableOpacity,
   StyleSheet,
@@ -11,20 +10,19 @@ import {
 } from 'react-native';
 import Modal from 'react-native-modal';
 import {CloseIcon} from '../assets/svg';
+import Typography, {TypographyType} from './Typography';
 
 // Utils
 import {useTranslation} from 'react-i18next';
 
 // Styles
 import Colors from '../constants/Colors';
-import Fonts from '../constants/Fonts';
 
 // Models
 import {Place} from '../store/types/Region.model';
 
 // Utils
 import {remoteAsset} from '../utils/remoteAsset';
-import {useAppSelector} from '../hooks/useAppDispatch';
 
 export type TermModalProps = {
   isVisible?: boolean;
@@ -39,8 +37,6 @@ const PlaceModal: React.VFC<TermModalProps> = ({
 }) => {
   const {t} = useTranslation();
 
-  const fontSize = useAppSelector(state => state.user.fontSize);
-
   return (
     <Modal
       style={styles.container}
@@ -54,7 +50,9 @@ const PlaceModal: React.VFC<TermModalProps> = ({
       propagateSwipe={true}>
       <View style={styles.wrapper}>
         <View style={styles.headerContainer}>
-          <Text style={styles.header}>{t('menu:biblemap')}</Text>
+          <Typography type={TypographyType.SmallDescription}>
+            {t('menu:biblemap')}
+          </Typography>
 
           <TouchableOpacity
             hitSlop={{top: 10, left: 10, right: 10, bottom: 10}}
@@ -69,7 +67,9 @@ const PlaceModal: React.VFC<TermModalProps> = ({
           <View
             style={styles.scrollableContainer}
             onStartShouldSetResponder={() => true}>
-            <Text style={styles.title}>{place?.name}</Text>
+            <Typography type={TypographyType.Title} resizeable>
+              {place?.name}
+            </Typography>
 
             {place?.photo && (
               <Image
@@ -78,9 +78,12 @@ const PlaceModal: React.VFC<TermModalProps> = ({
               />
             )}
 
-            <Text style={[styles.description, {fontSize}]}>
+            <Typography
+              type={TypographyType.Text}
+              style={styles.description}
+              resizeable>
               {place?.description}
-            </Text>
+            </Typography>
           </View>
         </ScrollView>
       </View>
@@ -122,18 +125,7 @@ const styles = StyleSheet.create({
   scrollableContent: {
     paddingHorizontal: 20,
   },
-  header: {
-    fontSize: 12,
-    fontFamily: Fonts.RobotoLight,
-    color: Colors.gray,
-  },
-  title: {
-    fontSize: 16,
-    fontFamily: Fonts.RobotoRegular,
-  },
   description: {
-    fontSize: 15,
-    fontFamily: Fonts.RobotoLight,
     marginVertical: 25,
   },
   image: {

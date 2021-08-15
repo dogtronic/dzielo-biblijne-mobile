@@ -1,13 +1,13 @@
 import React from 'react';
 
 // Components
-import {StyleSheet, Text, View, TextStyle, StyleProp} from 'react-native';
+import {StyleSheet, View, TextStyle, StyleProp} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import FastImage from 'react-native-fast-image';
+import Typography, {TypographyType} from './Typography';
 
 // Styles
 import Colors from '../constants/Colors';
-import Fonts from '../constants/Fonts';
 import GlobalStyles from '../constants/GlobalStyles';
 
 type ImageHeaderProps = {
@@ -28,7 +28,13 @@ const ImageHeader: React.FC<ImageHeaderProps> = ({uri, children, subTitle}) => (
     <FastImage source={{uri}} style={styles.image} />
     <View style={[styles.container, GlobalStyles.shadow]}>
       <View style={styles.textContainer}>{children}</View>
-      {subTitle && <Text style={styles.subTitle}>{subTitle}</Text>}
+      {subTitle && (
+        <Typography
+          type={TypographyType.SmallDescription}
+          style={styles.subTitle}>
+          {subTitle}
+        </Typography>
+      )}
     </View>
   </>
 );
@@ -41,16 +47,16 @@ export const ImageHeaderText: React.VFC<ImageHeaderTextProps> = ({
   textStyle,
 }) => (
   <TouchableOpacity onPress={onPress} activeOpacity={onPress ? 0.7 : 1}>
-    <Text
+    <Typography
+      type={TypographyType.HugeMainHeader}
       style={[
-        styles.headerText,
         underline && styles.underlineText,
         disabled && styles.disabledText,
         textStyle,
       ]}
       numberOfLines={1}>
       {content}
-    </Text>
+    </Typography>
   </TouchableOpacity>
 );
 
@@ -78,9 +84,6 @@ const styles = StyleSheet.create({
     maxWidth: '94%',
   },
   headerText: {
-    color: Colors.primary,
-    fontSize: 22,
-    fontFamily: Fonts.MartelRegular,
     marginTop: 2,
   },
   disabledText: {
@@ -90,9 +93,6 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
   },
   subTitle: {
-    color: Colors.gray,
-    fontSize: 13,
-    fontFamily: Fonts.RobotoLight,
     marginTop: -5,
     marginBottom: 2,
   },

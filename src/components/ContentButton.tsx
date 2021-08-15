@@ -1,13 +1,8 @@
 import React from 'react';
 
 // Components
-import {
-  TouchableOpacity,
-  StyleSheet,
-  Text,
-  ViewStyle,
-  StyleProp,
-} from 'react-native';
+import {TouchableOpacity, StyleSheet, ViewStyle, StyleProp} from 'react-native';
+import Typography, {TypographyType} from './Typography';
 
 // Styles
 import Colors from '../constants/Colors';
@@ -38,7 +33,11 @@ const ContentButton: React.VFC<ContentButtonProps> = ({
       style={[styles.container, disabled && styles.disabled, containerStyle]}
       disabled={disabled}
       onPress={press}>
-      <Text style={styles.buttonText}>{title}</Text>
+      <Typography
+        type={TypographyType.ExtraSmallTitle}
+        style={styles.buttonText}>
+        {title}
+      </Typography>
     </TouchableOpacity>
   );
 };
@@ -54,7 +53,6 @@ const styles = StyleSheet.create({
     borderRadius: 2,
   },
   buttonText: {
-    fontSize: 13,
     color: Colors.primary,
   },
   disabled: {

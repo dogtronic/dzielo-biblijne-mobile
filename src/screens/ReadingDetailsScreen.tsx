@@ -1,7 +1,7 @@
 import React from 'react';
 
 //components
-import {StyleSheet, ScrollView, Text, View} from 'react-native';
+import {StyleSheet, ScrollView, View} from 'react-native';
 import ImageHeader, {ImageHeaderText} from '../components/ImageHeader';
 import TopRoundedContainer from '../components/TopRoundedContainer';
 
@@ -15,12 +15,12 @@ import {remoteAsset} from '../utils/remoteAsset';
 
 // Styles
 import Colors from '../constants/Colors';
-import Fonts from '../constants/Fonts';
 import HtmlViewer from '../components/HtmlViewer';
 import {BookIcon} from '../assets/svg';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useAppSelector} from '../hooks/useAppDispatch';
 import ContentButton from '../components/ContentButton';
+import Typography, {TypographyType} from '../components/Typography';
 
 type ReadingDetailsScreenProps = {
   navigation: StackNavigationProp<
@@ -51,8 +51,15 @@ const ReadingDetailsScreen: React.VFC<ReadingDetailsScreenProps> = ({
       <TopRoundedContainer style={styles.textContainer}>
         <View style={styles.headerContainer}>
           <View style={styles.descriptionContainer}>
-            <Text style={styles.title}>{reading.description}</Text>
-            <Text style={styles.description}>{reading.sub_description}</Text>
+            <Typography type={TypographyType.Title} resizeable>
+              {reading.description}
+            </Typography>
+            <Typography
+              type={TypographyType.Description}
+              style={styles.description}
+              resizeable>
+              {reading.sub_description}
+            </Typography>
           </View>
 
           {!!reading.sections.length && (
@@ -124,14 +131,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
     paddingVertical: 30,
   },
-  title: {
-    fontSize: 16,
-    fontFamily: Fonts.RobotoRegular,
-  },
   description: {
-    fontSize: 14,
-    fontFamily: Fonts.RobotoLight,
-    color: Colors.gray,
     marginTop: 5,
   },
   headerContainer: {

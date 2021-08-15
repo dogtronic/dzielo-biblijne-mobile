@@ -1,13 +1,12 @@
 import React, {useState} from 'react';
 
 // Components
-import {View, StyleSheet, TouchableOpacity, Text} from 'react-native';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import CrossSmall from '../assets/svg/CrossSmall';
+import Typography, {TypographyType} from './Typography';
 
 // Styles
 import Colors from '../constants/Colors';
-import Fonts from '../constants/Fonts';
-
 // Utils
 import {useTranslation} from 'react-i18next';
 
@@ -73,7 +72,9 @@ const ReadingDrawer: React.VFC<DrawerProps> = ({
     <View style={styles.container}>
       <CrossSmall style={styles.cross} />
 
-      <Text style={styles.header}>{reading.reading_type.name}</Text>
+      <Typography type={TypographyType.MainHeader} style={styles.header}>
+        {reading.reading_type.name}
+      </Typography>
 
       <View style={styles.optionsContainer}>
         {menus.map((v, index) => (
@@ -84,7 +85,11 @@ const ReadingDrawer: React.VFC<DrawerProps> = ({
               v.onPress();
             }}
             style={styles.optionContainer}>
-            <Text style={styles.optionText}>{v.name}</Text>
+            <Typography
+              type={TypographyType.SmallTitle}
+              style={styles.optionText}>
+              {v.name}
+            </Typography>
           </TouchableOpacity>
         ))}
       </View>
@@ -104,9 +109,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   header: {
-    fontSize: 20,
-    fontFamily: Fonts.MartelRegular,
-    color: Colors.white,
     marginTop: 20,
   },
   cross: {
@@ -118,8 +120,6 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   optionText: {
-    fontSize: 15,
-    fontFamily: Fonts.RobotoRegular,
     color: Colors.white,
   },
 });

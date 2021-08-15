@@ -5,11 +5,12 @@ import * as actions from '../store/actions';
 import {useAppDispatch, useAppSelector} from '../hooks/useAppDispatch';
 
 // Components
-import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import Modal from 'react-native-modal';
 import {CloseIcon} from '../assets/svg';
 import Button from './Button';
 import Loader from './Loader';
+import Typography, {TypographyType} from './Typography';
 
 // Utils
 import {useTranslation} from 'react-i18next';
@@ -17,7 +18,6 @@ import {useAppNavigation} from '../hooks/useAppNavigation';
 
 // Styles
 import Colors from '../constants/Colors';
-import Fonts from '../constants/Fonts';
 
 // Models
 import {TermType} from '../store/types/Term.model';
@@ -60,7 +60,9 @@ const TermModal: React.VFC<TermModalProps> = ({
       onBackdropPress={toggleModal}>
       <View style={styles.wrapper}>
         <View style={styles.headerContainer}>
-          <Text style={styles.header}>{t('menu:words')}</Text>
+          <Typography type={TypographyType.SmallDescription}>
+            {t('menu:words')}
+          </Typography>
 
           <TouchableOpacity
             hitSlop={{top: 10, left: 10, right: 10, bottom: 10}}
@@ -73,10 +75,16 @@ const TermModal: React.VFC<TermModalProps> = ({
           <Loader />
         ) : (
           <View style={styles.content}>
-            <Text style={styles.title}>{term?.term}</Text>
-            <Text style={styles.description} numberOfLines={3}>
+            <Typography type={TypographyType.Title} resizeable>
+              {term?.term}
+            </Typography>
+            <Typography
+              type={TypographyType.Text}
+              style={styles.description}
+              numberOfLines={3}
+              resizeable>
               {term?.description}
-            </Text>
+            </Typography>
 
             <Button
               title={t('common:readMore')}
@@ -121,18 +129,7 @@ const styles = StyleSheet.create({
   content: {
     marginTop: 30,
   },
-  header: {
-    fontSize: 12,
-    fontFamily: Fonts.RobotoLight,
-    color: Colors.gray,
-  },
-  title: {
-    fontSize: 16,
-    fontFamily: Fonts.RobotoRegular,
-  },
   description: {
-    fontSize: 15,
-    fontFamily: Fonts.RobotoLight,
     marginVertical: 25,
   },
 });

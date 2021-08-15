@@ -1,23 +1,25 @@
 import React, {useState, useEffect, useCallback} from 'react';
 
-//redux
+// Redux
 import {useAppDispatch, useAppSelector} from '../hooks/useAppDispatch';
 import * as actions from '../store/actions';
 
-//components
-import {StyleSheet, View, Text, ImageBackground} from 'react-native';
+// Components
+import {StyleSheet, View, ImageBackground} from 'react-native';
 import ImageHeader, {ImageHeaderText} from '../components/ImageHeader';
 import TopRoundedContainer from '../components/TopRoundedContainer';
 import ContentButton from '../components/ContentButton';
 import Loader from '../components/Loader';
 import ContentError from '../components/ContentError';
+import {ScrollView} from 'react-native-gesture-handler';
+import Typography, {TypographyType} from '../components/Typography';
 
-//navigation
+// Navigation
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/core';
 import {RootNavigatorParamList} from '../navigation/RootNavigator';
 
-//utils
+// Utils
 import {useTranslation} from 'react-i18next';
 import {remoteAsset} from '../utils/remoteAsset';
 import {debounce} from 'ts-debounce';
@@ -25,11 +27,9 @@ import DeviceInfo from 'react-native-device-info';
 
 // Styles
 import Colors from '../constants/Colors';
-import Fonts from '../constants/Fonts';
 
 // Models
 import {CuriosityBase} from '../store/types/Curiosity.model';
-import {ScrollView} from 'react-native-gesture-handler';
 
 type CuriosityBaseScreenProps = {
   navigation: StackNavigationProp<
@@ -49,7 +49,6 @@ const CuriosityBaseScreen: React.VFC<CuriosityBaseScreenProps> = ({route}) => {
   const [offset, setOffest] = useState(50);
   const [curiosityIndex, setCuriosityIndex] = useState(0);
 
-  const fontSize = useAppSelector(state => state.user.fontSize);
   const sectionImages = useAppSelector(state => state.settings.sectionImages);
 
   const curiosities: CuriosityBase[] = useAppSelector(state =>
@@ -177,12 +176,20 @@ const CuriosityBaseScreen: React.VFC<CuriosityBaseScreenProps> = ({route}) => {
 
       <TopRoundedContainer style={styles.textContainer}>
         {currentCuriosity?.title && (
-          <Text style={styles.title}>{currentCuriosity.title}</Text>
+          <Typography
+            type={TypographyType.Title}
+            style={styles.title}
+            resizeable>
+            {currentCuriosity.title}
+          </Typography>
         )}
         {currentCuriosity?.comment && (
-          <Text style={[styles.description, {fontSize}]}>
+          <Typography
+            type={TypographyType.Text}
+            style={styles.description}
+            resizeable>
             {currentCuriosity.comment}
-          </Text>
+          </Typography>
         )}
 
         <View style={styles.buttonsContainer}>
@@ -242,15 +249,9 @@ const styles = StyleSheet.create({
     paddingVertical: 30,
   },
   title: {
-    fontSize: 16,
-    fontFamily: Fonts.RobotoRegular,
-    color: Colors.black,
     marginBottom: 20,
   },
   description: {
-    fontSize: 15,
-    fontFamily: Fonts.RobotoLight,
-    color: Colors.black,
     marginBottom: 20,
   },
   buttonsContainer: {

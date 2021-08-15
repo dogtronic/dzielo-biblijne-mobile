@@ -4,15 +4,14 @@ import React from 'react';
 import {
   TouchableOpacity,
   StyleSheet,
-  Text,
   ViewStyle,
   StyleProp,
   ActivityIndicator,
 } from 'react-native';
+import Typography, {TypographyType} from './Typography';
 
 // Styles
 import Colors from '../constants/Colors';
-import Fonts from '../constants/Fonts';
 
 // Utils
 import {debounce} from 'ts-debounce';
@@ -46,7 +45,7 @@ const Button: React.VFC<ButtonProps> = ({
       {loading ? (
         <ActivityIndicator color={Colors.white} />
       ) : (
-        <Text style={styles.buttonText}>{title}</Text>
+        <Typography type={TypographyType.BigHeader}>{title}</Typography>
       )}
     </TouchableOpacity>
   );
@@ -68,11 +67,6 @@ const styles = StyleSheet.create({
   },
   textNearIcon: {
     marginLeft: 5,
-  },
-  buttonText: {
-    fontSize: 18,
-    color: Colors.white,
-    fontFamily: Fonts.RobotoRegular,
   },
   disabled: {
     opacity: 0.4,

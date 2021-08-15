@@ -2,12 +2,14 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 
 // Components
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {BellIcon, CloseIcon} from '../assets/svg';
-import Colors from '../constants/Colors';
-import Fonts from '../constants/Fonts';
 import {InfoBox, InfoBoxContainer} from './InfoBox';
+import Typography, {TypographyType} from './Typography';
+
+// Styles
+import Colors from '../constants/Colors';
 
 type NotificationProps = {
   title: string;
@@ -35,9 +37,11 @@ export const Notification: React.FC<NotificationProps> = ({
       <View style={styles.headerContainer}>
         <View style={styles.insideHeaderContainer}>
           <BellIcon fill={isRead ? Colors.gray : Colors.primary} />
-          <Text style={styles.notificationHeader}>
+          <Typography
+            type={TypographyType.SmallDescription}
+            style={styles.notificationHeader}>
             {t('common:notification')}
-          </Text>
+          </Typography>
         </View>
 
         {!!onPressClose && (
@@ -92,10 +96,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   notificationHeader: {
-    color: Colors.gray,
     marginLeft: 10,
-    fontSize: 12,
-    fontFamily: Fonts.RobotoLight,
   },
   isReadTitle: {
     color: Colors.gray,

@@ -5,11 +5,12 @@ import {useAppDispatch, useAppSelector} from '../hooks/useAppDispatch';
 import * as actions from '../store/actions';
 
 //components
-import {StyleSheet, ScrollView, Text} from 'react-native';
+import {StyleSheet, ScrollView} from 'react-native';
 import ImageHeader, {ImageHeaderText} from '../components/ImageHeader';
 import TopRoundedContainer from '../components/TopRoundedContainer';
 import Loader from '../components/Loader';
 import ContentError from '../components/ContentError';
+import Typography, {TypographyType} from '../components/Typography';
 
 //navigation
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -22,7 +23,6 @@ import {useTranslation} from 'react-i18next';
 
 // Styles
 import Colors from '../constants/Colors';
-import Fonts from '../constants/Fonts';
 
 type NotificationDetailsScreenProps = {
   navigation: StackNavigationProp<
@@ -48,7 +48,6 @@ const NotificationDetailsScreen: React.VFC<NotificationDetailsScreenProps> = ({
     state => state.notifications.isNotificationLoading,
   );
   const error = useAppSelector(state => state.notifications.notificationsError);
-  const fontSize = useAppSelector(state => state.user.fontSize);
 
   useEffect(() => {
     dispatch(actions.getNotificationDetails.request({notificationId}));
@@ -84,10 +83,15 @@ const NotificationDetailsScreen: React.VFC<NotificationDetailsScreenProps> = ({
       </ImageHeader>
 
       <TopRoundedContainer style={styles.textContainer}>
-        <Text style={styles.title}>{notification?.title}</Text>
-        <Text style={[styles.description, {fontSize}]}>
+        <Typography type={TypographyType.Title} resizeable>
+          {notification?.title}
+        </Typography>
+        <Typography
+          type={TypographyType.Text}
+          style={styles.description}
+          resizeable>
           {notification?.content}
-        </Text>
+        </Typography>
       </TopRoundedContainer>
     </ScrollView>
   );
@@ -107,13 +111,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
     paddingVertical: 30,
   },
-  title: {
-    fontSize: 16,
-    fontFamily: Fonts.RobotoRegular,
-  },
   description: {
-    fontSize: 15,
-    fontFamily: Fonts.RobotoLight,
     marginTop: 30,
   },
 });

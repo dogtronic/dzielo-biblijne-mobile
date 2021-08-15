@@ -1,11 +1,11 @@
 import React from 'react';
 
 // Components
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import Typography, {TypographyType} from './Typography';
 
 // Styles
 import Colors from '../constants/Colors';
-import Fonts from '../constants/Fonts';
 
 // Models
 import {BibleBook} from '../store/types/BibleBook.model';
@@ -33,9 +33,9 @@ export const BookItem: React.VFC<BookItemProps> = ({item, withoutTopLine}) => {
             testament: item.testament,
           })
         }>
-        <Text style={styles.text} numberOfLines={1}>
+        <Typography type={TypographyType.Text} numberOfLines={1}>
           {item.name}
-        </Text>
+        </Typography>
       </TouchableOpacity>
     </View>
   );
@@ -52,9 +52,5 @@ const styles = StyleSheet.create({
   },
   topMargin: {
     marginTop: 30,
-  },
-  text: {
-    fontSize: 15,
-    fontFamily: Fonts.RobotoLight,
   },
 });

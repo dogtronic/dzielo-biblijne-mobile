@@ -5,12 +5,16 @@ import {useAppDispatch, useAppSelector} from '../hooks/useAppDispatch';
 import * as actions from '../store/actions';
 
 // Components
-import {StyleSheet, FlatList, View, Text} from 'react-native';
+import {StyleSheet, FlatList, View} from 'react-native';
 import ImageHeader, {ImageHeaderText} from '../components/ImageHeader';
 import SearchInput from '../components/SearchInput';
 import ContentError from '../components/ContentError';
 import RoundedListHeader from '../components/RoundedListHeader';
 import Loader from '../components/Loader';
+import Typography, {TypographyType} from '../components/Typography';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import TopRoundedContainer from '../components/TopRoundedContainer';
+import TermDetailsTablet from '../components/TermDetailsTablet';
 
 // Navigation
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -25,13 +29,9 @@ import DeviceInfo from 'react-native-device-info';
 
 // Styles
 import Colors from '../constants/Colors';
-import Fonts from '../constants/Fonts';
 
 // Models
 import {Term, TermType} from '../store/types/Term.model';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import TopRoundedContainer from '../components/TopRoundedContainer';
-import TermDetailsTablet from '../components/TermDetailsTablet';
 
 type TermsListScreenProps = {
   navigation: StackNavigationProp<RootNavigatorParamList, 'TermsListScreen'>;
@@ -118,16 +118,16 @@ const TermsListScreen: React.VFC<TermsListScreenProps> = ({
             ? setSelectedTermId(item.id)
             : navigation.navigate('TermDetailsScreen', {termId: item.id, type})
         }>
-        <Text
+        <Typography
+          type={TypographyType.Text}
           style={[
-            styles.itemText,
             isTablet &&
               item.id === selectedTermId &&
               styles.itemSelectedTextTablet,
           ]}
           numberOfLines={1}>
           {item.term}
-        </Text>
+        </Typography>
       </TouchableOpacity>
     ),
     [navigation, type, isTablet, selectedTermId],
@@ -290,10 +290,6 @@ const styles = StyleSheet.create({
   },
   itemSelectedTextTablet: {
     color: Colors.primary,
-  },
-  itemText: {
-    fontSize: 15,
-    fontFamily: Fonts.RobotoLight,
   },
   flexContainer: {
     flex: 1,

@@ -8,7 +8,6 @@ import * as actions from '../store/actions';
 import {
   StyleSheet,
   ScrollView,
-  Text,
   View,
   ImageBackground,
   Dimensions,
@@ -33,7 +32,7 @@ import DeviceInfo from 'react-native-device-info';
 
 // Styles
 import Colors from '../constants/Colors';
-import Fonts from '../constants/Fonts';
+import Typography, {TypographyType} from '../components/Typography';
 
 type ReadingsScreenProps = {
   navigation: StackNavigationProp<RootNavigatorParamList, 'ReadingsScreen'>;
@@ -127,9 +126,11 @@ const ReadingsScreen: React.VFC<ReadingsScreenProps> = ({navigation}) => {
                     isSundayReading: true,
                   })
                 }>
-                <Text style={styles.topContainerText}>
+                <Typography
+                  type={TypographyType.Title}
+                  style={styles.topContainerText}>
                   {v.reading_type.name}
-                </Text>
+                </Typography>
               </TouchableOpacity>
             </ImageBackground>
           ))}
@@ -171,8 +172,6 @@ const styles = StyleSheet.create({
     height: 130,
   },
   topContainerText: {
-    fontFamily: Fonts.RobotoRegular,
-    fontSize: 16,
     color: Colors.white,
   },
   rowContainer: {

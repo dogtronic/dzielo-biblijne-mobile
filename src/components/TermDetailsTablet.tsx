@@ -5,13 +5,13 @@ import {useAppDispatch, useAppSelector} from '../hooks/useAppDispatch';
 import * as actions from '../store/actions';
 
 // Components
-import {StyleSheet, ScrollView, Text} from 'react-native';
+import {StyleSheet, ScrollView} from 'react-native';
 import ContentError from '../components/ContentError';
 import Loader from '../components/Loader';
+import Typography, {TypographyType} from './Typography';
 
 // Styles
 import Colors from '../constants/Colors';
-import Fonts from '../constants/Fonts';
 
 // Models
 import {TermType} from '../store/types/Term.model';
@@ -27,7 +27,6 @@ const TermDetailsTablet: React.VFC<TermDetailsTablet> = ({termId, type}) => {
   const term = useAppSelector(state => state.terms.termDetails);
   const loading = useAppSelector(state => state.terms.isTermDetailsLoading);
   const error = useAppSelector(state => state.terms.termDetailsError);
-  const fontSize = useAppSelector(state => state.user.fontSize);
 
   React.useEffect(() => {
     if (termId) {
@@ -58,8 +57,15 @@ const TermDetailsTablet: React.VFC<TermDetailsTablet> = ({termId, type}) => {
       bounces={false}
       style={styles.container}
       contentContainerStyle={styles.content}>
-      <Text style={styles.title}>{term?.term}</Text>
-      <Text style={[styles.description, {fontSize}]}>{term?.description}</Text>
+      <Typography type={TypographyType.Title} resizeable>
+        {term?.term}
+      </Typography>
+      <Typography
+        type={TypographyType.Text}
+        style={styles.description}
+        resizeable>
+        {term?.description}
+      </Typography>
     </ScrollView>
   );
 };
@@ -76,13 +82,7 @@ const styles = StyleSheet.create({
   content: {
     paddingVertical: 15,
   },
-  title: {
-    fontSize: 16,
-    fontFamily: Fonts.RobotoRegular,
-  },
   description: {
-    fontSize: 15,
-    fontFamily: Fonts.RobotoLight,
     marginTop: 30,
   },
 });

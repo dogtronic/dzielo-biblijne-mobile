@@ -6,10 +6,11 @@ import * as actions from '../store/actions';
 import {useAppSelector} from '../hooks/useAppDispatch';
 
 //components
-import {StyleSheet, ScrollView, Text, View} from 'react-native';
+import {StyleSheet, ScrollView, View} from 'react-native';
 import ImageHeader, {ImageHeaderText} from '../components/ImageHeader';
 import TopRoundedContainer from '../components/TopRoundedContainer';
 import {Slider} from '@miblanchard/react-native-slider';
+import Typography, {TypographyType} from '../components/Typography';
 
 //navigation
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -22,7 +23,6 @@ import {useTranslation} from 'react-i18next';
 
 // Styles
 import Colors from '../constants/Colors';
-import Fonts from '../constants/Fonts';
 
 type SettingsScreenProps = {
   navigation: StackNavigationProp<RootNavigatorParamList, 'SettingsScreen'>;
@@ -46,7 +46,9 @@ const SettingsScreen: React.VFC<SettingsScreenProps> = () => {
       </ImageHeader>
 
       <TopRoundedContainer style={styles.textContainer}>
-        <Text style={styles.title}>{t('settings:fontSize')}</Text>
+        <Typography type={TypographyType.Title} style={styles.title}>
+          {t('settings:fontSize')}
+        </Typography>
 
         <Slider
           value={fontSize}
@@ -58,12 +60,14 @@ const SettingsScreen: React.VFC<SettingsScreenProps> = () => {
           minimumTrackTintColor={Colors.secondary}
         />
 
-        <Text style={styles.subTitle}>{t('settings:sampleText')}</Text>
+        <Typography type={TypographyType.Description} style={styles.subTitle}>
+          {t('settings:sampleText')}
+        </Typography>
 
         <View>
-          <Text style={[styles.sampleDescription, {fontSize}]}>
+          <Typography type={TypographyType.Text}>
             {t('settings:loremIpsum')}
-          </Text>
+          </Typography>
         </View>
       </TopRoundedContainer>
     </ScrollView>
@@ -85,18 +89,11 @@ const styles = StyleSheet.create({
     paddingVertical: 30,
   },
   title: {
-    fontFamily: Fonts.RobotoRegular,
-    fontSize: 15,
     fontWeight: '500',
     marginBottom: 10,
   },
   subTitle: {
-    fontFamily: Fonts.RobotoRegular,
-    fontSize: 15,
     marginTop: 20,
     marginBottom: 10,
-  },
-  sampleDescription: {
-    fontFamily: Fonts.RobotoLight,
   },
 });

@@ -1,19 +1,12 @@
 import React from 'react';
 
 // Components
-import {
-  StyleProp,
-  StyleSheet,
-  Text,
-  TextStyle,
-  View,
-  ViewStyle,
-} from 'react-native';
+import {StyleProp, StyleSheet, TextStyle, View, ViewStyle} from 'react-native';
 import ContentButton from './ContentButton';
+import Typography, {TypographyType} from './Typography';
 
 // Styles
 import Colors from '../constants/Colors';
-import Fonts from '../constants/Fonts';
 import GlobalStyles from '../constants/GlobalStyles';
 
 type InfoBoxContainerProps = {
@@ -52,12 +45,18 @@ export const InfoBox: React.VFC<InfoBoxProps> = ({
       position === 'vertical' && styles.verticalContentContainer,
     ]}>
     <View style={[position === 'horizontal' && styles.textContainer]}>
-      <Text style={[styles.titleText, titleStyle]} numberOfLines={1}>
+      <Typography
+        type={TypographyType.Title}
+        style={titleStyle}
+        numberOfLines={1}>
         {title}
-      </Text>
-      <Text style={styles.descriptionText} numberOfLines={2}>
+      </Typography>
+      <Typography
+        type={TypographyType.Description}
+        style={styles.descriptionText}
+        numberOfLines={2}>
         {description}
-      </Text>
+      </Typography>
     </View>
     <ContentButton
       onPress={onPressButton}
@@ -96,15 +95,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginRight: 20,
   },
-  titleText: {
-    color: Colors.black,
-    fontSize: 16,
-    fontFamily: Fonts.RobotoRegular,
-  },
   descriptionText: {
-    color: Colors.gray,
-    fontSize: 14,
-    fontFamily: Fonts.RobotoLight,
     marginTop: 5,
   },
 });

@@ -5,12 +5,14 @@ import {useAppDispatch, useAppSelector} from '../hooks/useAppDispatch';
 import * as actions from '../store/actions';
 
 // Components
-import {StyleSheet, FlatList, View, Text} from 'react-native';
+import {StyleSheet, FlatList, View} from 'react-native';
 import ImageHeader, {ImageHeaderText} from '../components/ImageHeader';
 import SearchInput from '../components/SearchInput';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import ContentError from '../components/ContentError';
 import RoundedListHeader from '../components/RoundedListHeader';
+import Typography, {TypographyType} from '../components/Typography';
+import Loader from '../components/Loader';
 
 // Navigation
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -23,9 +25,7 @@ import {remoteAsset} from '../utils/remoteAsset';
 import {debounce} from 'ts-debounce';
 
 // Styles
-import Loader from '../components/Loader';
 import Colors from '../constants/Colors';
-import Fonts from '../constants/Fonts';
 
 // Models
 import {Reading} from '../store/types/Reading.model';
@@ -98,9 +98,9 @@ const HomiliesListScreen: React.VFC<HomiliesListScreenProps> = ({
         onPress={() =>
           navigation.navigate('ReadingsDrawerNavigator', {reading: item})
         }>
-        <Text style={styles.itemText} numberOfLines={1}>
+        <Typography type={TypographyType.Text} numberOfLines={1}>
           {item.description}
-        </Text>
+        </Typography>
       </TouchableOpacity>
     ),
     [navigation],
@@ -180,9 +180,5 @@ const styles = StyleSheet.create({
     height: 50,
     justifyContent: 'center',
     marginHorizontal: 30,
-  },
-  itemText: {
-    fontSize: 15,
-    fontFamily: Fonts.RobotoLight,
   },
 });

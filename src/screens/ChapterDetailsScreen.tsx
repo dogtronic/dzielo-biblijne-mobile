@@ -1,37 +1,31 @@
 import React, {useEffect} from 'react';
 
-//redux
+// Redux
 import {useAppDispatch, useAppSelector} from '../hooks/useAppDispatch';
 
-//components
-import {
-  StyleSheet,
-  ScrollView,
-  Text,
-  useWindowDimensions,
-  View,
-} from 'react-native';
+// Components
+import {StyleSheet, ScrollView, useWindowDimensions, View} from 'react-native';
 import ImageHeader, {ImageHeaderText} from '../components/ImageHeader';
 import {RightArrowIcon} from '../assets/svg';
 import HtmlViewer from '../components/HtmlViewer';
 import Loader from '../components/Loader';
 import ContentError from '../components/ContentError';
+import TopRoundedContainer from '../components/TopRoundedContainer';
+import Typography, {TypographyType} from '../components/Typography';
+import ContentButton from '../components/ContentButton';
 
-//navigation
+// Navigation
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/core';
 import {RootNavigatorParamList} from '../navigation/RootNavigator';
 
-//utils
+// Utils
 import {remoteAsset} from '../utils/remoteAsset';
 import * as actions from '../store/actions';
+import {useTranslation} from 'react-i18next';
 
 // Styles
 import Colors from '../constants/Colors';
-import Fonts from '../constants/Fonts';
-import ContentButton from '../components/ContentButton';
-import {useTranslation} from 'react-i18next';
-import TopRoundedContainer from '../components/TopRoundedContainer';
 
 type BibleScreenProps = {
   navigation: StackNavigationProp<
@@ -119,7 +113,9 @@ const BibleScreen: React.VFC<BibleScreenProps> = ({route, navigation}) => {
       </ImageHeader>
 
       <TopRoundedContainer style={styles.textContainer}>
-        <Text style={styles.title}>{chapter?.title}</Text>
+        <Typography type={TypographyType.Title} style={styles.title} resizeable>
+          {chapter?.title}
+        </Typography>
 
         <HtmlViewer html={chapter?.text} containerStyle={styles.content} />
 
@@ -169,8 +165,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
   },
   title: {
-    fontSize: 16,
-    fontFamily: Fonts.RobotoRegular,
     marginTop: 20,
     marginHorizontal: 20,
   },

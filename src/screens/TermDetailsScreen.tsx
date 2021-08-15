@@ -1,28 +1,28 @@
 import React from 'react';
 
-//redux
+// Redux
 import {useAppDispatch, useAppSelector} from '../hooks/useAppDispatch';
 import * as actions from '../store/actions';
 
-//components
-import {StyleSheet, ScrollView, Text} from 'react-native';
+// Components
+import {StyleSheet, ScrollView} from 'react-native';
 import ImageHeader, {ImageHeaderText} from '../components/ImageHeader';
 import TopRoundedContainer from '../components/TopRoundedContainer';
 import ContentError from '../components/ContentError';
 import Loader from '../components/Loader';
+import Typography, {TypographyType} from '../components/Typography';
 
-//navigation
+// Navigation
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/core';
 import {RootNavigatorParamList} from '../navigation/RootNavigator';
 
-//utils
+// Utils
 import {remoteAsset} from '../utils/remoteAsset';
 import {useTranslation} from 'react-i18next';
 
 // Styles
 import Colors from '../constants/Colors';
-import Fonts from '../constants/Fonts';
 
 // Models
 import {TermType} from '../store/types/Term.model';
@@ -42,7 +42,6 @@ const TermDetailsScreen: React.VFC<TermDetailsScreenProps> = ({route}) => {
   const sectionImages = useAppSelector(state => state.settings.sectionImages);
   const loading = useAppSelector(state => state.terms.isTermDetailsLoading);
   const error = useAppSelector(state => state.terms.termDetailsError);
-  const fontSize = useAppSelector(state => state.user.fontSize);
 
   React.useEffect(() => {
     dispatch(actions.getTermDetails.request({termId, type}));
@@ -83,10 +82,15 @@ const TermDetailsScreen: React.VFC<TermDetailsScreenProps> = ({route}) => {
       </ImageHeader>
 
       <TopRoundedContainer style={styles.textContainer}>
-        <Text style={styles.title}>{term?.term}</Text>
-        <Text style={[styles.description, {fontSize}]}>
+        <Typography type={TypographyType.Title} resizeable>
+          {term?.term}
+        </Typography>
+        <Typography
+          type={TypographyType.Text}
+          style={styles.description}
+          resizeable>
           {term?.description}
-        </Text>
+        </Typography>
       </TopRoundedContainer>
     </ScrollView>
   );
@@ -106,13 +110,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
     paddingVertical: 30,
   },
-  title: {
-    fontSize: 16,
-    fontFamily: Fonts.RobotoRegular,
-  },
   description: {
-    fontSize: 15,
-    fontFamily: Fonts.RobotoLight,
     marginTop: 30,
   },
 });

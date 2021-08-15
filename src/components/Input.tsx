@@ -1,8 +1,9 @@
 import React, {useRef} from 'react';
 
 // Components
-import {TextInput, StyleSheet, Text, View} from 'react-native';
+import {TextInput, StyleSheet, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import Typography, {TypographyType} from './Typography';
 
 // Styles
 import Colors from '../constants/Colors';
@@ -54,12 +55,14 @@ const Input: React.FC<InputProps> = ({
         />
       </TouchableOpacity>
       {multiline && (
-        <Text style={styles.charNumber}>
+        <Typography type={TypographyType.Description} style={styles.charNumber}>
           {value.length}/{maxLength}
-        </Text>
+        </Typography>
       )}
 
-      <Text style={styles.errorText}>{error}</Text>
+      <Typography type={TypographyType.Description} style={styles.errorText}>
+        {error}
+      </Typography>
     </View>
   );
 };
@@ -94,8 +97,6 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   charNumber: {
-    color: Colors.gray,
-    fontFamily: Fonts.RobotoLight,
     position: 'absolute',
     right: 10,
     top: 150,

@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react';
 
-//redux
+// Redux
 import {useAppDispatch, useAppSelector} from '../hooks/useAppDispatch';
 
-//components
-import {StyleSheet, Text, View} from 'react-native';
+// Components
+import {Keyboard, StyleSheet, View} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import ImageHeader, {ImageHeaderText} from '../components/ImageHeader';
 import HtmlViewer from '../components/HtmlViewer';
@@ -12,13 +12,14 @@ import Loader from '../components/Loader';
 import TopRoundedContainer from '../components/TopRoundedContainer';
 import Input from '../components/Input';
 import ContentError from '../components/ContentError';
+import Typography, {TypographyType} from '../components/Typography';
 
-//navigation
+// Navigation
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/core';
 import {RootNavigatorParamList} from '../navigation/RootNavigator';
 
-//utils
+// Utils
 import {remoteAsset} from '../utils/remoteAsset';
 import * as actions from '../store/actions';
 import {useTranslation} from 'react-i18next';
@@ -30,7 +31,6 @@ import DeviceInfo from 'react-native-device-info';
 // Styles
 import Colors from '../constants/Colors';
 import Button from '../components/Button';
-import Fonts from '../constants/Fonts';
 
 type ContactScreenProps = {
   navigation: StackNavigationProp<RootNavigatorParamList, 'ContactScreen'>;
@@ -95,10 +95,17 @@ const ContactScreen: React.VFC<ContactScreenProps> = () => {
       <TopRoundedContainer style={styles.textContainer}>
         <HtmlViewer html={contactDetails?.content} />
 
-        <Text style={styles.writeToUsHeader}>{t('common:writeToUs')}</Text>
+        <Typography
+          type={TypographyType.Title}
+          style={styles.writeToUsHeader}
+          resizeable>
+          {t('common:writeToUs')}
+        </Typography>
 
         {messageSentInfo && (
-          <Text style={styles.messageSent}>{messageSentInfo}</Text>
+          <Typography type={TypographyType.Text} style={styles.messageSent}>
+            {messageSentInfo}
+          </Typography>
         )}
 
         <View style={[isTablet && styles.formContainer]}>
@@ -113,6 +120,7 @@ const ContactScreen: React.VFC<ContactScreenProps> = () => {
             onSubmit={(formValues, helpers) => {
               dispatch(actions.sendMessageToAdministrator.request(formValues));
               helpers.resetForm();
+              Keyboard.dismiss();
             }}>
             {({handleChange, handleSubmit, handleBlur, values, errors}) => (
               <>
@@ -167,8 +175,6 @@ const styles = StyleSheet.create({
   },
   writeToUsHeader: {
     marginBottom: 15,
-    fontFamily: Fonts.RobotoRegular,
-    fontSize: 16,
   },
   messageSent: {
     marginBottom: 15,

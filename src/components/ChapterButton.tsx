@@ -1,11 +1,11 @@
 import React from 'react';
 
 // Components
-import {TouchableOpacity, StyleSheet, Text} from 'react-native';
+import {TouchableOpacity, StyleSheet} from 'react-native';
+import Typography, {TypographyType} from './Typography';
 
 // Styles
 import Colors from '../constants/Colors';
-import Fonts from '../constants/Fonts';
 import GlobalStyles from '../constants/GlobalStyles';
 
 // Models
@@ -28,7 +28,7 @@ const ChapterButton: React.VFC<ChapterButtonProps> = ({item}) => {
       onPress={() =>
         navigation.navigate('ChapterDetailsScreen', {chapterId: item.id})
       }>
-      <Text style={styles.buttonText}>{item.number}</Text>
+      <Typography type={TypographyType.SmallTitle}>{item.number}</Typography>
     </TouchableOpacity>
   );
 };
@@ -44,9 +44,5 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  buttonText: {
-    fontSize: 15,
-    fontFamily: Fonts.RobotoRegular,
   },
 });

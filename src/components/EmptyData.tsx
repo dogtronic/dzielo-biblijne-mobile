@@ -2,17 +2,16 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 
 // components
-import {StyleSheet, Text, View} from 'react-native';
-
-// styles
-import Colors from '../constants/Colors';
-import Fonts from '../constants/Fonts';
+import {StyleSheet, View} from 'react-native';
+import Typography, {TypographyType} from './Typography';
 
 const EmptyData: React.VFC = () => {
   const {t} = useTranslation();
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>{t('common:dataNotFound')}</Text>
+      <Typography type={TypographyType.Text}>
+        {t('common:dataNotFound')}
+      </Typography>
     </View>
   );
 };
@@ -24,10 +23,5 @@ const styles = StyleSheet.create({
     padding: 40,
     flex: 1,
     alignItems: 'center',
-  },
-  text: {
-    color: Colors.black,
-    fontSize: 15,
-    fontFamily: Fonts.RobotoLight,
   },
 });

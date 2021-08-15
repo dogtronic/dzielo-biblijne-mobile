@@ -2,12 +2,12 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 
 // Components
-import {View, Text, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import Button from './Button';
+import Typography, {TypographyType} from './Typography';
 
 // Styles
 import Colors from '../constants/Colors';
-import Fonts from '../constants/Fonts';
 
 type ContentErrorProps = {
   onPressRefresh?: () => void;
@@ -18,10 +18,12 @@ const ContentError: React.VFC<ContentErrorProps> = ({onPressRefresh}) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{t('common:serverErrorTitle')}</Text>
-      <Text style={styles.description}>
+      <Typography type={TypographyType.BigHeader} style={styles.title}>
+        {t('common:serverErrorTitle')}
+      </Typography>
+      <Typography type={TypographyType.Description} style={styles.description}>
         {t('common:serverErrorDescription')}
-      </Text>
+      </Typography>
       {onPressRefresh && (
         <Button title={t('common:tryAgain')} onPress={onPressRefresh} />
       )}
@@ -41,12 +43,8 @@ const styles = StyleSheet.create({
   description: {
     textAlign: 'center',
     marginVertical: 20,
-    fontFamily: Fonts.RobotoLight,
-    fontSize: 13,
   },
   title: {
-    textAlign: 'center',
-    fontFamily: Fonts.RobotoRegular,
-    fontSize: 18,
+    color: Colors.black,
   },
 });
