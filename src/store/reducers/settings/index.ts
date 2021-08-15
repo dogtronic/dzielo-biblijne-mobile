@@ -97,6 +97,10 @@ const settingsReducer = createReducer<SettingsState, SettingsActions>(
   .handleAction(actions.getPhotoOfTheWeek.success, (state, action) => ({
     ...state,
     photoOfTheWeek: action.payload,
+  }))
+  .handleAction(actions.clearMessageToAdministratorResponse, state => ({
+    ...state,
+    messageSentInfo: undefined,
   }));
 
 export default settingsReducer;

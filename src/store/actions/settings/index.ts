@@ -1,4 +1,4 @@
-import {createAsyncAction} from 'typesafe-actions';
+import {createAction, createAsyncAction} from 'typesafe-actions';
 import {Photo} from '../../types/Curiosity.model';
 import {Information} from '../../types/Information.model';
 import {
@@ -35,3 +35,7 @@ export const getPhotoOfTheWeek = createAsyncAction(
   'GET_PHOTO_OF_THE_WEEK_SUCCESS',
   'GET_PHOTO_OF_THE_WEEK_FAILURE',
 )<undefined, Photo, undefined>();
+
+export const clearMessageToAdministratorResponse = createAction(
+  'CLEAR_MESSAGE_TO_ADMINISTRATOR_RESPONSE',
+)<undefined>();

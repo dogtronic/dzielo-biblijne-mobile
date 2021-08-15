@@ -66,6 +66,7 @@ const ContactScreen: React.VFC<ContactScreenProps> = () => {
 
   useEffect(() => {
     dispatch(actions.getContact.request());
+    dispatch(actions.clearMessageToAdministratorResponse());
   }, [dispatch]);
 
   if (loading) {
