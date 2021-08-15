@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 
 //redux
 import {useAppDispatch, useAppSelector} from '../hooks/useAppDispatch';
+import * as actions from '../store/actions';
 
 //components
 import {StyleSheet, ScrollView, View} from 'react-native';
@@ -19,7 +20,7 @@ import {RootNavigatorParamList} from '../navigation/RootNavigator';
 //utils
 import {useTranslation} from 'react-i18next';
 import {remoteAsset} from '../utils/remoteAsset';
-import * as actions from '../store/actions';
+import DeviceInfo from 'react-native-device-info';
 
 // Styles
 import Loader from '../components/Loader';
@@ -37,8 +38,10 @@ const BibleScreen: React.VFC<BibleScreenProps> = ({navigation}) => {
   const {t} = useTranslation();
   const dispatch = useAppDispatch();
 
-  const [isOldTestamentOpen, setIsOldTestamentOpen] = useState(false);
-  const [isNewTestamentOpen, setIsNewTestamentOpen] = useState(false);
+  const isTablet = DeviceInfo.isTablet();
+
+  const [isOldTestamentOpen, setIsOldTestamentOpen] = useState(isTablet);
+  const [isNewTestamentOpen, setIsNewTestamentOpen] = useState(isTablet);
 
   const books = useAppSelector(state => state.bible.books);
   const sectionImages = useAppSelector(state => state.settings.sectionImages);
@@ -93,7 +96,8 @@ const BibleScreen: React.VFC<BibleScreenProps> = ({navigation}) => {
         </View>
       )}
 
-      <TopRoundedContainer style={styles.textContainer}>
+      <TopRoundedContainer
+        style={[styles.textContainer, isTablet && styles.tabletTextContainer]}>
         <ReadingListItem
           title={t('bible:oldTestamentHeader')}
           description={t('bible:oldTestamentDescription')}
@@ -101,12 +105,15 @@ const BibleScreen: React.VFC<BibleScreenProps> = ({navigation}) => {
           customButtonLabel={
             isOldTestamentOpen ? t('common:hide') : t('common:show')
           }
-          onPressButton={() => setIsOldTestamentOpen(!isOldTestamentOpen)}>
+          onPressButton={() => setIsOldTestamentOpen(!isOldTestamentOpen)}
+          containerStyle={[isTablet && styles.tabletItem]}>
           {isOldTestamentOpen &&
             oldTestament.map((v, index) => (
               <BookItem key={v.id} item={v} withoutTopLine={index === 0} />
             ))}
         </ReadingListItem>
+
+        <View style={[isTablet && styles.tabletSeparator]} />
 
         <ReadingListItem
           title={t('bible:newTestamentHeader')}
@@ -115,7 +122,8 @@ const BibleScreen: React.VFC<BibleScreenProps> = ({navigation}) => {
           customButtonLabel={
             isNewTestamentOpen ? t('common:hide') : t('common:show')
           }
-          onPressButton={() => setIsNewTestamentOpen(!isNewTestamentOpen)}>
+          onPressButton={() => setIsNewTestamentOpen(!isNewTestamentOpen)}
+          containerStyle={[isTablet && styles.tabletItem]}>
           {isNewTestamentOpen &&
             newTestament.map((v, index) => (
               <BookItem key={v.id} item={v} withoutTopLine={index === 0} />
@@ -142,5 +150,15 @@ const styles = StyleSheet.create({
   insideContainer: {
     marginTop: 20,
     marginHorizontal: 20,
+  },
+  tabletTextContainer: {
+    flexDirection: 'row',
+    paddingTop: 30,
+  },
+  tabletItem: {
+    flex: 1,
+  },
+  tabletSeparator: {
+    width: 50,
   },
 });

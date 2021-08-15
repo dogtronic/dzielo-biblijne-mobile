@@ -4,7 +4,7 @@ import React, {useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from '../hooks/useAppDispatch';
 
 //components
-import {StyleSheet, Text} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import ImageHeader, {ImageHeaderText} from '../components/ImageHeader';
 import HtmlViewer from '../components/HtmlViewer';
@@ -25,6 +25,7 @@ import {useTranslation} from 'react-i18next';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
 import i18n from '../assets/translations';
+import DeviceInfo from 'react-native-device-info';
 
 // Styles
 import Colors from '../constants/Colors';
@@ -46,6 +47,8 @@ const formValidationSchema = Yup.object().shape({
 const ContactScreen: React.VFC<ContactScreenProps> = () => {
   const {t} = useTranslation();
   const dispatch = useAppDispatch();
+
+  const isTablet = DeviceInfo.isTablet();
 
   const contactDetails = useAppSelector(state => state.settings.contactDetails);
   const sectionImages = useAppSelector(state => state.settings.sectionImages);
@@ -98,47 +101,49 @@ const ContactScreen: React.VFC<ContactScreenProps> = () => {
           <Text style={styles.messageSent}>{messageSentInfo}</Text>
         )}
 
-        <Formik
-          initialValues={{
-            name: '',
-            content: '',
-          }}
-          validationSchema={formValidationSchema}
-          validateOnChange={false}
-          validateOnBlur={false}
-          onSubmit={(formValues, helpers) => {
-            dispatch(actions.sendMessageToAdministrator.request(formValues));
-            helpers.resetForm();
-          }}>
-          {({handleChange, handleSubmit, handleBlur, values, errors}) => (
-            <>
-              <Input
-                placeholder={t('common:name')}
-                value={values.name}
-                onChange={handleChange('name')}
-                error={errors.name}
-                onBlur={handleBlur('name')}
-              />
+        <View style={[isTablet && styles.formContainer]}>
+          <Formik
+            initialValues={{
+              name: '',
+              content: '',
+            }}
+            validationSchema={formValidationSchema}
+            validateOnChange={false}
+            validateOnBlur={false}
+            onSubmit={(formValues, helpers) => {
+              dispatch(actions.sendMessageToAdministrator.request(formValues));
+              helpers.resetForm();
+            }}>
+            {({handleChange, handleSubmit, handleBlur, values, errors}) => (
+              <>
+                <Input
+                  placeholder={t('common:name')}
+                  value={values.name}
+                  onChange={handleChange('name')}
+                  error={errors.name}
+                  onBlur={handleBlur('name')}
+                />
 
-              <Input
-                placeholder={t('common:message')}
-                value={values.content}
-                onChange={handleChange('content')}
-                error={errors.content}
-                multiline
-                maxLength={300}
-                onBlur={handleBlur('content')}
-              />
+                <Input
+                  placeholder={t('common:message')}
+                  value={values.content}
+                  onChange={handleChange('content')}
+                  error={errors.content}
+                  multiline
+                  maxLength={300}
+                  onBlur={handleBlur('content')}
+                />
 
-              <Button
-                title={t('common:send')}
-                containerStyle={styles.sendButton}
-                onPress={handleSubmit}
-                loading={isMessageSending}
-              />
-            </>
-          )}
-        </Formik>
+                <Button
+                  title={t('common:send')}
+                  containerStyle={styles.sendButton}
+                  onPress={handleSubmit}
+                  loading={isMessageSending}
+                />
+              </>
+            )}
+          </Formik>
+        </View>
       </TopRoundedContainer>
     </KeyboardAwareScrollView>
   );
@@ -168,5 +173,8 @@ const styles = StyleSheet.create({
   messageSent: {
     marginBottom: 15,
     color: Colors.primary,
+  },
+  formContainer: {
+    maxWidth: '50%',
   },
 });

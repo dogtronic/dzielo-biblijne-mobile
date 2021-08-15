@@ -26,7 +26,7 @@ export function* getTerms(action: ActionType<typeof actions.getTerms.request>) {
     yield put(
       actions.getTerms.success({
         terms: response.data,
-        areMoreData: response.data.length >= 10,
+        areMoreData: response.data.length >= 30,
         withReset: action.payload.withReset,
       }),
     );

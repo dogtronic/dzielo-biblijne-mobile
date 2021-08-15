@@ -23,6 +23,7 @@ import {useTranslation} from 'react-i18next';
 import {remoteAsset} from '../utils/remoteAsset';
 import dayjs from 'dayjs';
 import pl from 'dayjs/locale/pl';
+import DeviceInfo from 'react-native-device-info';
 
 // Styles
 import Fonts from '../constants/Fonts';
@@ -40,6 +41,8 @@ function capitalizeFirstLetter(string: string) {
 const DashboardScreen: React.VFC<DashboardScreenProps> = ({navigation}) => {
   const {t} = useTranslation();
   const dispatch = useDispatch();
+
+  const isTablet = DeviceInfo.isTablet();
 
   const sectionImages = useAppSelector(state => state.settings.sectionImages);
 
@@ -74,55 +77,74 @@ const DashboardScreen: React.VFC<DashboardScreenProps> = ({navigation}) => {
         </View>
       </View>
 
-      {photoOfTheWeek && <WeeklyPhoto photo={photoOfTheWeek} />}
+      <View style={[isTablet && styles.tabletTopContainer]}>
+        <View style={[isTablet && styles.tabletFlexContainer]}>
+          {photoOfTheWeek && <WeeklyPhoto photo={photoOfTheWeek} />}
+        </View>
 
-      {newNotifications.map(v => (
-        <Notification
-          key={v.id.toString()}
-          title={v.title}
-          description={v.content}
-          isRead={readNotifications[v.id]}
-          onPressClose={() =>
-            dispatch(actions.setRemovedNotificationFromDashboard(v.id))
-          }
-          onPressButton={() =>
-            navigation.navigate('NotificationDetailsScreen', {
-              notificationId: v.id,
-            })
-          }
-        />
-      ))}
+        <View style={[isTablet && styles.tabletFlexContainer]}>
+          {newNotifications.map(v => (
+            <Notification
+              key={v.id.toString()}
+              title={v.title}
+              description={v.content}
+              isRead={readNotifications[v.id]}
+              onPressClose={() =>
+                dispatch(actions.setRemovedNotificationFromDashboard(v.id))
+              }
+              onPressButton={() =>
+                navigation.navigate('NotificationDetailsScreen', {
+                  notificationId: v.id,
+                })
+              }
+            />
+          ))}
+        </View>
+      </View>
 
-      <TopRoundedContainer style={styles.textContainer}>
-        <ReadingListItem
-          title={t('dashboard:bibleHeader')}
-          description={t('dashboard:bibleDescription')}
-          uri={remoteAsset(sectionImages?.bible?.url)}
-          onPressButton={() => navigation.navigate('BibleScreen')}
-        />
+      <TopRoundedContainer
+        style={[styles.textContainer, isTablet && styles.tabletTextContainer]}>
+        <View style={[isTablet && styles.tabletTopContainer]}>
+          <ReadingListItem
+            title={t('dashboard:bibleHeader')}
+            description={t('dashboard:bibleDescription')}
+            uri={remoteAsset(sectionImages?.bible?.url)}
+            onPressButton={() => navigation.navigate('BibleScreen')}
+            containerStyle={styles.itemTablet}
+          />
 
-        <ReadingListItem
-          title={t('dashboard:sundayReadingsHeader')}
-          description={t('dashboard:sundayReadingsDescription')}
-          uri={remoteAsset(sectionImages?.sunday_readings?.url)}
-          onPressButton={() => navigation.navigate('ReadingsScreen')}
-        />
+          <View style={[isTablet && styles.tabletSeparator]} />
 
-        <ReadingListItem
-          title={t('dashboard:homilyHeader')}
-          description={t('dashboard:homilyDescription')}
-          uri={remoteAsset(sectionImages?.homily?.url)}
-          onPressButton={() => navigation.navigate('HomiliesListScreen')}
-        />
+          <ReadingListItem
+            title={t('dashboard:sundayReadingsHeader')}
+            description={t('dashboard:sundayReadingsDescription')}
+            uri={remoteAsset(sectionImages?.sunday_readings?.url)}
+            onPressButton={() => navigation.navigate('ReadingsScreen')}
+            containerStyle={styles.itemTablet}
+          />
+        </View>
 
-        <ReadingListItem
-          title={t('dashboard:nationalReadingsHeader')}
-          description={t('dashboard:nationalReadingsDescription')}
-          uri={remoteAsset(sectionImages?.national_readings?.url)}
-          onPressButton={() =>
-            navigation.navigate('NationalReadingsListScreen')
-          }
-        />
+        <View style={[isTablet && styles.tabletTopContainer]}>
+          <ReadingListItem
+            title={t('dashboard:homilyHeader')}
+            description={t('dashboard:homilyDescription')}
+            uri={remoteAsset(sectionImages?.homily?.url)}
+            onPressButton={() => navigation.navigate('HomiliesListScreen')}
+            containerStyle={styles.itemTablet}
+          />
+
+          <View style={[isTablet && styles.tabletSeparator]} />
+
+          <ReadingListItem
+            title={t('dashboard:nationalReadingsHeader')}
+            description={t('dashboard:nationalReadingsDescription')}
+            uri={remoteAsset(sectionImages?.national_readings?.url)}
+            onPressButton={() =>
+              navigation.navigate('NationalReadingsListScreen')
+            }
+            containerStyle={styles.itemTablet}
+          />
+        </View>
       </TopRoundedContainer>
     </ScrollView>
   );
@@ -153,5 +175,21 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     fontSize: 16,
     fontFamily: Fonts.MartelRegular,
+  },
+  tabletTopContainer: {
+    flexDirection: 'row',
+  },
+  tabletFlexContainer: {
+    flex: 1,
+  },
+  itemTablet: {
+    flex: 1,
+    marginTop: 20,
+  },
+  tabletSeparator: {
+    width: 50,
+  },
+  tabletTextContainer: {
+    marginTop: 40,
   },
 });

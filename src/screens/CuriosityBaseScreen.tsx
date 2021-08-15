@@ -21,9 +21,9 @@ import {RootNavigatorParamList} from '../navigation/RootNavigator';
 import {useTranslation} from 'react-i18next';
 import {remoteAsset} from '../utils/remoteAsset';
 import {debounce} from 'ts-debounce';
+import DeviceInfo from 'react-native-device-info';
 
 // Styles
-
 import Colors from '../constants/Colors';
 import Fonts from '../constants/Fonts';
 
@@ -43,6 +43,8 @@ const CuriosityBaseScreen: React.VFC<CuriosityBaseScreenProps> = ({route}) => {
   const {type, curiosities: customCuriosities} = route.params;
   const {t} = useTranslation();
   const dispatch = useAppDispatch();
+
+  const isTablet = DeviceInfo.isTablet();
 
   const [offset, setOffest] = useState(50);
   const [curiosityIndex, setCuriosityIndex] = useState(0);
@@ -168,7 +170,7 @@ const CuriosityBaseScreen: React.VFC<CuriosityBaseScreenProps> = ({route}) => {
 
       {currentCuriosity?.image?.url && (
         <ImageBackground
-          style={styles.image}
+          style={[styles.image, isTablet && styles.imageTablet]}
           source={{uri: remoteAsset(currentCuriosity?.image?.url)}}
         />
       )}
@@ -224,6 +226,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
     borderRadius: 5,
     overflow: 'hidden',
+  },
+  imageTablet: {
+    width: '100%',
+    maxWidth: 600,
+    alignSelf: 'center',
+    height: 400,
   },
   contentContainer: {
     flexGrow: 1,

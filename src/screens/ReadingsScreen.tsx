@@ -11,6 +11,7 @@ import {
   Text,
   View,
   ImageBackground,
+  Dimensions,
 } from 'react-native';
 import TopRoundedContainer from '../components/TopRoundedContainer';
 import {ReadingListItem} from '../components/ReadingListItem';
@@ -28,6 +29,7 @@ import {RootNavigatorParamList} from '../navigation/RootNavigator';
 // Utils
 import {useTranslation} from 'react-i18next';
 import {remoteAsset} from '../utils/remoteAsset';
+import DeviceInfo from 'react-native-device-info';
 
 // Styles
 import Colors from '../constants/Colors';
@@ -41,6 +43,8 @@ type ReadingsScreenProps = {
 const ReadingsScreen: React.VFC<ReadingsScreenProps> = ({navigation}) => {
   const {t} = useTranslation();
   const dispatch = useAppDispatch();
+
+  const isTablet = DeviceInfo.isTablet();
 
   const sectionImages = useAppSelector(state => state.settings.sectionImages);
   const readings = useAppSelector(state => state.readings.readings);
@@ -80,25 +84,38 @@ const ReadingsScreen: React.VFC<ReadingsScreenProps> = ({navigation}) => {
       <TopRoundedContainer style={styles.insideContainer}>
         {!mainReaddings.length && !additionalReadings.length && <EmptyData />}
 
-        {mainReaddings.map(v => (
-          <ReadingListItem
-            key={v.id}
-            title={v.reading_type.name}
-            description={v.description}
-            uri={remoteAsset(v.reading_type.image.url)}
-            onPressButton={() =>
-              navigation.navigate('ReadingsDrawerNavigator', {
-                reading: v,
-                isSundayReading: true,
-              })
-            }
-          />
-        ))}
+        <View style={[isTablet && styles.tabletReadingsContainer]}>
+          {mainReaddings.map((v, index) => (
+            <ReadingListItem
+              key={v.id}
+              title={v.reading_type.name}
+              description={v.description}
+              uri={remoteAsset(v.reading_type.image.url)}
+              onPressButton={() =>
+                navigation.navigate('ReadingsDrawerNavigator', {
+                  reading: v,
+                  isSundayReading: true,
+                })
+              }
+              containerStyle={[
+                isTablet && styles.tabletItem,
+                isTablet && index % 2 === 1 && styles.evenTabletItem,
+              ]}
+            />
+          ))}
+        </View>
 
-        <View style={styles.rowContainer}>
+        <View
+          style={[
+            styles.rowContainer,
+            isTablet && styles.tabletBottomRowContainer,
+          ]}>
           {additionalReadings.map(v => (
             <ImageBackground
-              style={styles.itemContainer}
+              style={[
+                styles.itemContainer,
+                isTablet && styles.tabletBottomItemContainer,
+              ]}
               key={v.id}
               source={{uri: remoteAsset(v.reading_type.image.url)}}>
               <TouchableOpacity
@@ -143,6 +160,10 @@ const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: 5,
   },
+  tabletBottomItemContainer: {
+    marginHorizontal: 15,
+    marginTop: 30,
+  },
   topContainer: {
     backgroundColor: 'rgba(0,0,0,0.7)',
     alignItems: 'center',
@@ -157,5 +178,19 @@ const styles = StyleSheet.create({
   rowContainer: {
     flexDirection: 'row',
     marginHorizontal: -5,
+  },
+  tabletBottomRowContainer: {
+    marginHorizontal: -15,
+  },
+  tabletReadingsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  tabletItem: {
+    width: Dimensions.get('screen').width / 2 - 50,
+    marginTop: 20,
+  },
+  evenTabletItem: {
+    marginLeft: 50,
   },
 });

@@ -33,6 +33,7 @@ export function* getCurrentReadings() {
       }),
     );
   } catch (err) {
+    console.log(err);
     yield put(actions.getCurrentReadings.failure());
   }
 }

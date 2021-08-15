@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import {StyleSheet, Image} from 'react-native';
+import {StyleSheet, Image, StyleProp, ViewStyle} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {InfoBox, InfoBoxContainer} from './InfoBox';
 //@ts-ignore - missing ts definitions
@@ -13,6 +13,7 @@ type ReadingListItemProps = {
   onPressButton?: () => void;
   uri?: string;
   customButtonLabel?: string;
+  containerStyle?: StyleProp<ViewStyle>;
 };
 
 export const ReadingListItem: React.FC<ReadingListItemProps> = ({
@@ -22,8 +23,9 @@ export const ReadingListItem: React.FC<ReadingListItemProps> = ({
   uri,
   customButtonLabel,
   children,
+  containerStyle,
 }) => (
-  <ViewOverflow>
+  <ViewOverflow style={containerStyle}>
     <InfoBoxContainer containerStyle={styles.container}>
       <TouchableOpacity
         onPress={onPressButton}

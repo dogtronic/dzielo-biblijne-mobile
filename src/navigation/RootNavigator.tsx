@@ -27,6 +27,9 @@ import * as actions from '../store/actions';
 import {Reading} from '../store/types/Reading.model';
 import {CuriosityBase} from '../store/types/Curiosity.model';
 
+// Utils
+import DeviceInfo from 'react-native-device-info';
+
 //screens
 import DashboardScreen from '../screens/DashboardScreen';
 import BibleScreen from '../screens/BibleScreen';
@@ -206,7 +209,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.background,
   },
   drawerContainer: {
-    width: Dimensions.get('window').width,
+    width: DeviceInfo.isTablet() ? 350 : Dimensions.get('window').width,
     backgroundColor: Colors.primary,
   },
 });
