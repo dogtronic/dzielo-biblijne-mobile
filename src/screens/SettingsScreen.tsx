@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 // Redux
 import {useDispatch} from 'react-redux';
@@ -20,6 +20,7 @@ import {RootNavigatorParamList} from '../navigation/RootNavigator';
 //utils
 import {remoteAsset} from '../utils/remoteAsset';
 import {useTranslation} from 'react-i18next';
+import {version} from 'react-native-version';
 
 // Styles
 import Colors from '../constants/Colors';
@@ -33,8 +34,21 @@ const SettingsScreen: React.VFC<SettingsScreenProps> = () => {
   const {t} = useTranslation();
   const dispatch = useDispatch();
 
+  const [versionNumber, setVersionNumber] = useState('');
+
   const fontSize = useAppSelector(state => state.user.fontSize);
   const sectionImages = useAppSelector(state => state.settings.sectionImages);
+
+  useEffect(() => {
+    const getVersion = async () => {
+      const versionResult = await version({
+        amend: true,
+      });
+      setVersionNumber(versionResult);
+    };
+
+    getVersion();
+  }, []);
 
   return (
     <ScrollView
@@ -67,6 +81,15 @@ const SettingsScreen: React.VFC<SettingsScreenProps> = () => {
         <View>
           <Typography type={TypographyType.Text}>
             {t('settings:loremIpsum')}
+          </Typography>
+        </View>
+
+        <View>
+          <Typography type={TypographyType.Header}>
+            {t('settings:appName')}
+          </Typography>
+          <Typography type={TypographyType.Text}>
+            {t('settings:version')}: {versionNumber}
           </Typography>
         </View>
       </TopRoundedContainer>

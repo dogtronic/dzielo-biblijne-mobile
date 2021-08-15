@@ -1,5 +1,7 @@
 export default {
   common: {
+    appName: 'Dzieło Biblijne',
+    version: 'Wersja',
     read: 'Czytaj',
     hide: 'Zwiń',
     show: 'Rozwiń',
