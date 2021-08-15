@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {Config} from '../../config';
+import {API_URL} from 'react-native-dotenv';
 
 export enum Endpoint {
   SectionImages = 'sections-images/',
@@ -25,7 +25,7 @@ export const Api = axios.create();
 Api.interceptors.request.use(
   axiosConfig => ({
     ...axiosConfig,
-    baseURL: Config.baseUrl,
+    baseURL: API_URL,
   }),
   error => Promise.reject(error),
 );
