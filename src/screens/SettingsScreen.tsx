@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 
 // Redux
 import {useDispatch} from 'react-redux';
@@ -20,7 +20,7 @@ import {RootNavigatorParamList} from '../navigation/RootNavigator';
 //utils
 import {remoteAsset} from '../utils/remoteAsset';
 import {useTranslation} from 'react-i18next';
-import {version} from 'react-native-version';
+import DeviceInfo from 'react-native-device-info';
 
 // Styles
 import Colors from '../constants/Colors';
@@ -34,21 +34,8 @@ const SettingsScreen: React.VFC<SettingsScreenProps> = () => {
   const {t} = useTranslation();
   const dispatch = useDispatch();
 
-  const [versionNumber, setVersionNumber] = useState('');
-
   const fontSize = useAppSelector(state => state.user.fontSize);
   const sectionImages = useAppSelector(state => state.settings.sectionImages);
-
-  useEffect(() => {
-    const getVersion = async () => {
-      const versionResult = await version({
-        amend: true,
-      });
-      setVersionNumber(versionResult);
-    };
-
-    getVersion();
-  }, []);
 
   return (
     <ScrollView
@@ -79,17 +66,17 @@ const SettingsScreen: React.VFC<SettingsScreenProps> = () => {
         </Typography>
 
         <View>
-          <Typography type={TypographyType.Text}>
+          <Typography type={TypographyType.Text} style={{fontSize}}>
             {t('settings:loremIpsum')}
           </Typography>
         </View>
 
-        <View>
-          <Typography type={TypographyType.Header}>
+        <View style={styles.versionContainer}>
+          <Typography type={TypographyType.Header} style={styles.primaryText}>
             {t('settings:appName')}
           </Typography>
-          <Typography type={TypographyType.Text}>
-            {t('settings:version')}: {versionNumber}
+          <Typography type={TypographyType.Description}>
+            {t('settings:version')}: v{DeviceInfo.getVersion()}
           </Typography>
         </View>
       </TopRoundedContainer>
@@ -118,5 +105,11 @@ const styles = StyleSheet.create({
   subTitle: {
     marginTop: 20,
     marginBottom: 10,
+  },
+  versionContainer: {
+    marginTop: 40,
+  },
+  primaryText: {
+    color: Colors.primary,
   },
 });
