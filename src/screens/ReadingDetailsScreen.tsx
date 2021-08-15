@@ -55,13 +55,15 @@ const ReadingDetailsScreen: React.VFC<ReadingDetailsScreenProps> = ({
             <Text style={styles.description}>{reading.sub_description}</Text>
           </View>
 
-          <TouchableOpacity
-            style={styles.bookButton}
-            activeOpacity={0.9}
-            //@ts-ignore
-            onPress={navigation.openDrawer}>
-            <BookIcon />
-          </TouchableOpacity>
+          {!!reading.sections.length && (
+            <TouchableOpacity
+              style={styles.bookButton}
+              activeOpacity={0.9}
+              //@ts-ignore
+              onPress={navigation.openDrawer}>
+              <BookIcon />
+            </TouchableOpacity>
+          )}
         </View>
 
         <HtmlViewer html={reading.content} containerStyle={styles.htmlViewer} />
@@ -72,10 +74,13 @@ const ReadingDetailsScreen: React.VFC<ReadingDetailsScreenProps> = ({
               <ContentButton
                 title={readings[index - 1].reading_type.name}
                 onPress={() =>
-                  navigation.navigate('ReadingDetailsScreen', {
-                    reading: readings[index - 1],
-                    isSundayReading,
-                  })
+                  navigation
+                    .dangerouslyGetParent()
+                    //@ts-ignore
+                    ?.push('ReadingsDrawerNavigator', {
+                      reading: readings[index - 1],
+                      isSundayReading,
+                    })
                 }
               />
             ) : (
@@ -85,12 +90,15 @@ const ReadingDetailsScreen: React.VFC<ReadingDetailsScreenProps> = ({
             {index < readings.length - 1 ? (
               <ContentButton
                 title={readings[index + 1].reading_type.name}
-                onPress={() =>
-                  navigation.navigate('ReadingDetailsScreen', {
-                    reading: readings[index + 1],
-                    isSundayReading,
-                  })
-                }
+                onPress={() => {
+                  navigation
+                    .dangerouslyGetParent()
+                    //@ts-ignore
+                    ?.push('ReadingsDrawerNavigator', {
+                      reading: readings[index + 1],
+                      isSundayReading,
+                    });
+                }}
               />
             ) : (
               <View />
