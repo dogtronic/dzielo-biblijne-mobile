@@ -1,7 +1,5 @@
 export default {
   common: {
-    appName: 'Dzieło Biblijne',
-    version: 'Wersja',
     read: 'Czytaj',
     hide: 'Zwiń',
     show: 'Rozwiń',
@@ -64,6 +62,8 @@ export default {
     archive: 'Archiwum',
   },
   settings: {
+    appName: 'Dzieło Biblijne',
+    version: 'Wersja',
     fontSize: 'Rozmiar tekstu treści w aplikacji',
     sampleText: 'Przykładowy tekst',
     loremIpsum:
