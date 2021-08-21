@@ -4,6 +4,10 @@ export interface SectionImages {
   id?: unknown;
   created_at?: unknown;
   updated_at?: unknown;
+  __v?: number;
+  _id?: string;
+  provider?: unknown;
+  related?: unknown;
 
   bible: ImageSource | null;
   sunday_readings: ImageSource | null;

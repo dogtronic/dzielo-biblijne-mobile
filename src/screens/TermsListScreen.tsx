@@ -51,7 +51,7 @@ const TermsListScreen: React.VFC<TermsListScreenProps> = ({
 
   const [offset, setOffest] = useState(30);
   const [filter, setFilter] = useState('');
-  const [selectedTermId, setSelectedTermId] = useState<number | undefined>(
+  const [selectedTermId, setSelectedTermId] = useState<string | undefined>(
     undefined,
   );
 
@@ -231,6 +231,7 @@ const TermsListScreen: React.VFC<TermsListScreenProps> = ({
         ) : undefined
       }
       style={styles.container}
+      contentContainerStyle={styles.contentContainer}
       data={terms}
       renderItem={renderItem}
       keyExtractor={item => item.id.toString()}
@@ -245,6 +246,10 @@ export default TermsListScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: Colors.white,
+  },
+  contentContainer: {
+    paddingBottom: 40,
   },
   headerContainer: {
     backgroundColor: Colors.background,

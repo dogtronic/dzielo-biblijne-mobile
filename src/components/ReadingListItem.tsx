@@ -14,6 +14,7 @@ type ReadingListItemProps = {
   uri?: string;
   customButtonLabel?: string;
   containerStyle?: StyleProp<ViewStyle>;
+  descriptionNumberOfLines?: number;
 };
 
 export const ReadingListItem: React.FC<ReadingListItemProps> = ({
@@ -24,6 +25,7 @@ export const ReadingListItem: React.FC<ReadingListItemProps> = ({
   customButtonLabel,
   children,
   containerStyle,
+  descriptionNumberOfLines,
 }) => (
   <ViewOverflow style={containerStyle}>
     <InfoBoxContainer containerStyle={styles.container}>
@@ -37,6 +39,7 @@ export const ReadingListItem: React.FC<ReadingListItemProps> = ({
           description={description}
           position="vertical"
           customButtonLabel={customButtonLabel}
+          descriptionNumberOfLines={descriptionNumberOfLines}
         />
       </TouchableOpacity>
 

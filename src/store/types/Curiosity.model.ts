@@ -1,7 +1,7 @@
 import {ImageSource} from './ImageSource.model';
 
 export interface CuriosityBase {
-  id: number;
+  id: string;
   image?: ImageSource;
   title?: string;
   comment?: string;

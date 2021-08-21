@@ -85,8 +85,8 @@ const BibleMapScreen: React.VFC<BibleMapScreenProps> = () => {
     ({lat, lng, zoom}: {lat: number; lng: number; zoom?: number}) => {
       mapRef.current?.animateCamera({
         center: {
-          latitude: lat,
-          longitude: lng,
+          latitude: lat || 0,
+          longitude: lng || 0,
         },
         zoom,
         altitude: zoom ? altitude[zoom?.toString()] : undefined,

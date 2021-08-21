@@ -15,8 +15,8 @@ export type BibleState = {
   chapterDetails?: Chapter;
   isChapterDetailsLoading: boolean;
   chapterDetailsError: boolean;
-  isNextChapter?: number;
-  isPreviousChapter?: number;
+  isNextChapter?: string;
+  isPreviousChapter?: string;
 };
 
 const initialState: BibleState = {

@@ -1,15 +1,15 @@
 import {Chapter} from '../../types/Chapter.model';
 
 export type GetChaptersRequestPayload = {
-  bookId: number;
+  bookId: string;
 };
 
 export type GetChapterDetailsRequestPayload = {
-  chapterId: number;
+  chapterId: string;
 };
 
 export type GetChapterDetailsSuccessPayload = {
   chapter: Chapter;
-  isNextChapter?: number;
-  isPreviousChapter?: number;
+  isNextChapter?: string;
+  isPreviousChapter?: string;
 };

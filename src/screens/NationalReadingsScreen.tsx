@@ -43,7 +43,7 @@ const NationalReadingsListScreen: React.VFC<NationalReadingsListScreenProps> =
     const {t} = useTranslation();
     const dispatch = useAppDispatch();
 
-    const [offset, setOffest] = useState(10);
+    const [offset, setOffest] = useState(30);
     const [filter, setFilter] = useState('');
 
     const nationalReadings = useAppSelector(
@@ -62,7 +62,7 @@ const NationalReadingsListScreen: React.VFC<NationalReadingsListScreenProps> =
       dispatch(
         actions.getNationalReadings.request({
           offset: 0,
-          limit: 10,
+          limit: 30,
           withReset: true,
         }),
       );
@@ -81,13 +81,13 @@ const NationalReadingsListScreen: React.VFC<NationalReadingsListScreenProps> =
         dispatch(
           actions.getNationalReadings.request({
             offset: withResetOffest ? 0 : offset,
-            limit: 10,
+            limit: 30,
             filter: customFilter,
             withReset: withResetOffest,
           }),
         );
 
-        setOffest(customOffset + 10);
+        setOffest(customOffset + 30);
       }, 400),
       [offset],
     );
@@ -158,6 +158,7 @@ const NationalReadingsListScreen: React.VFC<NationalReadingsListScreenProps> =
           ) : undefined
         }
         style={styles.container}
+        contentContainerStyle={styles.contentContainer}
         data={nationalReadings}
         renderItem={renderItem}
         keyExtractor={item => item.id.toString()}
@@ -173,6 +174,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.white,
+  },
+  contentContainer: {
+    paddingBottom: 30,
   },
   headerContainer: {
     backgroundColor: Colors.background,

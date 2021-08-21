@@ -75,7 +75,8 @@ const ReadingsScreen: React.VFC<ReadingsScreenProps> = ({navigation}) => {
     <ScrollView
       bounces={false}
       style={styles.container}
-      contentContainerStyle={styles.contentContainer}>
+      contentContainerStyle={styles.contentContainer}
+      showsVerticalScrollIndicator={false}>
       <ImageHeader uri={remoteAsset(sectionImages?.sunday_readings?.url) || ''}>
         <ImageHeaderText content={t('menu:sundayReading')} />
       </ImageHeader>
@@ -100,6 +101,7 @@ const ReadingsScreen: React.VFC<ReadingsScreenProps> = ({navigation}) => {
                 isTablet && styles.tabletItem,
                 isTablet && index % 2 === 1 && styles.evenTabletItem,
               ]}
+              descriptionNumberOfLines={1}
             />
           ))}
         </View>

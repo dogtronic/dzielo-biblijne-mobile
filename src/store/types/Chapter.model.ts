@@ -1,7 +1,7 @@
 import {BibleBook} from './BibleBook.model';
 
 export interface Chapter {
-  id: number;
+  id: string;
   number: number;
   title: string;
   text: string;

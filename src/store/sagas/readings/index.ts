@@ -33,7 +33,6 @@ export function* getCurrentReadings() {
       }),
     );
   } catch (err) {
-    console.log(err);
     yield put(actions.getCurrentReadings.failure());
   }
 }
@@ -56,10 +55,10 @@ export function* getHomilies(
   action: ActionType<typeof actions.getHomilies.request>,
 ) {
   try {
-    let link = `${Endpoint.Readings}?_start=${action.payload.offset}&_limit=${action.payload.limit}&_reading_type.name=Homilia`;
+    let link = `${Endpoint.Readings}?_start=${action.payload.offset}&_limit=${action.payload.limit}&_reading_type.name=Homilia&_sort=createdAt:asc,description:asc`;
 
     if (action.payload.filter) {
-      link += `&term_contains=${action.payload.filter}`;
+      link += `&description_contains=${action.payload.filter}`;
     }
 
     const response: AxiosResponse<Reading[]> = yield Api.get(link);
@@ -67,7 +66,7 @@ export function* getHomilies(
     yield put(
       actions.getHomilies.success({
         homilies: response.data,
-        areMoreData: response.data.length >= 10,
+        areMoreData: response.data.length >= 30,
         withReset: action.payload.withReset,
       }),
     );
@@ -80,10 +79,10 @@ export function* getNationalReadings(
   action: ActionType<typeof actions.getNationalReadings.request>,
 ) {
   try {
-    let link = `${Endpoint.Readings}?_start=${action.payload.offset}&_limit=${action.payload.limit}&_reading_type.name=Narodowe czytanie`;
+    let link = `${Endpoint.Readings}?_start=${action.payload.offset}&_limit=${action.payload.limit}&_reading_type.name=Narodowe Czytanie&_sort=createdAt:asc,description:asc`;
 
     if (action.payload.filter) {
-      link += `&term_contains=${action.payload.filter}`;
+      link += `&description_contains=${action.payload.filter}`;
     }
 
     const response: AxiosResponse<Reading[]> = yield Api.get(link);
@@ -91,7 +90,7 @@ export function* getNationalReadings(
     yield put(
       actions.getNationalReadings.success({
         nationalReadings: response.data,
-        areMoreData: response.data.length >= 10,
+        areMoreData: response.data.length >= 30,
         withReset: action.payload.withReset,
       }),
     );

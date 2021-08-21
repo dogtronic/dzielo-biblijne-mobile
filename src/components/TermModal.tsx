@@ -25,7 +25,7 @@ import {TermType} from '../store/types/Term.model';
 export type TermModalProps = {
   isVisible?: boolean;
   toggleModal?: () => void;
-  termId?: number;
+  termId?: string;
   type?: TermType;
 };
 

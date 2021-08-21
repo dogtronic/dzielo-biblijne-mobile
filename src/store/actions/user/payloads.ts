@@ -1,6 +1,6 @@
 export type SetLastBibleFragmentPayload = {
-  chapterId: number;
-  bookId: number;
+  chapterId: string;
+  bookId: string;
   siglum: string;
   chapterNumber: number;
 };

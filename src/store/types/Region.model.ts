@@ -1,7 +1,7 @@
 import {ImageSource} from './ImageSource.model';
 
 export interface Region {
-  id: number;
+  id: string;
   name: string;
   country: string;
   position: string;
@@ -10,7 +10,7 @@ export interface Region {
 }
 
 export interface Place {
-  id: number;
+  id: string;
   region: Region;
   photo: ImageSource;
   name: string;

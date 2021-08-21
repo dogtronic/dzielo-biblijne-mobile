@@ -1,5 +1,5 @@
 export interface BibleBook {
-  id: number;
+  id: string;
   name: string;
   testament: 'Stary' | 'Nowy';
   siglum: string;

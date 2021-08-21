@@ -15,6 +15,6 @@ export type GetTermsSuccessPayload = {
 };
 
 export type GetTermDetailsRequestPayload = {
-  termId: number;
+  termId: string;
   type: TermType;
 };

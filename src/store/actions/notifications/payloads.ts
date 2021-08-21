@@ -14,5 +14,5 @@ export interface GetNotificationsSuccessPayload {
 }
 
 export interface GetNotificationDetailsRequestPayload {
-  notificationId: number;
+  notificationId: string;
 }

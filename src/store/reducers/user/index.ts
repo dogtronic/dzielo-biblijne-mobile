@@ -2,12 +2,12 @@ import {createReducer, ActionType} from 'typesafe-actions';
 import * as actions from '../../actions/user';
 
 export type UserState = {
-  readNotifications: {[key in number]: boolean};
-  removedNotificationsFromDashboard: {[key in number]: boolean};
+  readNotifications: {[key in string]: boolean};
+  removedNotificationsFromDashboard: {[key in string]: boolean};
   lastReadBibleFragment?: {
-    bookId: number;
+    bookId: string;
     siglum: string;
-    chapterId: number;
+    chapterId: string;
     chapterNumber: number;
   };
   fontSize: number;

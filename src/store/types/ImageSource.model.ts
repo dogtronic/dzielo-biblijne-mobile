@@ -1,5 +1,5 @@
 export interface ImageSource {
-  id: number;
+  id: string;
   name: string;
   alternativeText: string;
   caption: string;

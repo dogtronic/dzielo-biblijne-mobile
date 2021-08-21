@@ -1,7 +1,7 @@
 import {ImageSource} from './ImageSource.model';
 
 export interface ReadingType {
-  id: number;
+  id: string;
   name: string;
   image: ImageSource;
   type: 'Glowne' | 'Poboczne';
@@ -9,33 +9,33 @@ export interface ReadingType {
 }
 
 export interface SectionType {
-  id: number;
+  id: string;
   name: string;
   image: string;
 }
 
 export interface Section {
-  id: number;
+  id: string;
   section_type: SectionType;
   content: string;
 }
 
 export interface Curiosity {
-  id: number;
+  id: string;
   image: string;
   comment?: string;
   is_visible_on_dashboard: boolean;
 }
 
 export interface Photo {
-  id: number;
+  id: string;
   image?: string;
   comment: string;
   is_visible_on_dashboard: boolean;
 }
 
 export interface Reading {
-  id: number;
+  id: string;
   description?: string;
   sub_description?: string;
   reading_type: ReadingType;

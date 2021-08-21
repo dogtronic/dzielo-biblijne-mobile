@@ -34,13 +34,13 @@ const HtmlViewer: React.VFC<HtmlViewerProps> = ({html, containerStyle}) => {
   const navigation = useAppNavigation();
 
   const [termModalVisible, setTermModalVisible] = useState(false);
-  const [termId, setTermId] = useState<number | undefined>(undefined);
+  const [termId, setTermId] = useState<string | undefined>(undefined);
   const [termType, setTermType] = useState<TermType | undefined>(undefined);
 
   const fontSize = useAppSelector(state => state.user.fontSize);
 
   const toggleTermModal = useCallback(
-    (id?: number, type?: TermType) => {
+    (id?: string, type?: TermType) => {
       setTermId(id);
       setTermType(type);
       setTermModalVisible(!termModalVisible);
@@ -54,21 +54,18 @@ const HtmlViewer: React.VFC<HtmlViewerProps> = ({html, containerStyle}) => {
         const termLink = href.substring(href.indexOf('terms/'));
         const termLinkParams = termLink.split('/');
 
-        toggleTermModal(parseInt(termLinkParams[4], 10), TermType.Words);
+        toggleTermModal(termLinkParams[4], TermType.Words);
       } else if (href.includes('bible-dictionary')) {
         const termLink = href.substring(href.indexOf('bible-dictionary/'));
         const termLinkParams = termLink.split('/');
 
-        toggleTermModal(
-          parseInt(termLinkParams[1], 10),
-          TermType.BibleDictionary,
-        );
+        toggleTermModal(termLinkParams[1], TermType.BibleDictionary);
       } else if (href.includes('bible')) {
         const bibleLink = href.substring(href.indexOf('bible/'));
         const bibleLinkParams = bibleLink.split('/');
 
         navigation.navigate('ChapterDetailsScreen', {
-          chapterId: parseInt(bibleLinkParams[1], 10),
+          chapterId: bibleLinkParams[1],
         });
       } else {
         if (Linking.canOpenURL(href)) {

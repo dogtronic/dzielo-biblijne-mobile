@@ -17,7 +17,7 @@ import Colors from '../constants/Colors';
 import {TermType} from '../store/types/Term.model';
 
 type TermDetailsTablet = {
-  termId?: number;
+  termId?: string;
   type: TermType;
 };
 

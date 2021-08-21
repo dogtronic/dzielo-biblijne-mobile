@@ -41,7 +41,7 @@ const HomiliesListScreen: React.VFC<HomiliesListScreenProps> = ({
   const {t} = useTranslation();
   const dispatch = useAppDispatch();
 
-  const [offset, setOffest] = useState(10);
+  const [offset, setOffest] = useState(30);
   const [filter, setFilter] = useState('');
 
   const homilies = useAppSelector(state => state.readings.homilies);
@@ -52,7 +52,7 @@ const HomiliesListScreen: React.VFC<HomiliesListScreenProps> = ({
 
   useEffect(() => {
     dispatch(
-      actions.getHomilies.request({offset: 0, limit: 10, withReset: true}),
+      actions.getHomilies.request({offset: 0, limit: 30, withReset: true}),
     );
   }, [dispatch]);
 
@@ -69,13 +69,13 @@ const HomiliesListScreen: React.VFC<HomiliesListScreenProps> = ({
       dispatch(
         actions.getHomilies.request({
           offset: withResetOffest ? 0 : offset,
-          limit: 10,
+          limit: 30,
           filter: customFilter,
           withReset: withResetOffest,
         }),
       );
 
-      setOffest(customOffset + 10);
+      setOffest(customOffset + 30);
     }, 400),
     [offset],
   );
@@ -147,7 +147,7 @@ const HomiliesListScreen: React.VFC<HomiliesListScreenProps> = ({
         ) : undefined
       }
       style={styles.container}
-      contentContainerStyle={{backgroundColor: Colors.white}}
+      contentContainerStyle={styles.contentContainer}
       data={homilies}
       renderItem={renderItem}
       keyExtractor={item => item.id.toString()}
@@ -167,6 +167,10 @@ const styles = StyleSheet.create({
   headerContainer: {
     backgroundColor: Colors.background,
     marginBottom: -20,
+  },
+  contentContainer: {
+    backgroundColor: Colors.white,
+    paddingBottom: 30,
   },
   separator: {
     height: 1,

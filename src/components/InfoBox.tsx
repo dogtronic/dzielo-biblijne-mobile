@@ -20,6 +20,7 @@ type InfoBoxProps = {
   position?: 'vertical' | 'horizontal';
   customButtonLabel?: string;
   titleStyle?: StyleProp<TextStyle>;
+  descriptionNumberOfLines?: number;
 };
 
 export const InfoBoxContainer: React.FC<InfoBoxContainerProps> = ({
@@ -38,6 +39,7 @@ export const InfoBox: React.VFC<InfoBoxProps> = ({
   position = 'horizontal',
   customButtonLabel,
   titleStyle,
+  descriptionNumberOfLines,
 }) => (
   <View
     style={[
@@ -54,7 +56,7 @@ export const InfoBox: React.VFC<InfoBoxProps> = ({
       <Typography
         type={TypographyType.Description}
         style={styles.descriptionText}
-        numberOfLines={2}>
+        numberOfLines={descriptionNumberOfLines || 2}>
         {description}
       </Typography>
     </View>

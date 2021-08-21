@@ -15,7 +15,9 @@ export function* getTerms(action: ActionType<typeof actions.getTerms.request>) {
       action.payload.type === TermType.Words
         ? Endpoint.Terms
         : Endpoint.BibleDictionary
-    }?_start=${action.payload.offset}&_limit=${action.payload.limit}`;
+    }?_start=${action.payload.offset}&_limit=${
+      action.payload.limit
+    }&_sort=term:ASC`;
 
     if (action.payload.filter) {
       link += `&term_contains=${action.payload.filter}`;

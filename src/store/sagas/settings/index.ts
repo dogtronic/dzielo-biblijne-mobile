@@ -16,7 +16,7 @@ import {ActionType} from 'typesafe-actions';
 
 // Utils
 import i18n from '../../../assets/translations';
-import FastImage from 'react-native-fast-image';
+import FastImage, {Source} from 'react-native-fast-image';
 import {remoteAsset} from '../../../utils/remoteAsset';
 
 export function* getSettings() {
@@ -29,19 +29,18 @@ export function* getSettings() {
     yield getPhotoOfTheWeek();
 
     if (sectionImagesResponse.data) {
-      delete sectionImagesResponse.data.id;
-      delete sectionImagesResponse.data.created_at;
-      delete sectionImagesResponse.data.updated_at;
+      const images = Object.keys(sectionImagesResponse.data)
+        .map(v => {
+          const id = v as keyof SectionImages;
+          const url = (sectionImagesResponse.data[id] as {url?: string})?.url;
+          if (url) {
+            return {uri: remoteAsset(url)};
+          }
+          return undefined;
+        })
+        .filter(v => typeof v === 'string');
 
-      FastImage.preload(
-        Object.keys(sectionImagesResponse.data).map(v => {
-          const id = v as keyof Omit<
-            SectionImages,
-            'id' | 'created_at' | 'updated_at'
-          >;
-          return {uri: remoteAsset(sectionImagesResponse.data[id]?.url)};
-        }),
-      );
+      FastImage.preload(images as Source[]);
     }
 
     yield put(
@@ -50,6 +49,7 @@ export function* getSettings() {
       }),
     );
   } catch (err) {
+    console.log(JSON.stringify(err));
     yield put(actions.getAppSettings.failure());
   }
 }

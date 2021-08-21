@@ -20,7 +20,10 @@ type MapMarkerProps = {
 const MapMarker: React.FC<MapMarkerProps> = ({coordinate, onPress, title}) => {
   return (
     <Marker coordinate={coordinate} onPress={onPress}>
-      <Text style={styles.markerText}>{title}</Text>
+      <Text style={styles.markerText}>
+        {title?.substring(0, 20)}
+        {title.length > 20 ? '...' : ''}
+      </Text>
       <MarkerIcon style={styles.markerImage} />
     </Marker>
   );

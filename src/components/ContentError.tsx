@@ -46,5 +46,6 @@ const styles = StyleSheet.create({
   },
   title: {
     color: Colors.black,
+    textAlign: 'center',
   },
 });

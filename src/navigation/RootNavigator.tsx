@@ -58,10 +58,10 @@ export type RootNavigatorParamList = {
   UnifiedScreen: undefined;
   DashboardScreen: undefined;
   BibleScreen: undefined;
-  ChaptersScreen: {bookId: number; testament: 'Nowy' | 'Stary'};
-  ChapterDetailsScreen: {chapterId: number};
+  ChaptersScreen: {bookId: string; testament: 'Nowy' | 'Stary'};
+  ChapterDetailsScreen: {chapterId: string};
   TermsListScreen: {type: TermType};
-  TermDetailsScreen: {termId: number; type: TermType};
+  TermDetailsScreen: {termId: string; type: TermType};
   ReadingsScreen: undefined;
   ReadingsDrawerNavigator: {reading: Reading; isSundayReading?: boolean};
   HomiliesListScreen: undefined;
@@ -73,7 +73,7 @@ export type RootNavigatorParamList = {
     type: CuriosityType;
   };
   NotificationsScreen: undefined;
-  NotificationDetailsScreen: {notificationId: number};
+  NotificationDetailsScreen: {notificationId: string};
   BibleMapScreen: undefined;
   SettingsScreen: undefined;
 };

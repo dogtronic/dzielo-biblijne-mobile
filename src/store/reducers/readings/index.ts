@@ -72,7 +72,7 @@ const readingsReducer = createReducer<ReadingsState, ReadingsActions>(
     ...state,
     areReadingsLoading: false,
     readings: action.payload.readings.sort((v, w) =>
-      v.reading_type.priority > w.reading_type.priority ? -1 : 1,
+      v.reading_type.priority > w.reading_type.priority ? 1 : -1,
     ),
     sections: action.payload.sections,
   }))
