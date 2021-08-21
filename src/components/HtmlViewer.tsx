@@ -89,7 +89,12 @@ const HtmlViewer: React.VFC<HtmlViewerProps> = ({html, containerStyle}) => {
     <>
       <RenderHtml
         contentWidth={width - 40}
-        source={{html: html || ''}}
+        source={{
+          html:
+            html
+              ?.replace(/font-size/g, 'font-sized')
+              ?.replace(/font-family/g, 'font-family') || '',
+        }}
         baseStyle={{...styles.container, ...containerStyle}}
         renderersProps={renderersProps}
         //@ts-ignore
