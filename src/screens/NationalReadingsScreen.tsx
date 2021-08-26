@@ -1,4 +1,4 @@
-import React, {useCallback, useState, useEffect} from 'react';
+import React, {useCallback, useState, useLayoutEffect} from 'react';
 
 // Redux
 import {useAppDispatch, useAppSelector} from '../hooks/useAppDispatch';
@@ -58,7 +58,7 @@ const NationalReadingsListScreen: React.VFC<NationalReadingsListScreenProps> =
     );
     const error = useAppSelector(state => state.readings.nationalReadingsError);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
       dispatch(
         actions.getNationalReadings.request({
           offset: 0,

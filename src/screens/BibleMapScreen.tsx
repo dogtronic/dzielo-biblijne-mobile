@@ -51,7 +51,7 @@ const altitude: {[key in string]: number} = {
   '7': 741589,
   '8': 243624,
   '10': 100000,
-  '12': 36310,
+  '11': 36310,
 };
 
 const BibleMapScreen: React.VFC<BibleMapScreenProps> = () => {
@@ -109,7 +109,7 @@ const BibleMapScreen: React.VFC<BibleMapScreenProps> = () => {
   useEffect(() => {
     if (places.length) {
       const point = getLatLngCenter(places);
-      animateMap({lat: point.lat, lng: point.lng, zoom: 12});
+      animateMap({lat: point.lat, lng: point.lng, zoom: 11});
     }
   }, [places, animateMap]);
 
@@ -138,7 +138,10 @@ const BibleMapScreen: React.VFC<BibleMapScreenProps> = () => {
 
       const selectedRegions = regions.filter(w => w.country === v.alpha2);
       const point = getLatLngCenter(selectedRegions);
-      animateMap({lat: point.lat, lng: point.lng, zoom: 7});
+
+      setTimeout(() => {
+        animateMap({lat: point.lat, lng: point.lng, zoom: 7});
+      }, 500);
     },
     [animateMap, regions],
   );

@@ -1,4 +1,4 @@
-import React, {useCallback, useState, useEffect} from 'react';
+import React, {useCallback, useState, useLayoutEffect} from 'react';
 
 // Redux
 import {useAppDispatch, useAppSelector} from '../hooks/useAppDispatch';
@@ -50,7 +50,7 @@ const HomiliesListScreen: React.VFC<HomiliesListScreenProps> = ({
   const areMoreData = useAppSelector(state => state.readings.areMoreHomilies);
   const error = useAppSelector(state => state.readings.homiliesError);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     dispatch(
       actions.getHomilies.request({offset: 0, limit: 30, withReset: true}),
     );

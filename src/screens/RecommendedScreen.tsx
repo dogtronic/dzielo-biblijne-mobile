@@ -42,7 +42,7 @@ const RecommendedScreen: React.VFC<RecommendedScreenProps> = () => {
   );
   const error = useAppSelector(state => state.settings.recommendedError);
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     dispatch(actions.getRecommended.request());
   }, [dispatch]);
 

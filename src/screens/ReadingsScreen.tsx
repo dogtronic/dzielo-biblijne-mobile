@@ -50,7 +50,7 @@ const ReadingsScreen: React.VFC<ReadingsScreenProps> = ({navigation}) => {
   const additionalReadings =
     readings?.filter(v => v.reading_type.type === 'Poboczne') || [];
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     dispatch(actions.getCurrentReadings.request());
   }, [dispatch]);
 

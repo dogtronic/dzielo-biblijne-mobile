@@ -55,7 +55,7 @@ const BibleScreen: React.VFC<BibleScreenProps> = ({navigation}) => {
     state => state.user.lastReadBibleFragment,
   );
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     dispatch(actions.getBooks.request());
   }, [dispatch]);
 

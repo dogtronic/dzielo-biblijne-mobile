@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useLayoutEffect} from 'react';
 
 //redux
 import {useAppDispatch, useAppSelector} from '../hooks/useAppDispatch';
@@ -49,7 +49,7 @@ const NotificationDetailsScreen: React.VFC<NotificationDetailsScreenProps> = ({
   );
   const error = useAppSelector(state => state.notifications.notificationsError);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     dispatch(actions.getNotificationDetails.request({notificationId}));
   }, [dispatch, notificationId]);
 

@@ -86,6 +86,7 @@ const StackRootNavigator = () => {
   return (
     <StackNav.Navigator
       initialRouteName="DashboardScreen"
+      mode="modal"
       screenOptions={{
         header: ({scene}) => {
           //@ts-ignore
@@ -93,7 +94,7 @@ const StackRootNavigator = () => {
 
           return (
             <Topbar
-              onPressLeftButton={goBack}
+              onPressLeftButton={() => goBack()}
               onPressRightButton={openDrawer}
               canGoBack={canGoBack}
             />

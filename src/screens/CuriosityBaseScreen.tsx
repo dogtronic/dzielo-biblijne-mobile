@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState, useLayoutEffect, useCallback} from 'react';
 
 // Redux
 import {useAppDispatch, useAppSelector} from '../hooks/useAppDispatch';
@@ -90,7 +90,7 @@ const CuriosityBaseScreen: React.VFC<CuriosityBaseScreenProps> = ({route}) => {
     }
   }, [dispatch, type, customCuriosities]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     getEntities();
   }, [getEntities]);
 

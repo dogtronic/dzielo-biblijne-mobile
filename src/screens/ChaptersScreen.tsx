@@ -51,7 +51,7 @@ const BibleScreen: React.VFC<BibleScreenProps> = ({route, navigation}) => {
   const loading = useAppSelector(state => state.bible.isChaptersLoading);
   const error = useAppSelector(state => state.bible.chaptersError);
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     dispatch(actions.getChapters.request({bookId}));
   }, [dispatch, bookId]);
 

@@ -43,7 +43,7 @@ const TermDetailsScreen: React.VFC<TermDetailsScreenProps> = ({route}) => {
   const loading = useAppSelector(state => state.terms.isTermDetailsLoading);
   const error = useAppSelector(state => state.terms.termDetailsError);
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     dispatch(actions.getTermDetails.request({termId, type}));
   }, [dispatch, termId, type]);
 

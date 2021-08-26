@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useLayoutEffect} from 'react';
 
 // Redux
 import {useAppDispatch, useAppSelector} from '../hooks/useAppDispatch';
@@ -64,7 +64,7 @@ const ContactScreen: React.VFC<ContactScreenProps> = () => {
     state => state.settings.messageSentInfo,
   );
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     dispatch(actions.getContact.request());
     dispatch(actions.clearMessageToAdministratorResponse());
   }, [dispatch]);

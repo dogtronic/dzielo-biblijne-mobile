@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useLayoutEffect} from 'react';
 
 // Redux
 import {useAppDispatch, useAppSelector} from '../hooks/useAppDispatch';
@@ -50,7 +50,7 @@ const BibleScreen: React.VFC<BibleScreenProps> = ({route, navigation}) => {
   const loading = useAppSelector(state => state.bible.isChapterDetailsLoading);
   const error = useAppSelector(state => state.bible.chapterDetailsError);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     dispatch(actions.getChapterDetails.request({chapterId}));
   }, [dispatch, chapterId]);
 

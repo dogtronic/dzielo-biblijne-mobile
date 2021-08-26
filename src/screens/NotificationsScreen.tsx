@@ -1,4 +1,4 @@
-import React, {useCallback, useState, useEffect} from 'react';
+import React, {useCallback, useState, useLayoutEffect} from 'react';
 
 //redux
 import {useAppDispatch, useAppSelector} from '../hooks/useAppDispatch';
@@ -63,7 +63,7 @@ const NotificationsScreen: React.VFC<NotificationsScreenProps> = ({
     state => state.user.readNotifications || {},
   );
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     dispatch(
       actions.getNotifications.request({offset: 0, limit: 10, withReset: true}),
     );
