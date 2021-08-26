@@ -25,7 +25,10 @@ type ImageHeaderTextProps = {
 
 const ImageHeader: React.FC<ImageHeaderProps> = ({uri, children, subTitle}) => (
   <>
-    <FastImage source={{uri}} style={styles.image} />
+    <FastImage
+      source={{uri, priority: FastImage.priority.high}}
+      style={styles.image}
+    />
     <View style={[styles.container, GlobalStyles.shadow]}>
       <View style={styles.textContainer}>{children}</View>
       {subTitle && (
@@ -82,6 +85,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     maxWidth: '94%',
+    marginTop: 5,
   },
   headerText: {
     marginTop: 2,

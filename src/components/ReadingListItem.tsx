@@ -1,11 +1,12 @@
 import React from 'react';
 
 // Components
-import {StyleSheet, Image, StyleProp, ViewStyle} from 'react-native';
+import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {InfoBox, InfoBoxContainer} from './InfoBox';
 //@ts-ignore - missing ts definitions
 import ViewOverflow from 'react-native-view-overflow';
+import FastImage from 'react-native-fast-image';
 
 type ReadingListItemProps = {
   title: string;
@@ -33,7 +34,7 @@ export const ReadingListItem: React.FC<ReadingListItemProps> = ({
         onPress={onPressButton}
         activeOpacity={0.7}
         style={styles.rowContainer}>
-        <Image style={styles.image} source={{uri}} resizeMode="cover" />
+        <FastImage style={styles.image} source={{uri}} resizeMode="cover" />
         <InfoBox
           title={title}
           description={description}

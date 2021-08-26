@@ -5,13 +5,7 @@ import {useAppDispatch, useAppSelector} from '../hooks/useAppDispatch';
 import * as actions from '../store/actions';
 
 // Components
-import {
-  StyleSheet,
-  ScrollView,
-  View,
-  ImageBackground,
-  Dimensions,
-} from 'react-native';
+import {StyleSheet, ScrollView, View, Dimensions} from 'react-native';
 import TopRoundedContainer from '../components/TopRoundedContainer';
 import {ReadingListItem} from '../components/ReadingListItem';
 import ImageHeader, {ImageHeaderText} from '../components/ImageHeader';
@@ -33,6 +27,7 @@ import DeviceInfo from 'react-native-device-info';
 // Styles
 import Colors from '../constants/Colors';
 import Typography, {TypographyType} from '../components/Typography';
+import FastImage from 'react-native-fast-image';
 
 type ReadingsScreenProps = {
   navigation: StackNavigationProp<RootNavigatorParamList, 'ReadingsScreen'>;
@@ -112,7 +107,7 @@ const ReadingsScreen: React.VFC<ReadingsScreenProps> = ({navigation}) => {
             isTablet && styles.tabletBottomRowContainer,
           ]}>
           {additionalReadings.map(v => (
-            <ImageBackground
+            <FastImage
               style={[
                 styles.itemContainer,
                 isTablet && styles.tabletBottomItemContainer,
@@ -134,7 +129,7 @@ const ReadingsScreen: React.VFC<ReadingsScreenProps> = ({navigation}) => {
                   {v.reading_type.name}
                 </Typography>
               </TouchableOpacity>
-            </ImageBackground>
+            </FastImage>
           ))}
         </View>
       </TopRoundedContainer>

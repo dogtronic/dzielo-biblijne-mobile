@@ -9,6 +9,7 @@ import {Api, Endpoint} from '../../../services/Api.service';
 import {SectionImages} from '../../types/SectionImages.model';
 import {Information} from '../../types/Information.model';
 import {Photo} from '../../types/Curiosity.model';
+import {ReadingType} from '../../types/Reading.model';
 
 // Sagas
 import {getNewNotifications} from '../notifications';
@@ -34,14 +35,23 @@ export function* getSettings() {
           const id = v as keyof SectionImages;
           const url = (sectionImagesResponse.data[id] as {url?: string})?.url;
           if (url) {
-            return {uri: remoteAsset(url)};
+            return remoteAsset(url);
           }
           return undefined;
         })
-        .filter(v => typeof v === 'string');
+        .filter(v => typeof v === 'string')
+        .map(v => ({uri: v}));
 
       FastImage.preload(images as Source[]);
     }
+
+    const sectionsResponse: AxiosResponse<ReadingType[]> = yield Api.get(
+      Endpoint.ReadingsTypes,
+    );
+
+    FastImage.preload(
+      sectionsResponse.data.map(v => ({uri: remoteAsset(v.image.url)})),
+    );
 
     yield put(
       actions.getAppSettings.success({

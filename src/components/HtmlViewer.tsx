@@ -117,6 +117,8 @@ export default HtmlViewer;
 const styles = StyleSheet.create({
   container: {
     paddingVertical: 20,
+    fontFamily: Fonts.RobotoLight,
+    fontSize: 15,
   },
 });
 

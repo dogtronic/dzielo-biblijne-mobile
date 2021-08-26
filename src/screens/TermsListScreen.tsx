@@ -1,4 +1,4 @@
-import React, {useCallback, useState, useEffect} from 'react';
+import React, {useCallback, useState, useLayoutEffect} from 'react';
 
 // Redux
 import {useAppDispatch, useAppSelector} from '../hooks/useAppDispatch';
@@ -61,7 +61,7 @@ const TermsListScreen: React.VFC<TermsListScreenProps> = ({
   const areMoreData = useAppSelector(state => state.terms.areMoreTerms);
   const error = useAppSelector(state => state.terms.termsError);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     dispatch(
       actions.getTerms.request({offset: 0, limit: 30, withReset: true, type}),
     );

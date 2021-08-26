@@ -34,6 +34,7 @@ const WeeklyPhoto: React.VFC<WeeklyPhotoProps> = ({photo}) => {
             navigation.navigate('CuriosityBaseScreen', {
               curiosities: [photo],
               type: CuriosityType.Photo,
+              photoOfTheWeek: true,
             })
           }
         />

@@ -40,7 +40,7 @@ type CuriosityBaseScreenProps = {
 };
 
 const CuriosityBaseScreen: React.VFC<CuriosityBaseScreenProps> = ({route}) => {
-  const {type, curiosities: customCuriosities} = route.params;
+  const {type, curiosities: customCuriosities, photoOfTheWeek} = route.params;
   const {t} = useTranslation();
   const dispatch = useAppDispatch();
 
@@ -99,6 +99,7 @@ const CuriosityBaseScreen: React.VFC<CuriosityBaseScreenProps> = ({route}) => {
       let customOffset = offset;
 
       if (withResetOffest) {
+        setCuriosityIndex(0);
         setOffest(0);
         customOffset = 0;
       }
@@ -162,7 +163,11 @@ const CuriosityBaseScreen: React.VFC<CuriosityBaseScreenProps> = ({route}) => {
         }>
         <ImageHeaderText
           content={
-            type === 'curiosity' ? t('menu:curiosities') : t('menu:photos')
+            type === 'curiosity'
+              ? t('menu:curiosities')
+              : photoOfTheWeek
+              ? t('dashboard:photoOfWeek')
+              : t('menu:photos')
           }
         />
       </ImageHeader>
@@ -193,11 +198,15 @@ const CuriosityBaseScreen: React.VFC<CuriosityBaseScreenProps> = ({route}) => {
         )}
 
         <View style={styles.buttonsContainer}>
-          <ContentButton
-            title={t('common:previous')}
-            onPress={prevCuriosity}
-            disabled={curiosityIndex === 0}
-          />
+          <View style={styles.separator}>
+            {curiosityIndex !== 0 && (
+              <ContentButton
+                title={t('common:previous')}
+                onPress={prevCuriosity}
+                disabled={curiosityIndex === 0}
+              />
+            )}
+          </View>
 
           {!customCuriosities && (
             <ContentButton
@@ -206,14 +215,21 @@ const CuriosityBaseScreen: React.VFC<CuriosityBaseScreenProps> = ({route}) => {
             />
           )}
 
-          <ContentButton
-            title={t('common:next')}
-            onPress={nextCuriosity}
-            disabled={
+          <View style={[styles.separator, styles.rightSeparator]}>
+            {!(
               (customCuriosities?.length || curiosities.length) - 1 ===
                 curiosityIndex && !areMoreData
-            }
-          />
+            ) && (
+              <ContentButton
+                title={t('common:next')}
+                onPress={nextCuriosity}
+                disabled={
+                  (customCuriosities?.length || curiosities.length) - 1 ===
+                    curiosityIndex && !areMoreData
+                }
+              />
+            )}
+          </View>
         </View>
       </TopRoundedContainer>
     </ScrollView>
@@ -258,5 +274,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 20,
+  },
+  separator: {
+    width: 120,
+  },
+  rightSeparator: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
   },
 });

@@ -71,6 +71,7 @@ export type RootNavigatorParamList = {
   CuriosityBaseScreen: {
     curiosities?: CuriosityBase[];
     type: CuriosityType;
+    photoOfTheWeek?: boolean;
   };
   NotificationsScreen: undefined;
   NotificationDetailsScreen: {notificationId: string};
