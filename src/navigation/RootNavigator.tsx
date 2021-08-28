@@ -119,6 +119,7 @@ const StackRootNavigator = () => {
       <StackNav.Screen
         name={'ReadingsDrawerNavigator'}
         component={ReadingsDrawerNavigator}
+        options={{headerShown: false}}
       />
       <StackNav.Screen
         name={'HomiliesListScreen'}

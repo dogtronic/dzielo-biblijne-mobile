@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 // Components
 import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
@@ -27,27 +27,36 @@ export const ReadingListItem: React.FC<ReadingListItemProps> = ({
   children,
   containerStyle,
   descriptionNumberOfLines,
-}) => (
-  <ViewOverflow style={containerStyle}>
-    <InfoBoxContainer containerStyle={styles.container}>
-      <TouchableOpacity
-        onPress={onPressButton}
-        activeOpacity={0.7}
-        style={styles.rowContainer}>
-        <FastImage style={styles.image} source={{uri}} resizeMode="cover" />
-        <InfoBox
-          title={title}
-          description={description}
-          position="vertical"
-          customButtonLabel={customButtonLabel}
-          descriptionNumberOfLines={descriptionNumberOfLines}
-        />
-      </TouchableOpacity>
+}) => {
+  const [hasError, setHasError] = useState(false);
+  return (
+    <ViewOverflow style={containerStyle}>
+      <InfoBoxContainer containerStyle={styles.container}>
+        <TouchableOpacity
+          onPress={onPressButton}
+          activeOpacity={0.7}
+          style={styles.rowContainer}>
+          <FastImage
+            style={styles.image}
+            source={{uri}}
+            resizeMode={FastImage.resizeMode.cover}
+            fallback={hasError}
+            onError={() => setHasError(true)}
+          />
+          <InfoBox
+            title={title}
+            description={description}
+            position="vertical"
+            customButtonLabel={customButtonLabel}
+            descriptionNumberOfLines={descriptionNumberOfLines}
+          />
+        </TouchableOpacity>
 
-      {children}
-    </InfoBoxContainer>
-  </ViewOverflow>
-);
+        {children}
+      </InfoBoxContainer>
+    </ViewOverflow>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {

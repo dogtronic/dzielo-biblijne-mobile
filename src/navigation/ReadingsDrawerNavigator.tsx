@@ -6,7 +6,10 @@ import ReadingDrawer from '../components/ReadingDrawer';
 
 // Navigation
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import {createStackNavigator} from '@react-navigation/stack';
+import {
+  CardStyleInterpolators,
+  createStackNavigator,
+} from '@react-navigation/stack';
 
 // Styles
 import Colors from '../constants/Colors';
@@ -25,6 +28,7 @@ import {CuriosityType} from '../store/types/Curiosity.model';
 import ReadingDetailsScreen from '../screens/ReadingDetailsScreen';
 import SectionDetailsScreen from '../screens/SectionDetailsScreen';
 import CuriosityBaseScreen from '../screens/CuriosityBaseScreen';
+import Topbar from '../components/Topbar';
 
 export type ReadingsDrawerParamList = {
   ReadingsStackNavigator: {reading: Reading; isSundayReading?: boolean};
@@ -52,8 +56,26 @@ const ReadingsStackNavigator = ({route}) => {
   return (
     <StackNav.Navigator
       initialRouteName="ReadingDetailsScreen"
+      mode="modal"
       screenOptions={{
-        headerShown: false,
+        header: ({scene}) => {
+          //@ts-ignore
+          const {canGoBack, goBack, dangerouslyGetParent} =
+            scene.descriptor.navigation;
+
+          return (
+            <Topbar
+              onPressLeftButton={() => goBack()}
+              onPressRightButton={() =>
+                //@ts-ignore
+                dangerouslyGetParent()?.dangerouslyGetParent()?.openDrawer()
+              }
+              canGoBack={canGoBack}
+            />
+          );
+        },
+        headerShown: true,
+        cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}>
       <StackNav.Screen
         name="ReadingDetailsScreen"

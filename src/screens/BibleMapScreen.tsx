@@ -98,7 +98,9 @@ const BibleMapScreen: React.VFC<BibleMapScreenProps> = () => {
   useEffect(() => {
     if (countries) {
       const point = getLatLngCenter(countries);
-      animateMap({lat: point.lat, lng: point.lng, zoom: 5});
+      setTimeout(() => {
+        animateMap({lat: point.lat, lng: point.lng, zoom: 5});
+      }, 500);
     }
   }, [countries, animateMap]);
 
@@ -109,7 +111,9 @@ const BibleMapScreen: React.VFC<BibleMapScreenProps> = () => {
   useEffect(() => {
     if (places.length) {
       const point = getLatLngCenter(places);
-      animateMap({lat: point.lat, lng: point.lng, zoom: 11});
+      setTimeout(() => {
+        animateMap({lat: point.lat, lng: point.lng, zoom: 11});
+      }, 500);
     }
   }, [places, animateMap]);
 
