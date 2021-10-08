@@ -13,6 +13,8 @@ import Loader from '../components/Loader';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import ContentError from '../components/ContentError';
 import EmptyData from '../components/EmptyData';
+import Typography, {TypographyType} from '../components/Typography';
+import FastImage from 'react-native-fast-image';
 
 // Navigation
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -20,14 +22,11 @@ import {RouteProp} from '@react-navigation/core';
 import {RootNavigatorParamList} from '../navigation/RootNavigator';
 
 // Utils
-import {useTranslation} from 'react-i18next';
 import {remoteAsset} from '../utils/remoteAsset';
 import DeviceInfo from 'react-native-device-info';
 
 // Styles
 import Colors from '../constants/Colors';
-import Typography, {TypographyType} from '../components/Typography';
-import FastImage from 'react-native-fast-image';
 
 type ReadingsScreenProps = {
   navigation: StackNavigationProp<RootNavigatorParamList, 'ReadingsScreen'>;
@@ -35,13 +34,13 @@ type ReadingsScreenProps = {
 };
 
 const ReadingsScreen: React.VFC<ReadingsScreenProps> = ({navigation}) => {
-  const {t} = useTranslation();
   const dispatch = useAppDispatch();
 
   const isTablet = DeviceInfo.isTablet();
 
   const sectionImages = useAppSelector(state => state.settings.sectionImages);
   const readings = useAppSelector(state => state.readings.readings);
+  const readingsGroup = useAppSelector(state => state.readings.readingGroup);
   const loading = useAppSelector(state => state.readings.areReadingsLoading);
   const error = useAppSelector(state => state.readings.readingsError);
 
@@ -73,7 +72,7 @@ const ReadingsScreen: React.VFC<ReadingsScreenProps> = ({navigation}) => {
       contentContainerStyle={styles.contentContainer}
       showsVerticalScrollIndicator={false}>
       <ImageHeader uri={remoteAsset(sectionImages?.sunday_readings?.url) || ''}>
-        <ImageHeaderText content={t('menu:sundayReading')} />
+        <ImageHeaderText content={readingsGroup?.name} />
       </ImageHeader>
 
       <TopRoundedContainer style={styles.insideContainer}>

@@ -5,7 +5,6 @@ export interface CuriosityBase {
   image?: ImageSource;
   title?: string;
   comment?: string;
-  is_visible_on_dashboard: boolean;
 }
 
 export enum CuriosityType {

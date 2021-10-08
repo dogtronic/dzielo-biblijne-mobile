@@ -4,9 +4,11 @@ import {Curiosity, Photo} from '../../types/Curiosity.model';
 
 // Models
 import {Reading, SectionType} from '../../types/Reading.model';
+import {ReadingsGroup} from '../../types/ReadingsGroup.model';
 
 export type ReadingsState = {
   readings: Reading[];
+  readingGroup?: ReadingsGroup;
   areReadingsLoading: boolean;
   readingsError: boolean;
   readingDetails?: Reading;
@@ -34,6 +36,7 @@ export type ReadingsState = {
 
 const initialState: ReadingsState = {
   readings: [],
+  readingGroup: undefined,
   areReadingsLoading: true,
   readingsError: false,
   readingDetails: undefined,
@@ -71,7 +74,8 @@ const readingsReducer = createReducer<ReadingsState, ReadingsActions>(
   .handleAction(actions.getCurrentReadings.success, (state, action) => ({
     ...state,
     areReadingsLoading: false,
-    readings: action.payload.readings.sort((v, w) =>
+    readingGroup: action.payload.readingsGroup,
+    readings: action.payload.readingsGroup.readings.sort((v, w) =>
       v.reading_type.priority > w.reading_type.priority ? 1 : -1,
     ),
     sections: action.payload.sections,

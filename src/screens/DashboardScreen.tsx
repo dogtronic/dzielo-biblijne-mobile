@@ -45,6 +45,7 @@ const DashboardScreen: React.VFC<DashboardScreenProps> = ({navigation}) => {
   const isTablet = DeviceInfo.isTablet();
 
   const sectionImages = useAppSelector(state => state.settings.sectionImages);
+  const readingsGroup = useAppSelector(state => state.readings.readingGroup);
 
   const removedNotificationFromDashboard = useAppSelector(
     state => state.user.removedNotificationsFromDashboard || {},
@@ -59,10 +60,17 @@ const DashboardScreen: React.VFC<DashboardScreenProps> = ({navigation}) => {
     ),
   );
 
-  const photoOfTheWeek = useAppSelector(state => state.settings.photoOfTheWeek);
+  const photoOfTheWeek = {
+    id: '',
+    image: readingsGroup?.image,
+  };
 
   const today = capitalizeFirstLetter(
     dayjs().locale(pl).format('dddd, D MMMM').toString(),
+  );
+
+  const homily = readingsGroup?.readings.find(
+    v => v.reading_type.name === 'Homilia',
   );
 
   return (
@@ -81,7 +89,12 @@ const DashboardScreen: React.VFC<DashboardScreenProps> = ({navigation}) => {
 
       <View style={[isTablet && styles.tabletTopContainer]}>
         <View style={[isTablet && styles.tabletFlexContainer]}>
-          {photoOfTheWeek && <WeeklyPhoto photo={photoOfTheWeek} />}
+          {photoOfTheWeek.image && (
+            <WeeklyPhoto
+              //@ts-ignore
+              photo={photoOfTheWeek}
+            />
+          )}
         </View>
 
         <View style={[isTablet && styles.tabletFlexContainer]}>
@@ -127,13 +140,20 @@ const DashboardScreen: React.VFC<DashboardScreenProps> = ({navigation}) => {
         </View>
 
         <View style={[isTablet && styles.tabletTopContainer]}>
-          <ReadingListItem
-            title={t('dashboard:homilyHeader')}
-            description={t('dashboard:homilyDescription')}
-            uri={remoteAsset(sectionImages?.homily?.url)}
-            onPressButton={() => navigation.navigate('HomiliesListScreen')}
-            containerStyle={styles.itemTablet}
-          />
+          {homily && (
+            <ReadingListItem
+              title={t('dashboard:homilyHeader')}
+              description={t('dashboard:homilyDescription')}
+              uri={remoteAsset(sectionImages?.homily?.url)}
+              onPressButton={() =>
+                navigation.navigate('ReadingsDrawerNavigator', {
+                  reading: homily,
+                  isSundayReading: true,
+                })
+              }
+              containerStyle={styles.itemTablet}
+            />
+          )}
 
           <View style={[isTablet && styles.tabletSeparator]} />
 

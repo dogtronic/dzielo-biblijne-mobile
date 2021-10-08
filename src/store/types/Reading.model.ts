@@ -4,7 +4,7 @@ export interface ReadingType {
   id: string;
   name: string;
   image: ImageSource;
-  type: 'Glowne' | 'Poboczne';
+  type: 'Glowne' | 'Poboczne' | 'Ukryte';
   priority: number;
 }
 
@@ -12,6 +12,7 @@ export interface SectionType {
   id: string;
   name: string;
   image: string;
+  priority: number;
 }
 
 export interface Section {
@@ -42,7 +43,7 @@ export interface Reading {
   visible_from: string;
   visible_to: string;
   content: string;
-  sections: (Section & {section_type: number})[];
+  sections: (Section & {section_type: string})[];
   curiosities: Curiosity[];
   photos: Photo[];
 }

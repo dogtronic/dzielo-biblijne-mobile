@@ -1,13 +1,7 @@
 import React from 'react';
 
 // Components
-import {
-  View,
-  TouchableOpacity,
-  StyleSheet,
-  Image,
-  ScrollView,
-} from 'react-native';
+import {View, TouchableOpacity, StyleSheet, ScrollView} from 'react-native';
 import Modal from 'react-native-modal';
 import {CloseIcon} from '../assets/svg';
 import Typography, {TypographyType} from './Typography';
@@ -22,7 +16,7 @@ import Colors from '../constants/Colors';
 import {Place} from '../store/types/Region.model';
 
 // Utils
-import {remoteAsset} from '../utils/remoteAsset';
+import ImageCarousel from './ImageCarousel';
 
 export type TermModalProps = {
   isVisible?: boolean;
@@ -71,11 +65,8 @@ const PlaceModal: React.VFC<TermModalProps> = ({
               {place?.name}
             </Typography>
 
-            {place?.photo && (
-              <Image
-                style={styles.image}
-                source={{uri: remoteAsset(place.photo.url)}}
-              />
+            {place?.photo?.length !== 0 && (
+              <ImageCarousel images={place?.photo || []} />
             )}
 
             <Typography

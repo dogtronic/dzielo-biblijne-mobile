@@ -12,23 +12,37 @@ import dayjs from 'dayjs';
 // Models
 import {Reading, SectionType} from '../../types/Reading.model';
 import {Curiosity, Photo} from '../../types/Curiosity.model';
+import {ReadingsGroup} from '../../types/ReadingsGroup.model';
 
-export function* getCurrentReadings() {
+export function* getCurrentReadingGroup() {
   try {
     const startWeekDate = dayjs().startOf('week').format('YYYY-MM-DDTHH:mm');
     const endWeekDate = dayjs().endOf('week').format('YYYY-MM-DDTHH:mm');
 
-    const readingsResponse: AxiosResponse<Reading[]> = yield Api.get(
-      `${Endpoint.Readings}?visible_from_lte=${endWeekDate}&visible_to_gte=${startWeekDate}`,
+    const readingsResponse: AxiosResponse<ReadingsGroup[]> = yield Api.get(
+      `${Endpoint.ReadingsGroups}?visible_from_lte=${endWeekDate}&visible_to_gte=${startWeekDate}`,
     );
 
     const sectionsResponse: AxiosResponse<SectionType[]> = yield Api.get(
       Endpoint.SectionTypes,
     );
 
+    let readingGroup = readingsResponse.data[0];
+    const readings: Reading[] = [];
+
+    for (let readingFromGroup of readingsResponse.data[0].readings) {
+      const readingResponse: AxiosResponse<Reading> = yield Api.get(
+        `${Endpoint.Readings}${readingFromGroup.id}`,
+      );
+
+      readings.push(readingResponse.data);
+    }
+
+    readingGroup.readings = readings;
+
     yield put(
       actions.getCurrentReadings.success({
-        readings: readingsResponse.data,
+        readingsGroup: readingsResponse.data[0],
         sections: sectionsResponse.data,
       }),
     );
@@ -55,7 +69,7 @@ export function* getHomilies(
   action: ActionType<typeof actions.getHomilies.request>,
 ) {
   try {
-    let link = `${Endpoint.Readings}?_start=${action.payload.offset}&_limit=${action.payload.limit}&_reading_type.name=Homilia&_sort=createdAt:asc,description:asc`;
+    let link = `${Endpoint.Readings}?_start=${action.payload.offset}&_limit=${action.payload.limit}&reading_type.name=Homilia&_sort=createdAt:asc,description:asc`;
 
     if (action.payload.filter) {
       link += `&description_contains=${action.payload.filter}`;
@@ -79,7 +93,7 @@ export function* getNationalReadings(
   action: ActionType<typeof actions.getNationalReadings.request>,
 ) {
   try {
-    let link = `${Endpoint.Readings}?_start=${action.payload.offset}&_limit=${action.payload.limit}&_reading_type.name=Narodowe Czytanie&_sort=createdAt:asc,description:asc`;
+    let link = `${Endpoint.Readings}?_start=${action.payload.offset}&_limit=${action.payload.limit}&_sort=createdAt:desc,description:asc&reading_type.name=Narodowe Czytanie`;
 
     if (action.payload.filter) {
       link += `&description_contains=${action.payload.filter}`;
@@ -144,7 +158,7 @@ export function* getPhotos(
 }
 
 export const readingsSaga = [
-  takeLatest(actions.getCurrentReadings.request, getCurrentReadings),
+  takeLatest(actions.getCurrentReadings.request, getCurrentReadingGroup),
   takeLatest(actions.getReadingDetails.request, getReadingDetails),
   takeLatest(actions.getHomilies.request, getHomilies),
   takeLatest(actions.getNationalReadings.request, getNationalReadings),

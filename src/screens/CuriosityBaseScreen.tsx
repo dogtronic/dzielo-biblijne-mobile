@@ -11,8 +11,9 @@ import TopRoundedContainer from '../components/TopRoundedContainer';
 import ContentButton from '../components/ContentButton';
 import Loader from '../components/Loader';
 import ContentError from '../components/ContentError';
-import {ScrollView} from 'react-native-gesture-handler';
+import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import Typography, {TypographyType} from '../components/Typography';
+import ImageView from 'react-native-image-viewing';
 
 // Navigation
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -48,6 +49,7 @@ const CuriosityBaseScreen: React.VFC<CuriosityBaseScreenProps> = ({route}) => {
 
   const [offset, setOffest] = useState(50);
   const [curiosityIndex, setCuriosityIndex] = useState(0);
+  const [zoomModalVisible, setZoomModalVisible] = useState(false);
 
   const sectionImages = useAppSelector(state => state.settings.sectionImages);
 
@@ -173,10 +175,14 @@ const CuriosityBaseScreen: React.VFC<CuriosityBaseScreenProps> = ({route}) => {
       </ImageHeader>
 
       {currentCuriosity?.image?.url && (
-        <ImageBackground
-          style={[styles.image, isTablet && styles.imageTablet]}
-          source={{uri: remoteAsset(currentCuriosity?.image?.url)}}
-        />
+        <TouchableOpacity
+          activeOpacity={0.9}
+          onPress={() => setZoomModalVisible(true)}>
+          <ImageBackground
+            style={[styles.image, isTablet && styles.imageTablet]}
+            source={{uri: remoteAsset(currentCuriosity?.image?.url)}}
+          />
+        </TouchableOpacity>
       )}
 
       <TopRoundedContainer style={styles.textContainer}>
@@ -232,6 +238,17 @@ const CuriosityBaseScreen: React.VFC<CuriosityBaseScreenProps> = ({route}) => {
           </View>
         </View>
       </TopRoundedContainer>
+
+      <ImageView
+        images={
+          currentCuriosity
+            ? [{uri: remoteAsset(currentCuriosity.image?.url)}]
+            : []
+        }
+        imageIndex={0}
+        visible={zoomModalVisible}
+        onRequestClose={() => setZoomModalVisible(false)}
+      />
     </ScrollView>
   );
 };

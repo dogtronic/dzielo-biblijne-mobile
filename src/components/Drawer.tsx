@@ -55,10 +55,6 @@ const Drawer: React.VFC<DrawerProps> = ({closeDrawer, navigate}) => {
   const bottomMenu = useMemo(
     () => [
       {
-        name: t('menu:announcements'),
-        onPress: () => navigate?.('NotificationsScreen'),
-      },
-      {
         name: t('menu:words'),
         onPress: () => navigate?.('TermsListScreen', {type: TermType.Words}),
       },
@@ -75,6 +71,10 @@ const Drawer: React.VFC<DrawerProps> = ({closeDrawer, navigate}) => {
       {
         name: t('menu:biblemap'),
         onPress: () => navigate?.('BibleMapScreen'),
+      },
+      {
+        name: t('menu:announcements'),
+        onPress: () => navigate?.('NotificationsScreen'),
       },
       {
         name: t('menu:recommendations'),

@@ -100,7 +100,6 @@ const BibleScreen: React.VFC<BibleScreenProps> = ({navigation}) => {
         style={[styles.textContainer, isTablet && styles.tabletTextContainer]}>
         <ReadingListItem
           title={t('bible:oldTestamentHeader')}
-          description={t('bible:oldTestamentDescription')}
           uri={remoteAsset(sectionImages?.old_testament?.url)}
           customButtonLabel={
             isOldTestamentOpen ? t('common:hide') : t('common:show')
@@ -117,7 +116,6 @@ const BibleScreen: React.VFC<BibleScreenProps> = ({navigation}) => {
 
         <ReadingListItem
           title={t('bible:newTestamentHeader')}
-          description={t('bible:newTestamentDescription')}
           uri={remoteAsset(sectionImages?.new_testament?.url)}
           customButtonLabel={
             isNewTestamentOpen ? t('common:hide') : t('common:show')

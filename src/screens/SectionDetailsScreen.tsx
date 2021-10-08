@@ -1,10 +1,11 @@
 import React from 'react';
 
 // Components
-import {StyleSheet, ScrollView} from 'react-native';
+import {StyleSheet, ScrollView, View, TouchableOpacity} from 'react-native';
 import ImageHeader, {ImageHeaderText} from '../components/ImageHeader';
 import HtmlViewer from '../components/HtmlViewer';
 import TopRoundedContainer from '../components/TopRoundedContainer';
+import {BookIcon} from '../assets/svg';
 
 // Navigation
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -16,6 +17,7 @@ import {remoteAsset} from '../utils/remoteAsset';
 
 // Styles
 import Colors from '../constants/Colors';
+import Typography, {TypographyType} from '../components/Typography';
 
 type SectionDetailsScreenProps = {
   navigation: StackNavigationProp<
@@ -27,6 +29,7 @@ type SectionDetailsScreenProps = {
 
 const SectionDetailsScreen: React.VFC<SectionDetailsScreenProps> = ({
   route,
+  navigation,
 }) => {
   const {reading, section, sectionType} = route.params;
 
@@ -40,6 +43,21 @@ const SectionDetailsScreen: React.VFC<SectionDetailsScreenProps> = ({
       </ImageHeader>
 
       <TopRoundedContainer style={styles.textContainer}>
+        <View style={styles.headerContainer}>
+          <Typography type={TypographyType.Title} numberOfLines={2}>
+            {sectionType?.name}
+          </Typography>
+
+          {!!reading.sections.length && (
+            <TouchableOpacity
+              style={styles.bookButton}
+              activeOpacity={0.9}
+              //@ts-ignore
+              onPress={navigation.openDrawer}>
+              <BookIcon />
+            </TouchableOpacity>
+          )}
+        </View>
         <HtmlViewer html={section?.content} />
       </TopRoundedContainer>
     </ScrollView>
@@ -58,5 +76,22 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     marginTop: 40,
+  },
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 30,
+    alignItems: 'center',
+  },
+  bookButton: {
+    backgroundColor: Colors.primary,
+    height: 45,
+    width: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingRight: 10,
+    borderTopLeftRadius: 5,
+    borderBottomLeftRadius: 5,
+    marginRight: -25,
   },
 });

@@ -35,21 +35,50 @@ const ReadingDrawer: React.VFC<DrawerProps> = ({
   React.useEffect(() => {
     const menu: Menus = [];
 
-    reading.sections.forEach(v => {
-      const section = sections.find(w => w.id === v.section_type);
-
-      if (section) {
-        menu.push({
-          name: section.name,
-          onPress: () =>
-            navigate?.(`SectionDetailsScreen_${v.id}`, {
-              reading,
-              section: v,
-              sectionType: section,
-            }),
-        });
-      }
+    menu.push({
+      name: t('common:text'),
+      onPress: () =>
+        navigate?.('ReadingDetailsScreen', {
+          reading,
+        }),
     });
+
+    reading.sections
+      .sort((v, w) => {
+        const section1 =
+          typeof v.section_type === 'string'
+            ? sections.find(z => z.id === v.section_type)
+            : undefined;
+
+        const section2 =
+          typeof w.section_type === 'string'
+            ? sections.find(z => z.id === w.section_type)
+            : undefined;
+
+        if (section1 && section2) {
+          return section1.priority > section2.priority ? -1 : 1;
+        }
+
+        return 0;
+      })
+      .forEach(v => {
+        const section =
+          typeof v.section_type === 'string'
+            ? sections.find(w => w.id === v.section_type)
+            : undefined;
+
+        if (section) {
+          menu.push({
+            name: section.name,
+            onPress: () =>
+              navigate?.(`SectionDetailsScreen_${v.id}`, {
+                reading,
+                section: v,
+                sectionType: section,
+              }),
+          });
+        }
+      });
 
     if (reading.curiosities.length) {
       menu.push({

@@ -12,7 +12,7 @@ export interface Region {
 export interface Place {
   id: string;
   region: Region;
-  photo: ImageSource;
+  photo: ImageSource[];
   name: string;
   description: string;
   position: string;

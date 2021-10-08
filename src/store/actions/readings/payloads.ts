@@ -1,12 +1,13 @@
 import {Curiosity, Photo} from '../../types/Curiosity.model';
 import {Reading, SectionType} from '../../types/Reading.model';
+import {ReadingsGroup} from '../../types/ReadingsGroup.model';
 
 export type GetReadingDetailsRequestPayload = {
   readingId: string;
 };
 
 export type GetCurrentReadingsSuccessPayload = {
-  readings: Reading[];
+  readingsGroup: ReadingsGroup;
   sections: SectionType[];
 };
 

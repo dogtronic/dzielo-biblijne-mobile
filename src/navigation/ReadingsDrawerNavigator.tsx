@@ -6,10 +6,7 @@ import ReadingDrawer from '../components/ReadingDrawer';
 
 // Navigation
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import {
-  CardStyleInterpolators,
-  createStackNavigator,
-} from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack';
 
 // Styles
 import Colors from '../constants/Colors';
@@ -29,6 +26,7 @@ import ReadingDetailsScreen from '../screens/ReadingDetailsScreen';
 import SectionDetailsScreen from '../screens/SectionDetailsScreen';
 import CuriosityBaseScreen from '../screens/CuriosityBaseScreen';
 import Topbar from '../components/Topbar';
+import {StackActions} from '@react-navigation/routers';
 
 export type ReadingsDrawerParamList = {
   ReadingsStackNavigator: {reading: Reading; isSundayReading?: boolean};
@@ -75,7 +73,7 @@ const ReadingsStackNavigator = ({route}) => {
           );
         },
         headerShown: true,
-        cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        animationEnabled: false,
       }}>
       <StackNav.Screen
         name="ReadingDetailsScreen"
@@ -130,7 +128,9 @@ const ReadingsDrawerNavigator = ({route}) => {
       drawerContent={props => (
         <ReadingDrawer
           closeDrawer={props.navigation.closeDrawer}
-          navigate={props.navigation.navigate}
+          navigate={(name, params) =>
+            props.navigation.dispatch(StackActions.replace(name, params))
+          }
           reading={reading}
         />
       )}>

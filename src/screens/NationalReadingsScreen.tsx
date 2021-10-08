@@ -57,7 +57,7 @@ const NationalReadingsListScreen: React.VFC<NationalReadingsListScreenProps> =
       state => state.readings.areMoreNationalReadings,
     );
     const error = useAppSelector(state => state.readings.nationalReadingsError);
-
+    console.log(nationalReadings);
     useLayoutEffect(() => {
       dispatch(
         actions.getNationalReadings.request({

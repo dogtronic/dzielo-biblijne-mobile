@@ -26,6 +26,7 @@
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		86B6857FE58240CAAA7C532A /* Martel-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE7A16D502B6448197AD9301 /* Martel-ExtraBold.ttf */; };
 		A072FD75B05D4350AA9CB5EB /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 810B76468EB14B2F95DA6674 /* Roboto-Regular.ttf */; };
+		B225123D2703578C006333C5 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = B225123C2703578C006333C5 /* File.swift */; };
 		B3507210B2484F35A1E06F33 /* Roboto-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8CF54F5AE57049659877B218 /* Roboto-MediumItalic.ttf */; };
 		BA4DC9C9C0E147C79016F1B1 /* Roboto-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ACD8FD45D45B45E1A43FA35F /* Roboto-ThinItalic.ttf */; };
 		C7EC10728BB344B1AF9CB9BD /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D6C44CC8DA964EC79A2C4394 /* Roboto-Bold.ttf */; };
@@ -70,6 +71,8 @@
 		AB3B07E5F51A158B74135A4F /* libPods-bible-bibleTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-bible-bibleTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACD8FD45D45B45E1A43FA35F /* Roboto-ThinItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-ThinItalic.ttf"; path = "../src/assets/fonts/Roboto-ThinItalic.ttf"; sourceTree = "<group>"; };
 		ADD872F5E4876E6797040854 /* Pods-bible.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bible.debug.xcconfig"; path = "Target Support Files/Pods-bible/Pods-bible.debug.xcconfig"; sourceTree = "<group>"; };
+		B225123B2703578B006333C5 /* bible-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "bible-Bridging-Header.h"; sourceTree = "<group>"; };
+		B225123C2703578C006333C5 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		B42DB14FE9FF428CAC857BD4 /* Martel-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Martel-Bold.ttf"; path = "../src/assets/fonts/Martel-Bold.ttf"; sourceTree = "<group>"; };
 		BA644F22C9A384E1337ECE00 /* Pods-bible.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bible.release.xcconfig"; path = "Target Support Files/Pods-bible/Pods-bible.release.xcconfig"; sourceTree = "<group>"; };
 		BD89AAEC87B4D50D6985F6FF /* Pods-bible-bibleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bible-bibleTests.debug.xcconfig"; path = "Target Support Files/Pods-bible-bibleTests/Pods-bible-bibleTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -130,6 +133,8 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				B225123C2703578C006333C5 /* File.swift */,
+				B225123B2703578B006333C5 /* bible-Bridging-Header.h */,
 			);
 			name = bible;
 			sourceTree = "<group>";
@@ -272,7 +277,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1300;
 					};
 				};
 			};
@@ -495,6 +500,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				B225123D2703578C006333C5 /* File.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -514,6 +520,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = BD89AAEC87B4D50D6985F6FF /* Pods-bible-bibleTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -541,6 +548,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 09233C6A259AA18A80B3CDEC /* Pods-bible-bibleTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = bibleTests/Info.plist;
@@ -582,6 +590,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.akanza.bibleapp;
 				PRODUCT_NAME = bible;
+				SWIFT_OBJC_BRIDGING_HEADER = "bible-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -595,8 +604,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 4;
-				DEVELOPMENT_TEAM = PCT6GL3GWD;
+				DEVELOPMENT_TEAM = 57D78AMT65;
 				INFOPLIST_FILE = bible/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -607,8 +618,10 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.akanza.bibleapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.akanza.dzielobiblijne;
 				PRODUCT_NAME = bible;
+				PROVISIONING_PROFILE_SPECIFIER = dzielobiblijne_adhoc;
+				SWIFT_OBJC_BRIDGING_HEADER = "bible-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";

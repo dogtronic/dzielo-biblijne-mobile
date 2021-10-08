@@ -9,7 +9,6 @@ import {Api, Endpoint} from '../../../services/Api.service';
 import {SectionImages} from '../../types/SectionImages.model';
 import {Information} from '../../types/Information.model';
 import {Photo} from '../../types/Curiosity.model';
-// import {ReadingType} from '../../types/Reading.model';
 
 // Sagas
 import {getNewNotifications} from '../notifications';
@@ -17,8 +16,7 @@ import {ActionType} from 'typesafe-actions';
 
 // Utils
 import i18n from '../../../assets/translations';
-// import FastImage, {Source} from 'react-native-fast-image';
-// import {remoteAsset} from '../../../utils/remoteAsset';
+import {getCurrentReadingGroup} from '../readings';
 
 export function* getSettings() {
   try {
@@ -26,32 +24,9 @@ export function* getSettings() {
       Endpoint.SectionImages,
     );
 
+    yield getCurrentReadingGroup();
     yield getNewNotifications();
     yield getPhotoOfTheWeek();
-
-    // if (sectionImagesResponse.data) {
-    //   const images = Object.keys(sectionImagesResponse.data)
-    //     .map(v => {
-    //       const id = v as keyof SectionImages;
-    //       const url = (sectionImagesResponse.data[id] as {url?: string})?.url;
-    //       if (url) {
-    //         return remoteAsset(url);
-    //       }
-    //       return undefined;
-    //     })
-    //     .filter(v => typeof v === 'string')
-    //     .map(v => ({uri: v, priority: FastImage.priority.high}));
-
-    //   FastImage.preload(images as Source[]);
-    // }
-
-    // const sectionsResponse: AxiosResponse<ReadingType[]> = yield Api.get(
-    //   Endpoint.ReadingsTypes,
-    // );
-
-    // FastImage.preload(
-    //   sectionsResponse.data.map(v => ({uri: remoteAsset(v.image.url)})),
-    // );
 
     yield put(
       actions.getAppSettings.success({
