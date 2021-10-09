@@ -93,7 +93,7 @@ export function* getNationalReadings(
   action: ActionType<typeof actions.getNationalReadings.request>,
 ) {
   try {
-    let link = `${Endpoint.Readings}?_start=${action.payload.offset}&_limit=${action.payload.limit}&_sort=createdAt:desc,description:asc&reading_type.name=Narodowe Czytanie`;
+    let link = `${Endpoint.Readings}?_start=${action.payload.offset}&_limit=${action.payload.limit}&_sort=createdAt:desc,description:asc&reading_type.name=Narodowe Czytanie Pisma św.`;
 
     if (action.payload.filter) {
       link += `&description_contains=${action.payload.filter}`;

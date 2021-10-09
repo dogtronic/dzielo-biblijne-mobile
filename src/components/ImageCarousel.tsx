@@ -1,8 +1,13 @@
 import React, {useCallback, useState} from 'react';
 
 // Components
-import {Image, StyleSheet, useWindowDimensions, View} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {
+  Image,
+  StyleSheet,
+  useWindowDimensions,
+  View,
+  TouchableOpacity,
+} from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import ImageView from 'react-native-image-viewing';
 
@@ -46,7 +51,7 @@ const ImageCarousel: React.VFC<ImageCarouselProps> = ({images}) => {
         data={images}
         renderItem={renderItem}
         sliderWidth={dimensions.width - 50}
-        itemWidth={dimensions.width - 150 > 260 ? 260 : dimensions.width - 260}
+        itemWidth={dimensions.width - 150 > 260 ? 260 : dimensions.width - 150}
         activeSlideAlignment={'start'}
         scrollEnabled={true}
       />

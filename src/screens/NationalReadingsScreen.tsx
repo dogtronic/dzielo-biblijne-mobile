@@ -141,7 +141,9 @@ const NationalReadingsListScreen: React.VFC<NationalReadingsListScreenProps> =
           <View style={styles.headerContainer}>
             <ImageHeader
               uri={remoteAsset(sectionImages?.national_readings?.url) || ''}>
-              <ImageHeaderText content={t('menu:nationalReadings')} />
+              <ImageHeaderText
+                content={t('dashboard:nationalReadingsHeader')}
+              />
             </ImageHeader>
 
             <SearchInput value={filter} onChange={onChangeText} />
