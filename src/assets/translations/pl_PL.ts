@@ -23,6 +23,7 @@ export default {
     nextChapter: 'Następny rozdział',
     dataNotFound: 'Nie znaleziono danych',
     text: 'Tekst',
+    biblePhoto: 'Zdjęcie biblijne',
   },
   menu: {
     startPage: 'Strona startowa',

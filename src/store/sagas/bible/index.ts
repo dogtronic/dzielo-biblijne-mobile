@@ -72,7 +72,6 @@ export function* getChapterDetails(
       }),
     );
   } catch (err) {
-    console.log(err);
     yield put(actions.getChapterDetails.failure());
   }
 }

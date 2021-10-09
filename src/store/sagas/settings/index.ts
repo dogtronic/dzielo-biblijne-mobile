@@ -34,7 +34,6 @@ export function* getSettings() {
       }),
     );
   } catch (err) {
-    console.log(JSON.stringify(err));
     yield put(actions.getAppSettings.failure());
   }
 }

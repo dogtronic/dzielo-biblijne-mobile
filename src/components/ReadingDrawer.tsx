@@ -89,7 +89,7 @@ const ReadingDrawer: React.VFC<DrawerProps> = ({
 
     if (reading.photos.length) {
       menu.push({
-        name: t('menu:photos'),
+        name: t('common:biblePhoto'),
         onPress: () => navigate?.('PhotosScreen'),
       });
     }
