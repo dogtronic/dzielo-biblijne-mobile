@@ -12,15 +12,21 @@ import Carousel from 'react-native-snap-carousel';
 import ImageView from 'react-native-image-viewing';
 
 // Models
-import {ImageSource} from '../store/types/ImageSource.model';
+
 import {remoteAsset} from '../utils/remoteAsset';
+import {Photo} from '../store/types/Curiosity.model';
+import Typography, {TypographyType} from './Typography';
+import Colors from '../constants/Colors';
 
 type ImageCarouselProps = {
-  images: ImageSource[];
+  images: Photo[];
 };
 
 const ImageCarousel: React.VFC<ImageCarouselProps> = ({images}) => {
   const [zoomModalVisible, setZoomModalVisible] = useState(false);
+  const [zoomModalPhoto, setZoomModalPhoto] = useState<Photo | undefined>(
+    undefined,
+  );
   const [zoomModalImageLink, setZoomModalImageLink] = useState<
     string | undefined
   >(undefined);
@@ -28,16 +34,39 @@ const ImageCarousel: React.VFC<ImageCarouselProps> = ({images}) => {
   const dimensions = useWindowDimensions();
 
   const renderItem = useCallback(
-    ({item}: {item: ImageSource}) => {
+    ({item}: {item: Photo}) => {
       return (
         <View onStartShouldSetResponder={() => true}>
           <TouchableOpacity
             activeOpacity={0.9}
             onPress={() => {
               setZoomModalVisible(true);
-              setZoomModalImageLink(remoteAsset(item.url));
+              setZoomModalPhoto(item);
+              setZoomModalImageLink(remoteAsset(item.image.url));
             }}>
-            <Image style={styles.image} source={{uri: remoteAsset(item.url)}} />
+            <Image
+              style={styles.image}
+              source={{uri: remoteAsset(item.image.url)}}
+            />
+
+            <View style={styles.textContainer}>
+              {!!item?.title && (
+                <Typography
+                  type={TypographyType.SmallTitle}
+                  numberOfLines={1}
+                  style={styles.text}>
+                  {item.title}
+                </Typography>
+              )}
+              {!!item?.comment && (
+                <Typography
+                  type={TypographyType.Description}
+                  numberOfLines={2}
+                  style={styles.text}>
+                  {item.comment}
+                </Typography>
+              )}
+            </View>
           </TouchableOpacity>
         </View>
       );
@@ -61,6 +90,23 @@ const ImageCarousel: React.VFC<ImageCarouselProps> = ({images}) => {
         imageIndex={0}
         visible={zoomModalVisible}
         onRequestClose={() => setZoomModalVisible(false)}
+        FooterComponent={() => (
+          <View style={styles.imageDescriptionContainer}>
+            {!!zoomModalPhoto?.title && (
+              <Typography
+                type={TypographyType.SmallTitle}
+                numberOfLines={1}
+                style={styles.text}>
+                {zoomModalPhoto?.title}
+              </Typography>
+            )}
+            {!!zoomModalPhoto?.comment && (
+              <Typography type={TypographyType.Description} style={styles.text}>
+                {zoomModalPhoto?.comment}
+              </Typography>
+            )}
+          </View>
+        )}
       />
     </>
   );
@@ -81,5 +127,22 @@ const styles = StyleSheet.create({
     height: 200,
     marginTop: 30,
     borderRadius: 15,
+  },
+  textContainer: {
+    backgroundColor: 'rgba(0,0,0,0.6)',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    padding: 15,
+    borderBottomLeftRadius: 15,
+    borderBottomRightRadius: 15,
+  },
+  text: {
+    color: Colors.white,
+  },
+  imageDescriptionContainer: {
+    padding: 20,
+    backgroundColor: 'rgba(0,0,0,0.6)',
   },
 });

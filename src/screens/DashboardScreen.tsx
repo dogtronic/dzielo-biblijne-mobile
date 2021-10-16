@@ -62,7 +62,8 @@ const DashboardScreen: React.VFC<DashboardScreenProps> = ({navigation}) => {
 
   const photoOfTheWeek = {
     id: '',
-    image: readingsGroup?.image,
+    image: readingsGroup?.photos_of_the_week?.image,
+    comment: readingsGroup?.photos_of_the_week?.description,
   };
 
   const today = capitalizeFirstLetter(

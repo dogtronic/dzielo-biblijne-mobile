@@ -1,4 +1,4 @@
-import {ImageSource} from './ImageSource.model';
+import {Photo} from './Curiosity.model';
 
 export interface Region {
   id: string;
@@ -12,7 +12,7 @@ export interface Region {
 export interface Place {
   id: string;
   region: Region;
-  photo: ImageSource[];
+  photos: Photo[];
   name: string;
   description: string;
   position: string;

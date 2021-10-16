@@ -65,8 +65,8 @@ const PlaceModal: React.VFC<TermModalProps> = ({
               {place?.name}
             </Typography>
 
-            {place?.photo?.length !== 0 && (
-              <ImageCarousel images={place?.photo || []} />
+            {place?.photos?.length !== 0 && (
+              <ImageCarousel images={place?.photos || []} />
             )}
 
             <Typography
