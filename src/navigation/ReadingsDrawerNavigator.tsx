@@ -96,6 +96,7 @@ const ReadingsStackNavigator = ({route}) => {
           initialParams={{
             type: CuriosityType.Curiosity,
             curiosities: reading.curiosities,
+            reading,
           }}
         />
       ) : undefined}
@@ -107,6 +108,7 @@ const ReadingsStackNavigator = ({route}) => {
           initialParams={{
             type: CuriosityType.Photo,
             curiosities: reading.photos,
+            reading,
           }}
         />
       ) : undefined}

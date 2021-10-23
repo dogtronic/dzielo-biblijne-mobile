@@ -38,7 +38,11 @@ const ReadingDetailsScreen: React.VFC<ReadingDetailsScreenProps> = ({
 
   const readings = useAppSelector(state => state.readings.readings);
   const index = readings.findIndex(v => v.id === reading.id);
-
+  console.log(
+    reading.sections.length,
+    reading.photos.length,
+    reading.curiosities.length,
+  );
   return (
     <ScrollView
       bounces={false}
@@ -62,7 +66,9 @@ const ReadingDetailsScreen: React.VFC<ReadingDetailsScreenProps> = ({
             </Typography>
           </View>
 
-          {!!reading.sections.length && (
+          {(!!reading.sections.length ||
+            !!reading.photos.length ||
+            !!reading.curiosities.length) && (
             <TouchableOpacity
               style={styles.bookButton}
               activeOpacity={0.9}

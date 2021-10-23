@@ -31,6 +31,7 @@ import Colors from '../constants/Colors';
 
 // Models
 import {CuriosityBase} from '../store/types/Curiosity.model';
+import BookIcon from '../assets/svg/BookIcon';
 
 type CuriosityBaseScreenProps = {
   navigation: StackNavigationProp<
@@ -40,8 +41,16 @@ type CuriosityBaseScreenProps = {
   route: RouteProp<RootNavigatorParamList, 'CuriosityBaseScreen'>;
 };
 
-const CuriosityBaseScreen: React.VFC<CuriosityBaseScreenProps> = ({route}) => {
-  const {type, curiosities: customCuriosities, photoOfTheWeek} = route.params;
+const CuriosityBaseScreen: React.VFC<CuriosityBaseScreenProps> = ({
+  route,
+  navigation,
+}) => {
+  const {
+    type,
+    curiosities: customCuriosities,
+    photoOfTheWeek,
+    reading,
+  } = route.params;
   const {t} = useTranslation();
   const dispatch = useAppDispatch();
 
@@ -186,14 +195,27 @@ const CuriosityBaseScreen: React.VFC<CuriosityBaseScreenProps> = ({route}) => {
       )}
 
       <TopRoundedContainer style={styles.textContainer}>
-        {currentCuriosity?.title && (
-          <Typography
-            type={TypographyType.Title}
-            style={styles.title}
-            resizeable>
-            {currentCuriosity.title}
-          </Typography>
-        )}
+        <View style={styles.headerInsideContainer}>
+          {currentCuriosity?.title && (
+            <Typography
+              type={TypographyType.Title}
+              style={styles.title}
+              resizeable>
+              {currentCuriosity.title}
+            </Typography>
+          )}
+          {(!!reading?.sections.length ||
+            !!reading?.photos.length ||
+            !!reading?.curiosities.length) && (
+            <TouchableOpacity
+              style={styles.bookButton}
+              activeOpacity={0.9}
+              //@ts-ignore
+              onPress={navigation.openDrawer}>
+              <BookIcon />
+            </TouchableOpacity>
+          )}
+        </View>
         {currentCuriosity?.comment && (
           <Typography
             type={TypographyType.Text}
@@ -281,9 +303,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     paddingVertical: 30,
   },
-  title: {
-    marginBottom: 20,
-  },
+  title: {},
   description: {
     marginBottom: 20,
   },
@@ -298,5 +318,22 @@ const styles = StyleSheet.create({
   rightSeparator: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
+  },
+  bookButton: {
+    backgroundColor: Colors.primary,
+    height: 45,
+    width: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingRight: 10,
+    borderTopLeftRadius: 5,
+    borderBottomLeftRadius: 5,
+    marginRight: -25,
+  },
+  headerInsideContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
   },
 });
