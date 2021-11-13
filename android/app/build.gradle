@@ -134,8 +134,8 @@ android {
         applicationId "com.bible"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 8
-        versionName "0.2.3"
+        versionCode 9
+        versionName "1.0.0"
     }
     splits {
         abi {
