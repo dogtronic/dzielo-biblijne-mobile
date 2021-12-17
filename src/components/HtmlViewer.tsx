@@ -4,8 +4,11 @@ import React, {useCallback, useMemo, useState} from 'react';
 import {useAppSelector} from '../hooks/useAppDispatch';
 
 // Components
-import {StyleSheet, useWindowDimensions, Linking} from 'react-native';
-import RenderHtml, {defaultSystemFonts} from 'react-native-render-html';
+import {StyleSheet, useWindowDimensions, Linking, View} from 'react-native';
+import RenderHtml, {
+  defaultSystemFonts,
+  useInternalRenderer,
+} from 'react-native-render-html';
 import TermModal from './TermModal';
 
 // Styles
@@ -14,6 +17,7 @@ import Fonts from '../constants/Fonts';
 
 // Utils
 import {useAppNavigation} from '../hooks/useAppNavigation';
+import {remoteAsset} from '../utils/remoteAsset';
 
 // Models
 import {TermType} from '../store/types/Term.model';
@@ -27,6 +31,26 @@ const systemFonts = [
 type HtmlViewerProps = {
   html?: string;
   containerStyle?: Object;
+};
+
+function CustomImageRenderer(props: any) {
+  const {Renderer, rendererProps} = useInternalRenderer('img', props);
+
+  const uri = rendererProps.source.uri;
+
+  const thumbnailSource = {
+    ...rendererProps.source,
+    uri: remoteAsset(uri?.replace('about://', '')),
+  };
+  return (
+    <View style={styles.centered}>
+      <Renderer {...rendererProps} source={thumbnailSource} />
+    </View>
+  );
+}
+
+const renderers = {
+  img: CustomImageRenderer,
 };
 
 const HtmlViewer: React.VFC<HtmlViewerProps> = ({html, containerStyle}) => {
@@ -85,6 +109,8 @@ const HtmlViewer: React.VFC<HtmlViewerProps> = ({html, containerStyle}) => {
     [onPressLink],
   );
 
+  console.log(html);
+
   return (
     <>
       <RenderHtml
@@ -100,6 +126,7 @@ const HtmlViewer: React.VFC<HtmlViewerProps> = ({html, containerStyle}) => {
         //@ts-ignore
         tagsStyles={{...tagsStyles, p: {...tagsStyles.p, fontSize}}}
         systemFonts={systemFonts}
+        renderers={renderers}
       />
 
       <TermModal
@@ -119,6 +146,9 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     fontFamily: Fonts.RobotoLight,
     fontSize: 15,
+  },
+  centered: {
+    alignItems: 'center',
   },
 });
 

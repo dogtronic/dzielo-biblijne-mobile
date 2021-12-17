@@ -69,6 +69,6 @@ export default {
     fontSize: 'Rozmiar tekstu treści w aplikacji',
     sampleText: 'Przykładowy tekst',
     loremIpsum:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      'Mądrość jest wspaniała i niewiędnąca: ci łatwo ją dostrzegą, którzy ją miłują, i ci ją znajdą, którzy jej szukają, uprzedza bowiem tych, co jej pragną, wpierw dając się im poznać.',
   },
 };
