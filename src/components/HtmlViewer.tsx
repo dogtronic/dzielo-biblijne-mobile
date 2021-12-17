@@ -44,7 +44,11 @@ function CustomImageRenderer(props: any) {
   };
   return (
     <View style={styles.centered}>
-      <Renderer {...rendererProps} source={thumbnailSource} />
+      <Renderer
+        {...rendererProps}
+        source={thumbnailSource}
+        style={styles.image}
+      />
     </View>
   );
 }
@@ -149,6 +153,12 @@ const styles = StyleSheet.create({
   },
   centered: {
     alignItems: 'center',
+    width: '100%',
+    padding: 20,
+  },
+  image: {
+    width: '100%',
+    paddingHorizontal: 20,
   },
 });
 
