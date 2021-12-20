@@ -113,8 +113,6 @@ const HtmlViewer: React.VFC<HtmlViewerProps> = ({html, containerStyle}) => {
     [onPressLink],
   );
 
-  console.log(html);
-
   return (
     <>
       <RenderHtml

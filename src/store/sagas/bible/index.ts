@@ -28,7 +28,10 @@ export function* getChaptersByBookId(
   action: ActionType<typeof actions.getChapters.request>,
 ) {
   try {
-    const query = qs.stringify({'bible_book.id': action.payload.bookId});
+    const query = qs.stringify({
+      'bible_book.id': action.payload.bookId,
+      _limit: -1,
+    });
 
     const response: AxiosResponse<Chapter[]> = yield Api.get(
       `${Endpoint.Chapters}?${query}`,
