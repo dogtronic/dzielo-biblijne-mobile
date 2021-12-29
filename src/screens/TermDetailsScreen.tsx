@@ -65,7 +65,8 @@ const TermDetailsScreen: React.VFC<TermDetailsScreenProps> = ({route}) => {
     <ScrollView
       bounces={false}
       style={styles.container}
-      contentContainerStyle={styles.contentContainer}>
+      contentContainerStyle={styles.contentContainer}
+      scrollIndicatorInsets={{right: 1}}>
       <ImageHeader
         uri={
           (type === TermType.Words
