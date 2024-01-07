@@ -21,5 +21,19 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
       </activity>
+      <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value="AIzaSyCxUTmvlbNasSw4BYOJyWkJtCJmFpGy2ic"/>
     </application>
+
+    <queries>
+      <intent>
+        <action android:name="android.intent.action.VIEW" />
+        <data android:scheme="http"/>
+      </intent>
+      <intent>
+        <action android:name="android.intent.action.VIEW" />
+        <data android:scheme="https"/>
+      </intent>
+  </queries>
 </manifest>

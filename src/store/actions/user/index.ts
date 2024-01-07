@@ -1,0 +1,16 @@
+import {createAction} from 'typesafe-actions';
+import {SetLastBibleFragmentPayload} from './payloads';
+
+export const setReadNotification = createAction(
+  'SET_READ_NOTIFICATION',
+)<string>();
+
+export const setRemovedNotificationFromDashboard = createAction(
+  'SET_REMOVED_NOTIFICATION_FROM_DASHBOARD',
+)<string>();
+
+export const setLastReadBibleFragment = createAction(
+  'SET_LAST_READ_BIBLE_FRAGMENT',
+)<SetLastBibleFragmentPayload>();
+
+export const setFontSize = createAction('SET_FONT_SIZE')<number>();

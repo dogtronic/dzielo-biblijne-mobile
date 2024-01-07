@@ -1,0 +1,20 @@
+import {Term, TermType} from '../../types/Term.model';
+
+export type GetTermsRequestPayload = {
+  limit: number;
+  offset: number;
+  filter?: string;
+  withReset?: boolean;
+  type: TermType;
+};
+
+export type GetTermsSuccessPayload = {
+  terms: Term[];
+  areMoreData: boolean;
+  withReset?: boolean;
+};
+
+export type GetTermDetailsRequestPayload = {
+  termId: string;
+  type: TermType;
+};

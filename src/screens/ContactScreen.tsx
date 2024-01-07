@@ -1,0 +1,187 @@
+import React, {useLayoutEffect} from 'react';
+
+// Redux
+import {useAppDispatch, useAppSelector} from '../hooks/useAppDispatch';
+
+// Components
+import {Keyboard, StyleSheet, View} from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import ImageHeader, {ImageHeaderText} from '../components/ImageHeader';
+import HtmlViewer from '../components/HtmlViewer';
+import Loader from '../components/Loader';
+import TopRoundedContainer from '../components/TopRoundedContainer';
+import Input from '../components/Input';
+import ContentError from '../components/ContentError';
+import Typography, {TypographyType} from '../components/Typography';
+
+// Navigation
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RouteProp} from '@react-navigation/core';
+import {RootNavigatorParamList} from '../navigation/RootNavigator';
+
+// Utils
+import {remoteAsset} from '../utils/remoteAsset';
+import * as actions from '../store/actions';
+import {useTranslation} from 'react-i18next';
+import {Formik} from 'formik';
+import * as Yup from 'yup';
+import i18n from '../assets/translations';
+import DeviceInfo from 'react-native-device-info';
+
+// Styles
+import Colors from '../constants/Colors';
+import Button from '../components/Button';
+
+type ContactScreenProps = {
+  navigation: StackNavigationProp<RootNavigatorParamList, 'ContactScreen'>;
+  route: RouteProp<RootNavigatorParamList, 'ContactScreen'>;
+};
+
+const required = i18n.t('common:requiredField');
+
+const formValidationSchema = Yup.object().shape({
+  name: Yup.string().required(required),
+  content: Yup.string().max(300).required(required),
+});
+
+const ContactScreen: React.FC<ContactScreenProps> = () => {
+  const {t} = useTranslation();
+  const dispatch = useAppDispatch();
+
+  const isTablet = DeviceInfo.isTablet();
+
+  const contactDetails = useAppSelector(state => state.settings.contactDetails);
+  const sectionImages = useAppSelector(state => state.settings.sectionImages);
+  const loading = useAppSelector(
+    state => state.settings.isContactDetialsLoading,
+  );
+  const error = useAppSelector(state => state.settings.contactError);
+
+  const isMessageSending = useAppSelector(
+    state => state.settings.isMessageToAdministratorSending,
+  );
+  const messageSentInfo = useAppSelector(
+    state => state.settings.messageSentInfo,
+  );
+
+  useLayoutEffect(() => {
+    dispatch(actions.getContact.request());
+    dispatch(actions.clearMessageToAdministratorResponse());
+  }, [dispatch]);
+
+  if (loading) {
+    return <Loader isAbsolute />;
+  }
+
+  if (error) {
+    return (
+      <ContentError
+        onPressRefresh={() => dispatch(actions.getContact.request())}
+      />
+    );
+  }
+
+  return (
+    <KeyboardAwareScrollView
+      showsVerticalScrollIndicator={false}
+      bounces={false}
+      style={styles.container}
+      contentContainerStyle={styles.contentContainer}
+      keyboardShouldPersistTaps={'handled'}
+      extraHeight={140}>
+      <ImageHeader uri={remoteAsset(sectionImages?.contact?.url) || ''}>
+        <ImageHeaderText content={t('menu:contact')} />
+      </ImageHeader>
+
+      <TopRoundedContainer style={styles.textContainer}>
+        <HtmlViewer html={contactDetails?.content} />
+
+        <Typography
+          type={TypographyType.Title}
+          style={styles.writeToUsHeader}
+          resizeable>
+          {t('common:writeToUs')}
+        </Typography>
+
+        {messageSentInfo && (
+          <Typography type={TypographyType.Text} style={styles.messageSent}>
+            {messageSentInfo}
+          </Typography>
+        )}
+
+        <View style={[isTablet && styles.formContainer]}>
+          <Formik
+            initialValues={{
+              name: '',
+              content: '',
+            }}
+            validationSchema={formValidationSchema}
+            validateOnChange={false}
+            validateOnBlur={false}
+            onSubmit={(formValues, helpers) => {
+              dispatch(actions.sendMessageToAdministrator.request(formValues));
+              helpers.resetForm();
+              Keyboard.dismiss();
+            }}>
+            {({handleChange, handleSubmit, handleBlur, values, errors}) => (
+              <>
+                <Input
+                  placeholder={t('common:name')}
+                  value={values.name}
+                  onChange={handleChange('name')}
+                  error={errors.name}
+                  onBlur={handleBlur('name')}
+                />
+
+                <Input
+                  placeholder={t('common:message')}
+                  value={values.content}
+                  onChange={handleChange('content')}
+                  error={errors.content}
+                  multiline
+                  maxLength={300}
+                  onBlur={handleBlur('content')}
+                />
+
+                <Button
+                  title={t('common:send')}
+                  containerStyle={styles.sendButton}
+                  onPress={handleSubmit}
+                  loading={isMessageSending}
+                />
+              </>
+            )}
+          </Formik>
+        </View>
+      </TopRoundedContainer>
+    </KeyboardAwareScrollView>
+  );
+};
+
+export default ContactScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: Colors.background,
+  },
+  contentContainer: {
+    flexGrow: 1,
+  },
+  textContainer: {
+    marginTop: 30,
+  },
+  sendButton: {
+    marginTop: 20,
+  },
+  writeToUsHeader: {
+    marginBottom: 15,
+  },
+  messageSent: {
+    marginBottom: 15,
+    color: Colors.primary,
+  },
+  formContainer: {
+    maxWidth: '50%',
+  },
+});

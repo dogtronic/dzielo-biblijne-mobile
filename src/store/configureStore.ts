@@ -1,0 +1,72 @@
+import {configureStore, combineReducers} from '@reduxjs/toolkit';
+import {persistStore, persistReducer} from 'redux-persist';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+// Redux Saga
+import createSagaMiddleware from 'redux-saga';
+import {all} from 'redux-saga/effects';
+
+// Reducers
+import bibleReducer from './reducers/bible';
+import settingsReducer from './reducers/settings';
+import termsReducer from './reducers/terms';
+import readingsReducer from './reducers/readings';
+import notificationsReducer from './reducers/notifications';
+import userReducer from './reducers/user';
+import mapReducer from './reducers/map';
+
+// Sagas
+import {booksSaga} from './sagas/bible';
+import {settingsSaga} from './sagas/settings';
+import {termsSaga} from './sagas/terms';
+import {readingsSaga} from './sagas/readings';
+import {notificationsSaga} from './sagas/notifications';
+import {mapSaga} from './sagas/map';
+
+const persistConfig = {
+  key: 'store',
+  storage: AsyncStorage,
+  blacklist: ['bible', 'settings', 'terms', 'readings', 'notifications', 'map'],
+};
+
+const reducers = combineReducers({
+  bible: bibleReducer,
+  settings: settingsReducer,
+  terms: termsReducer,
+  readings: readingsReducer,
+  notifications: notificationsReducer,
+  user: userReducer,
+  map: mapReducer,
+});
+
+const sagaMiddleware = createSagaMiddleware();
+
+const rootReducer = persistReducer<any, any>(persistConfig, reducers);
+
+const middlewares = [sagaMiddleware];
+
+const store = configureStore({
+  reducer: rootReducer,
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({serializableCheck: false}).concat(middlewares),
+});
+
+export type StoreState = ReturnType<typeof reducers>;
+export type AppDispatch = typeof store.dispatch;
+
+function* saga() {
+  yield all([
+    ...booksSaga,
+    ...settingsSaga,
+    ...termsSaga,
+    ...readingsSaga,
+    ...notificationsSaga,
+    ...mapSaga,
+  ]);
+}
+
+sagaMiddleware.run(saga);
+
+export const persistor = persistStore(store);
+
+export default store;
