@@ -7,8 +7,9 @@ import {
   useWindowDimensions,
   View,
   TouchableOpacity,
+  Dimensions
 } from 'react-native';
-import Carousel from 'react-native-snap-carousel';
+import Carousel from 'react-native-reanimated-carousel';
 import ImageView from 'react-native-image-viewing';
 
 // Models
@@ -21,6 +22,8 @@ import Colors from '../constants/Colors';
 type ImageCarouselProps = {
   images: Photo[];
 };
+
+const windowWidth = Dimensions.get('window').width
 
 const ImageCarousel: React.FC<ImageCarouselProps> = ({images}) => {
   const [zoomModalVisible, setZoomModalVisible] = useState(false);
@@ -79,10 +82,14 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({images}) => {
       <Carousel
         data={images}
         renderItem={renderItem}
-        sliderWidth={dimensions.width - 50}
-        itemWidth={dimensions.width - 150 > 260 ? 260 : dimensions.width - 150}
-        activeSlideAlignment={'start'}
-        scrollEnabled={true}
+        style={styles.carouselContainer}
+        width={dimensions.width - 150 > 260 ? 260 : dimensions.width - 150}
+        loop={false}
+        mode="parallax"
+        modeConfig={{
+          parallaxScrollingScale: 0.95,
+          parallaxScrollingOffset: 5,
+        }}
       />
 
       <ImageView
@@ -121,6 +128,10 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     padding: 0,
     margin: 0,
+  },
+  carouselContainer: {
+    width: windowWidth,
+    height: 230,
   },
   image: {
     width: '100%',

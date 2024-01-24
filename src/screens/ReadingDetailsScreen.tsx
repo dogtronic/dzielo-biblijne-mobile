@@ -38,11 +38,7 @@ const ReadingDetailsScreen: React.FC<ReadingDetailsScreenProps> = ({
 
   const readings = useAppSelector(state => state.readings.readings);
   const index = readings.findIndex(v => v.id === reading.id);
-  console.log(
-    reading.sections.length,
-    reading.photos.length,
-    reading.curiosities.length,
-  );
+ 
   return (
     <ScrollView
       bounces={false}

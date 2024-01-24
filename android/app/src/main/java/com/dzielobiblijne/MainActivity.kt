@@ -16,8 +16,7 @@ class MainActivity : ReactActivity() {
   override fun getMainComponentName(): String = "dzielobiblijne"
 
   override fun onCreate(savedInstanceState: Bundle?) {
-    SplashScreen.show(this)
-    super.onCreate(savedInstanceState)
+    super.onCreate(null)
   }
 
   /**
