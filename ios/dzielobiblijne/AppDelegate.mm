@@ -8,7 +8,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  [GMSServices provideAPIKey:@"AIzaSyCxUTmvlbNasSw4BYOJyWkJtCJmFpGy2ic"];
+  [GMSServices provideAPIKey:@"AIzaSyDXvJMpqE4OGZbUvSJitfR1u3yka7cVtBY"];
   self.moduleName = @"dzielobiblijne";
   // You can add your custom initial props in the dictionary below.
   // They will be passed down to the ViewController used by React Native.
