@@ -8,6 +8,7 @@ import {Api, Endpoint} from '../../../services/Api.service';
 
 // Utils
 import dayjs from 'dayjs';
+import { getReadingsGroupBetween } from '../../../utils/getReadingsGroupBetween';
 
 // Models
 import {Reading, SectionType} from '../../types/Reading.model';
@@ -27,10 +28,10 @@ export function* getCurrentReadingGroup() {
       Endpoint.SectionTypes,
     );
 
-    let readingGroup = readingsResponse.data[0];
+    let activeReadingsGroup = getReadingsGroupBetween(readingsResponse.data);
     const readings: Reading[] = [];
 
-    for (let readingFromGroup of readingsResponse.data[0].readings) {
+    for (let readingFromGroup of activeReadingsGroup.readings) {
       const readingResponse: AxiosResponse<Reading> = yield Api.get(
         `${Endpoint.Readings}${readingFromGroup.id}`,
       );
@@ -38,11 +39,11 @@ export function* getCurrentReadingGroup() {
       readings.push(readingResponse.data);
     }
 
-    readingGroup.readings = readings;
+    activeReadingsGroup.readings = readings;
 
     yield put(
       actions.getCurrentReadings.success({
-        readingsGroup: readingsResponse.data[0],
+        readingsGroup: activeReadingsGroup,
         sections: sectionsResponse.data,
       }),
     );
