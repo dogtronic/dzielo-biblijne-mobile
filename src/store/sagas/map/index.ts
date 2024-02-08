@@ -25,7 +25,7 @@ export function* getPlacesFromRegion(
   action: ActionType<typeof actions.getPlacesFromRegion.request>,
 ) {
   try {
-    const query = qs.stringify({'region.id': action.payload.regionId});
+    const query = qs.stringify({'region.country': action.payload.countryCode});
 
     const response: AxiosResponse<Place[]> = yield Api.get(
       `${Endpoint.Places}?${query}`,

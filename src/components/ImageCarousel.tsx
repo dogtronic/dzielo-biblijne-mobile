@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useRef, useState} from 'react';
 
 // Components
 import {
@@ -7,11 +7,9 @@ import {
   useWindowDimensions,
   View,
   TouchableOpacity,
-  Dimensions
+  Animated,
 } from 'react-native';
-import Carousel from 'react-native-reanimated-carousel';
 import ImageView from 'react-native-image-viewing';
-
 // Models
 
 import {remoteAsset} from '../utils/remoteAsset';
@@ -23,29 +21,43 @@ type ImageCarouselProps = {
   images: Photo[];
 };
 
-const windowWidth = Dimensions.get('window').width
-
 const ImageCarousel: React.FC<ImageCarouselProps> = ({images}) => {
+  const scrollX = useRef(new Animated.Value(0)).current;
   const [zoomModalVisible, setZoomModalVisible] = useState(false);
-  const [zoomModalPhoto, setZoomModalPhoto] = useState<Photo | undefined>(
-    undefined,
-  );
-  const [zoomModalImageLink, setZoomModalImageLink] = useState<
-    string | undefined
-  >(undefined);
+  const [activePhoto, setActivePhoto] = useState<Photo | undefined>(undefined);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const imagesUrls = images.map(image => ({uri: remoteAsset(image.image.url)}));
 
   const dimensions = useWindowDimensions();
+  const itemWidth = dimensions.width - 150 > 260 ? 260 : dimensions.width - 150;
+  const itemHeight = 230;
 
   const renderItem = useCallback(
-    ({item}: {item: Photo}) => {
+    ({item, index}: {item: Photo; index: number}) => {
+      const inputRange = [
+        (index - 1) * itemWidth,
+        index * itemWidth,
+        (index + 1) * itemWidth,
+      ];
+
+      const scale = scrollX.interpolate({
+        inputRange,
+        outputRange: [0.95, 1, 0.95],
+      });
+
       return (
-        <View onStartShouldSetResponder={() => true}>
+        <Animated.View
+          style={[
+            styles.itemContainer,
+            {height: itemHeight, width: itemWidth, transform: [{scale}]},
+          ]}>
           <TouchableOpacity
             activeOpacity={0.9}
             onPress={() => {
+              setActiveIndex(index);
+              setActivePhoto(item);
               setZoomModalVisible(true);
-              setZoomModalPhoto(item);
-              setZoomModalImageLink(remoteAsset(item.image.url));
             }}>
             <Image
               style={styles.image}
@@ -71,45 +83,50 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({images}) => {
               )}
             </View>
           </TouchableOpacity>
-        </View>
+        </Animated.View>
       );
     },
-    [setZoomModalVisible, setZoomModalImageLink],
+    [setZoomModalVisible],
   );
 
   return (
     <>
-      <Carousel
+      <Animated.FlatList
+        style={styles.container}
         data={images}
         renderItem={renderItem}
-        style={styles.carouselContainer}
-        width={dimensions.width - 150 > 260 ? 260 : dimensions.width - 150}
-        loop={false}
-        mode="parallax"
-        modeConfig={{
-          parallaxScrollingScale: 0.95,
-          parallaxScrollingOffset: 5,
-        }}
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+        ListFooterComponent={<View style={styles.listFooter}></View>}
+        snapToInterval={itemWidth + 15}
+        decelerationRate={0}
+        bounces={false}
+        onScroll={Animated.event(
+          [{nativeEvent: {contentOffset: {x: scrollX}}}],
+          {useNativeDriver: true},
+        )}
+        scrollEventThrottle={16}
       />
 
       <ImageView
-        images={zoomModalImageLink ? [{uri: zoomModalImageLink}] : []}
-        imageIndex={0}
+        images={imagesUrls}
+        imageIndex={activeIndex}
         visible={zoomModalVisible}
         onRequestClose={() => setZoomModalVisible(false)}
+        onImageIndexChange={index => setActivePhoto(images[index])}
         FooterComponent={() => (
           <View style={styles.imageDescriptionContainer}>
-            {!!zoomModalPhoto?.title && (
+            {!!activePhoto?.title && (
               <Typography
                 type={TypographyType.SmallTitle}
                 numberOfLines={3}
                 style={styles.text}>
-                {zoomModalPhoto?.title}
+                {activePhoto?.title}
               </Typography>
             )}
-            {!!zoomModalPhoto?.comment && (
+            {!!activePhoto?.comment && (
               <Typography type={TypographyType.Description} style={styles.text}>
-                {zoomModalPhoto?.comment}
+                {activePhoto?.comment}
               </Typography>
             )}
           </View>
@@ -123,15 +140,13 @@ export default ImageCarousel;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end',
-    padding: 0,
-    margin: 0,
+    marginLeft: 25,
   },
-  carouselContainer: {
-    width: windowWidth,
-    height: 230,
+  itemContainer: {
+    marginRight: 15,
+  },
+  listFooter: {
+    marginRight: 25,
   },
   image: {
     width: '100%',

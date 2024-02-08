@@ -35,7 +35,7 @@ export default {
     words: 'Słowa',
     bibleDictionary: 'Słownik biblijny',
     curiosities: 'Ciekawostki',
-    biblemap: 'Bibliomapa',
+    biblemap: 'Mapa',
     recommendations: 'Polecane',
     contact: 'Kontakt',
     photos: 'Zdjęcia',

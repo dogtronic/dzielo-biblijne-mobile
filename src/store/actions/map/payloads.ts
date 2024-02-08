@@ -1,3 +1,3 @@
 export interface GetPlacesFromRegionRequestPayload {
-  regionId: string;
+  countryCode: string;
 }

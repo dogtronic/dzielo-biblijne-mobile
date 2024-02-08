@@ -61,7 +61,10 @@ const PlaceModal: React.FC<TermModalProps> = ({
           <View
             style={styles.scrollableContainer}
             onStartShouldSetResponder={() => true}>
-            <Typography type={TypographyType.Title} resizeable>
+            <Typography
+              style={styles.title}
+              type={TypographyType.Title}
+              resizeable>
               {place?.name}
             </Typography>
 
@@ -96,7 +99,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.background,
     borderTopRightRadius: 15,
     borderTopLeftRadius: 15,
-    paddingHorizontal: 25,
     paddingTop: 30,
     width: '100%',
     maxHeight: '80%',
@@ -105,6 +107,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    paddingHorizontal: 25,
+  },
+  title: {
+    paddingHorizontal: 25,
   },
   content: {
     marginTop: 30,
@@ -118,6 +124,7 @@ const styles = StyleSheet.create({
   },
   description: {
     marginVertical: 25,
+    paddingHorizontal: 25,
   },
   image: {
     width: '100%',

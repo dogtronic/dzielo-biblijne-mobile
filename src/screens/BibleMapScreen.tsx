@@ -9,7 +9,7 @@ import {StyleSheet, ScrollView} from 'react-native';
 import ImageHeader, {ImageHeaderText} from '../components/ImageHeader';
 import TopRoundedContainer from '../components/TopRoundedContainer';
 import ContentError from '../components/ContentError';
-import MapView from 'react-native-maps';
+import MapView, {LatLng} from 'react-native-maps';
 import MapMarker from '../components/MapMarker';
 import PlaceModal from '../components/PlaceModal';
 import MapControl from '../components/MapControl';
@@ -36,11 +36,7 @@ import Colors from '../constants/Colors';
 import Fonts from '../constants/Fonts';
 
 // Models
-import {
-  Country,
-  Place,
-  Region as CustomRegion,
-} from '../store/types/Region.model';
+import {Country, Place} from '../store/types/Region.model';
 
 type BibleMapScreenProps = {
   navigation: StackNavigationProp<RootNavigatorParamList, 'BibleMapScreen'>;
@@ -66,13 +62,9 @@ const BibleMapScreen: React.FC<BibleMapScreenProps> = () => {
 
   const [fullScreen, setFullScreen] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
-  const [selectedRegion, setSelectedRegion] = useState<CustomRegion | null>(
-    null,
-  );
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
 
   const countries = useAppSelector(state => state.map.countries);
-  const regions = useAppSelector(state => state.map.regions);
   const places = useAppSelector(state => state.map.places);
   const sectionImages = useAppSelector(state => state.settings.sectionImages);
   const loading = useAppSelector(state => state.map.areRegionsLoading);
@@ -80,12 +72,18 @@ const BibleMapScreen: React.FC<BibleMapScreenProps> = () => {
   const error = useAppSelector(state => state.map.regionsError);
 
   useEffect(() => {
-    if (selectedRegion) {
+    dispatch(actions.getRegions.request());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (selectedCountry) {
       dispatch(
-        actions.getPlacesFromRegion.request({regionId: selectedRegion.id}),
+        actions.getPlacesFromRegion.request({
+          countryCode: selectedCountry.alpha2,
+        }),
       );
     }
-  }, [selectedRegion, dispatch]);
+  }, [selectedCountry, dispatch]);
 
   const animateMap = useCallback(
     ({lat, lng, zoom}: {lat: number; lng: number; zoom?: number}) => {
@@ -101,6 +99,16 @@ const BibleMapScreen: React.FC<BibleMapScreenProps> = () => {
     [mapRef],
   );
 
+  const animateToPlaces = useCallback(
+    (coordinates: LatLng[]) => {
+      mapRef.current?.fitToCoordinates(coordinates, {
+        edgePadding: {top: 100, right: 100, bottom: 100, left: 100},
+        animated: true,
+      });
+    },
+    [mapRef],
+  );
+
   useEffect(() => {
     if (countries) {
       const point = getLatLngCenter(countries);
@@ -108,53 +116,32 @@ const BibleMapScreen: React.FC<BibleMapScreenProps> = () => {
         animateMap({lat: point.lat, lng: point.lng, zoom: 5});
       }, 500);
     }
-  }, [countries, animateMap]);
+  }, [countries]);
 
   useEffect(() => {
-    dispatch(actions.getRegions.request());
-  }, [dispatch]);
+    if (places) {
+      const selectedPlaces = places.filter(
+        p => p.region.country === selectedCountry?.alpha2,
+      );
+      const coords = selectedPlaces.map(p => ({
+        latitude: p.lat,
+        longitude: p.lng,
+      }));
 
-  useEffect(() => {
-    if (places.length) {
-      const point = getLatLngCenter(places);
       setTimeout(() => {
-        animateMap({lat: point.lat, lng: point.lng, zoom: 11});
+        animateToPlaces(coords);
       }, 500);
     }
-  }, [places, animateMap]);
+  }, [selectedCountry, places]);
 
   const zoomOut = useCallback(() => {
-    if (selectedRegion) {
-      setSelectedRegion(null);
-      const selectedRegions = regions.filter(
-        w => w.country === selectedCountry?.alpha2,
-      );
-      const point = getLatLngCenter(selectedRegions);
-      animateMap({lat: point.lat, lng: point.lng, zoom: 7});
-      return;
-    }
-
     if (selectedCountry) {
       setSelectedCountry(null);
       const point = getLatLngCenter(countries);
       animateMap({lat: point.lat, lng: point.lng, zoom: 5});
       return;
     }
-  }, [selectedRegion, selectedCountry, countries, animateMap, regions]);
-
-  const selectCountry = useCallback(
-    (v: Country) => {
-      setSelectedCountry(v);
-
-      const selectedRegions = regions.filter(w => w.country === v.alpha2);
-      const point = getLatLngCenter(selectedRegions);
-
-      setTimeout(() => {
-        animateMap({lat: point.lat, lng: point.lng, zoom: 7});
-      }, 500);
-    },
-    [animateMap, regions],
-  );
+  }, [selectedCountry, countries, animateMap]);
 
   if (loading) {
     return <Loader isAbsolute />;
@@ -193,39 +180,27 @@ const BibleMapScreen: React.FC<BibleMapScreenProps> = () => {
                   latitude: v.lat,
                   longitude: v.lng,
                 }}
-                onPress={() => selectCountry(v)}
+                onPress={() => setSelectedCountry(v)}
                 title={polishCountriesTranslations[v.alpha2].name_pl}
               />
             ))}
 
           {selectedCountry &&
-            !selectedRegion &&
-            regions
-              .filter(v => v.country === selectedCountry.alpha2)
-              .map(region => (
-                <MapMarker
-                  key={region.id.toString()}
-                  coordinate={{
-                    latitude: region.lat,
-                    longitude: region.lng,
-                  }}
-                  onPress={() => setSelectedRegion(region)}
-                  title={region.name}
-                />
-              ))}
+            places.map(place => {
+              const pos = JSON.parse(place.region.position);
 
-          {selectedRegion &&
-            places.map(place => (
-              <MapMarker
-                key={place.id.toString()}
-                coordinate={{
-                  latitude: place.lat,
-                  longitude: place.lng,
-                }}
-                title={place.name}
-                onPress={() => setSelectedPlace(place)}
-              />
-            ))}
+              return (
+                <MapMarker
+                  key={place.id.toString()}
+                  coordinate={{
+                    latitude: pos.lat,
+                    longitude: pos.lng,
+                  }}
+                  title={place.name}
+                  onPress={() => setSelectedPlace(place)}
+                />
+              );
+            })}
         </MapView>
 
         <MapControl
@@ -272,7 +247,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
     paddingVertical: 0,
     overflow: 'hidden',
-    backgroundColor: 'red',
     paddingBottom: 0,
   },
   title: {
