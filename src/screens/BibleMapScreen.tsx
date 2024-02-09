@@ -90,7 +90,7 @@ const BibleMapScreen: React.FC<BibleMapScreenProps> = () => {
       mapRef.current?.animateCamera({
         center: {
           latitude: lat || 0,
-          longitude: lng || 0,
+          longitude: lng || 0
         },
         zoom,
         altitude: zoom ? altitude[zoom?.toString()] : undefined,
@@ -119,10 +119,11 @@ const BibleMapScreen: React.FC<BibleMapScreenProps> = () => {
   }, [countries]);
 
   useEffect(() => {
-    if (places) {
+    if (places.filter(p => p.region.country === selectedCountry?.alpha2).length > 0) {
       const selectedPlaces = places.filter(
         p => p.region.country === selectedCountry?.alpha2,
       );
+
       const coords = selectedPlaces.map(p => ({
         latitude: p.lat,
         longitude: p.lng,
@@ -132,7 +133,7 @@ const BibleMapScreen: React.FC<BibleMapScreenProps> = () => {
         animateToPlaces(coords);
       }, 500);
     }
-  }, [selectedCountry, places]);
+  }, [places.length]);
 
   const zoomOut = useCallback(() => {
     if (selectedCountry) {
